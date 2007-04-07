@@ -2,6 +2,7 @@ package net.guha.apps.cdkdesc;
 
 import net.guha.apps.cdkdesc.ui.*;
 import net.guha.ui.checkboxtree.CheckBoxTreeUtils;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.IDescriptor;
 
 import javax.swing.*;
@@ -98,7 +99,7 @@ public class CDKdesc extends JFrame implements DropTargetListener {
         statusPanel.add(statusLabel, BorderLayout.WEST);
         statusPanel.add(progressBar, BorderLayout.EAST);
 
-        Border emptyBorder = new EmptyBorder(4,2,4,2);
+        Border emptyBorder = new EmptyBorder(4, 2, 4, 2);
         Border lowerEtched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
         statusPanel.setBorder(BorderFactory.createCompoundBorder(lowerEtched, emptyBorder));
         progressBar.setVisible(false);
@@ -113,7 +114,11 @@ public class CDKdesc extends JFrame implements DropTargetListener {
 
         ui = new ApplicationUI();
 
-        descriptorTree = new DescriptorTree(true);
+        try {
+            descriptorTree = new DescriptorTree(true);
+        } catch (CDKException e) {
+            System.out.println("e = " + e);
+        }
         JScrollPane sp = new JScrollPane(descriptorTree.getTree(),
                 VERTICAL_SCROLLBAR_AS_NEEDED,
                 HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -220,7 +225,7 @@ public class CDKdesc extends JFrame implements DropTargetListener {
                 //progressBar.setString((int) round(100.0 * current / (double) totaLength, 0) + "%");
                 //goButton.setText("Molecule "+current);
 
-                statusLabel.setText("Mol. "+current);
+                statusLabel.setText("Mol. " + current);
 
                 if (task.isDone()) {
                     timer.stop();

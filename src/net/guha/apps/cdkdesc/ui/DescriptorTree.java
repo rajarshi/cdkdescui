@@ -3,6 +3,7 @@ package net.guha.apps.cdkdesc.ui;
 import net.guha.apps.cdkdesc.AppOptions;
 import net.guha.ui.checkboxtree.CheckTreeManager;
 import net.guha.ui.checkboxtree.CheckTreeSelectionModel;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.IDescriptor;
 
@@ -24,7 +25,7 @@ public class DescriptorTree {
     private CheckTreeManager checkTreeManager;
     private DefaultMutableTreeNode rootNode;
 
-    public DescriptorTree(boolean expandRoot) {
+    public DescriptorTree(boolean expandRoot) throws CDKException {
         rootNode = new DefaultMutableTreeNode("All Descriptors");
         DefaultTreeModel treeModel = new DefaultTreeModel(rootNode);
         tree = new JTree(treeModel) {
@@ -59,7 +60,11 @@ public class DescriptorTree {
         for (int i = 0; i < ndesc; i++) {
             DescriptorSpecification spec = (DescriptorSpecification) descSpec.get(i);
             String definition = AppOptions.getInstance().getEngine().getDictionaryDefinition(spec);
-            leaves.add(new DescriptorTreeLeaf((IDescriptor) descInst.get(i), definition));
+            DescriptorTreeLeaf leaf = new DescriptorTreeLeaf((IDescriptor) descInst.get(i), definition);
+            if (leaf.getName() == null || definition == null) {
+                throw new CDKException("Seems that " + leaf.getInstance() + " is missing an entry in the OWL dictionary");
+            } else
+                leaves.add(leaf);
         }
         sort(leaves);
 
