@@ -4,6 +4,7 @@ package net.guha.apps.cdkdesc;
 import net.guha.apps.cdkdesc.ui.ApplicationUI;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -156,6 +157,7 @@ public class DescriptorSwingWorker {
                 boolean firstTime = true;
                 String headerLine = "";
 
+
                 while (iterReader.hasNext()) {
                     if (canceled) return false;
                     IMolecule molecule = (IMolecule) iterReader.next();
@@ -185,6 +187,7 @@ public class DescriptorSwingWorker {
                         String[] comps = descriptor.getSpecification().getSpecificationReference().split("#");
 
                         try {
+                            HueckelAromaticityDetector.detectAromaticity(molecule);
                             DescriptorValue value = descriptor.calculate(molecule);
                             String[] descName = value.getNames();
 
