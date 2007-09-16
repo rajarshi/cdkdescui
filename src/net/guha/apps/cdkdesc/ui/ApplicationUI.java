@@ -1,8 +1,12 @@
 package net.guha.apps.cdkdesc.ui;
 
 import net.guha.apps.cdkdesc.CDKDescUtils;
+import net.guha.ui.checkboxtree.CheckTreeManager;
 
 import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -151,16 +155,27 @@ public class ApplicationUI {
                 // cannot be evaluated for SMILES
                 if (CDKDescUtils.isSMILESFormat(sdFile.getAbsolutePath())) {
                     JTree tree = descriptorTree.getTree();
-                    tree.
+                    DefaultMutableTreeNode root = descriptorTree.getRootNode();
+                    CheckTreeManager checks = descriptorTree.getCheckTreeManager();
+                    checks.getSelectionModel().removeSelectionPath(new TreePath(root));
+                    for (int i = 0; i < root.getChildCount(); i++) {
+                        TreeNode child = root.getChildAt(i);
+                        if (child.toString().equals("topological")) {
+                            TreePath path = new TreePath(new Object[]{root, child});
+                            checks.getSelectionModel().setSelectionPath(path);
+                            break;
+                        } else {
+                        }
+                    }
+                } else {
+                    outFile = fileDialog.getSelectedFile();
+                    outFileTextField.setText(outFile.getAbsolutePath());
                 }
-            } else {
-                outFile = fileDialog.getSelectedFile();
-                outFileTextField.setText(outFile.getAbsolutePath());
             }
         }
-    }
 
-    public static void main(String[] args) {
+        public static void main
+        (String[]args){
         try {
             UIManager.setLookAndFeel(
                     UIManager.getSystemLookAndFeelClassName());
@@ -175,6 +190,6 @@ public class ApplicationUI {
     }
 
 
-}
+    }
 
 
