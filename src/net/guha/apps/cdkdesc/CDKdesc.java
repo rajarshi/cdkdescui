@@ -33,6 +33,10 @@ import java.util.List;
  */
 public class CDKdesc extends JFrame implements DropTargetListener {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     private ApplicationUI ui;
     private DescriptorTree descriptorTree;
     private JProgressBar progressBar;
@@ -63,8 +67,7 @@ public class CDKdesc extends JFrame implements DropTargetListener {
         tempFile.deleteOnExit();
 
         try {
-            UIManager.setLookAndFeel(
-                    UIManager.getSystemLookAndFeelClassName());
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -83,7 +86,7 @@ public class CDKdesc extends JFrame implements DropTargetListener {
 
         goButton = new JButton("Go");
         goButton.setName("go");
-        goButton.  addActionListener(new ActionListener() {
+        goButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 goApp(e);
             }
@@ -91,14 +94,11 @@ public class CDKdesc extends JFrame implements DropTargetListener {
 
 
         progressBar = new JProgressBar(0, 1);
-        //progressBar.setBorder(new EmptyBorder(4, 0, 0, 0));
-
         statusLabel = new JLabel("Ready               ");
 
         JPanel statusPanel = new JPanel(new BorderLayout());
         statusPanel.add(statusLabel, BorderLayout.WEST);
         statusPanel.add(progressBar, BorderLayout.EAST);
-
         Border emptyBorder = new EmptyBorder(4, 2, 4, 2);
         Border lowerEtched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
         statusPanel.setBorder(BorderFactory.createCompoundBorder(lowerEtched, emptyBorder));
@@ -107,7 +107,6 @@ public class CDKdesc extends JFrame implements DropTargetListener {
         JPanel bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.setBorder(new EmptyBorder(2, 4, 2, 4));
         bottomPanel.add(goButton, BorderLayout.NORTH);
-        //bottomPanel.add(progressBar, BorderLayout.SOUTH);
         bottomPanel.add(statusPanel, BorderLayout.SOUTH);
 
         getContentPane().add(bottomPanel, BorderLayout.SOUTH);
@@ -119,11 +118,10 @@ public class CDKdesc extends JFrame implements DropTargetListener {
         } catch (CDKException e) {
             System.out.println("e = " + e);
         }
-        JScrollPane sp = new JScrollPane(descriptorTree.getTree(),
-                VERTICAL_SCROLLBAR_AS_NEEDED,
+        ui.setDescriptorTree(descriptorTree);
+        JScrollPane sp = new JScrollPane(descriptorTree.getTree(), VERTICAL_SCROLLBAR_AS_NEEDED,
                 HORIZONTAL_SCROLLBAR_AS_NEEDED);
         ui.getSubpanel().add(sp, BorderLayout.CENTER);
-
         getContentPane().add(ui.getPanel(), BorderLayout.CENTER);
 
         dropTarget = new DropTarget(ui.getSdfFileTextField(), this);
@@ -151,19 +149,15 @@ public class CDKdesc extends JFrame implements DropTargetListener {
         }
     }
 
-    private double round(double num, int decimalPlaces) {
-        int intPart = (int) num;
-        double decPart = num - intPart;
-
-        double tmp1 = decPart * Math.pow(10, decimalPlaces);
-        int tmp2 = Math.round((float) tmp1);
-
-        return intPart + (double) tmp2 / Math.pow(10, decimalPlaces);
-    }
 
     private void goApp(ActionEvent e) {
-        if (ui.getSdfFileTextField().getText().equals("")) return;
-        if (ui.getOutFileTextField().getText().equals("")) return;
+        if (ui.getSdfFileTextField().getText().equals("") ||
+                ui.getOutFileTextField().getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Must provide an input file and an output file",
+                    "CDKDescUI Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
 
         progressBar.setVisible(true);
         progressBar.setStringPainted(true);
