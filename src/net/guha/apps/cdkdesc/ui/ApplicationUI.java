@@ -1,5 +1,7 @@
 package net.guha.apps.cdkdesc.ui;
 
+import net.guha.apps.cdkdesc.CDKDescUtils;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -23,6 +25,8 @@ public class ApplicationUI {
     private File outFile;
 
     private JPanel subpanel;
+
+    private DescriptorTree descriptorTree;
 
 
     public JPanel getSubpanel() {
@@ -50,6 +54,9 @@ public class ApplicationUI {
         return outBrowseButton;
     }
 
+    public void setDescriptorTree(DescriptorTree tree) {
+        this.descriptorTree = tree;
+    }
 
     public ApplicationUI() {
 
@@ -138,6 +145,14 @@ public class ApplicationUI {
             if (buttonName.equals("sdfButton")) {
                 sdFile = fileDialog.getSelectedFile();
                 sdfFileTextField.setText(sdFile.getAbsolutePath());
+
+                // check to see if it's a SMILES file. If so,
+                // disable parts of the descriptor tree that
+                // cannot be evaluated for SMILES
+                if (CDKDescUtils.isSMILESFormat(sdFile.getAbsolutePath())) {
+                    JTree tree = descriptorTree.getTree();
+                    tree.
+                }
             } else {
                 outFile = fileDialog.getSelectedFile();
                 outFileTextField.setText(outFile.getAbsolutePath());
