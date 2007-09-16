@@ -4,7 +4,6 @@ package net.guha.apps.cdkdesc;
 import net.guha.apps.cdkdesc.ui.ApplicationUI;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -32,10 +31,8 @@ public class DescriptorSwingWorker {
     private ApplicationUI ui;
     private List<IDescriptor> descriptors;
     private List<ExceptionInfo> exceptionList;
-    private int numIMolecule;
 
     private String inputFormat = "mdl";
-
     private File tempFile;
 
     private int lengthOfTask = 1;
@@ -54,15 +51,14 @@ public class DescriptorSwingWorker {
         exceptionList = new ArrayList<ExceptionInfo>();
 
         // see what type of file we have
+        inputFormat = "invalid";
         if (CDKDescUtils.isSMILESFormat(ui.getSdfFileTextField().getText())) {
             inputFormat = "smi";
         } else if (CDKDescUtils.isMDLFormat(ui.getSdfFileTextField().getText())) {
             inputFormat = "mdl";
         }
 
-        if (!CDKDescUtils.isMDLFormat(ui.getSdfFileTextField().getText()) &&
-                !CDKDescUtils.isSMILESFormat(ui.getSdfFileTextField().getText())) {
-            inputFormat = "invalid";
+        if (inputFormat.equals("invalid")) {
             done = true;
             canceled = true;
             JOptionPane.showMessageDialog(null,
@@ -112,7 +108,6 @@ public class DescriptorSwingWorker {
     }
 
     public int getCurrent() {
-//        return current;
         return molCount;
     }
 
@@ -152,11 +147,10 @@ public class DescriptorSwingWorker {
                 else if (inputFormat.equals("mdl"))
                     iterReader = new IteratingMDLReader(inputStream, DefaultChemObjectBuilder.getInstance());
 
-                molCount = 1;
+                molCount = 0;
 
                 boolean firstTime = true;
                 String headerLine = "";
-
 
                 while (iterReader.hasNext()) {
                     if (canceled) return false;
@@ -187,7 +181,6 @@ public class DescriptorSwingWorker {
                         String[] comps = descriptor.getSpecification().getSpecificationReference().split("#");
 
                         try {
-                            HueckelAromaticityDetector.detectAromaticity(molecule);
                             DescriptorValue value = descriptor.calculate(molecule);
                             String[] descName = value.getNames();
 
@@ -199,12 +192,12 @@ public class DescriptorSwingWorker {
                                 stringWriter.write(((IntegerResult) result).intValue() + itemSep);
                                 if (firstTime) headerLine = headerLine + descName[0] + itemSep;
                             } else if (result instanceof DoubleArrayResult) {
-                                for (int i = 0; i < ((DoubleArrayResult) result).size(); i++) {
+                                for (int i = 0; i < ((DoubleArrayResult) result).length(); i++) {
                                     stringWriter.write(((DoubleArrayResult) result).get(i) + itemSep);
                                     if (firstTime) headerLine = headerLine + descName[i] + itemSep;
                                 }
                             } else if (result instanceof IntegerArrayResult) {
-                                for (int i = 0; i < ((IntegerArrayResult) result).size(); i++) {
+                                for (int i = 0; i < ((IntegerArrayResult) result).length(); i++) {
                                     stringWriter.write(((IntegerArrayResult) result).get(i) + itemSep);
                                     if (firstTime) headerLine = headerLine + descName[i] + itemSep;
                                 }
@@ -273,11 +266,11 @@ public class DescriptorSwingWorker {
                             } else if (result instanceof IntegerResult) {
                                 map.put(descName, ((IntegerResult) result).intValue());
                             } else if (result instanceof DoubleArrayResult) {
-                                for (int i = 0; i < ((DoubleArrayResult) result).size(); i++) {
+                                for (int i = 0; i < ((DoubleArrayResult) result).length(); i++) {
                                     map.put(descName + "." + i, ((DoubleArrayResult) result).get(i));
                                 }
                             } else if (result instanceof IntegerArrayResult) {
-                                for (int i = 0; i < ((IntegerArrayResult) result).size(); i++)
+                                for (int i = 0; i < ((IntegerArrayResult) result).length(); i++)
                                     map.put(descName + "." + i, ((IntegerArrayResult) result).get(i));
                             }
                             current++;
