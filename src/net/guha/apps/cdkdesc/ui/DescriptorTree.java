@@ -29,6 +29,11 @@ public class DescriptorTree {
         rootNode = new DefaultMutableTreeNode("All Descriptors");
         DefaultTreeModel treeModel = new DefaultTreeModel(rootNode);
         tree = new JTree(treeModel) {
+            /**
+             *
+             */
+            private static final long serialVersionUID = 1L;
+
             public String getToolTipText(MouseEvent e) {
                 DefaultMutableTreeNode node = null;
                 DescriptorTreeLeaf leafObject = null;
