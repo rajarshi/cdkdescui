@@ -91,7 +91,7 @@ public class ApplicationUI {
         c.anchor = GridBagConstraints.NORTHWEST;
         c.insets = new Insets(2, 4, 2, 4);
 
-        JLabel label = new JLabel("SD File");
+        JLabel label = new JLabel("Input File");
         label.setHorizontalAlignment(JLabel.LEFT);
         label.setVerticalAlignment(JLabel.CENTER);
         c.gridx = 0;
