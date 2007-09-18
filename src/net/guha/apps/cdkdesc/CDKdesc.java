@@ -228,6 +228,7 @@ public class CDKdesc extends JFrame implements DropTargetListener {
                     progressBar.setIndeterminate(false);
                     progressBar.setString("Completed");
                     progressBar.setVisible(false);
+                    statusLabel.setText("Completed (" + current + ")");
 
                     doSave();
 
@@ -246,6 +247,7 @@ public class CDKdesc extends JFrame implements DropTargetListener {
                     progressBar.setString("");
                     progressBar.setVisible(false);
                     wasCancelled = true;
+                    statusLabel.setText("Cancelled");
                 }
             }
         });
