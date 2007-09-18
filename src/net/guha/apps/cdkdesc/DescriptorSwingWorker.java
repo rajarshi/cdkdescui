@@ -232,7 +232,7 @@ public class DescriptorSwingWorker {
                     }
 
                     String title = (String) molecule.getProperty(CDKConstants.TITLE);
-                    if (title == null) title = String.valueOf(molCount + 1);
+                    if (title == null) title = "Mol" + String.valueOf(molCount + 1);
                     tmpWriter.write(title + itemSep + dataLine);
                     tmpWriter.flush();
                     molCount++;
