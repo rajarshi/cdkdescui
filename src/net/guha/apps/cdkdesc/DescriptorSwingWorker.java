@@ -61,8 +61,10 @@ public class DescriptorSwingWorker {
         if (inputFormat.equals("invalid")) {
             done = true;
             canceled = true;
+            progressBar.setIndeterminate(false);
             JOptionPane.showMessageDialog(null,
-                    "Input file format was not recognized. It should be SDF or SMI",
+                    "Input file format was not recognized. It should be SDF or SMI" +
+                            "\nYou should avoid supplying Markush structures",
                     "CDKDescUI Error",
                     JOptionPane.ERROR_MESSAGE);
         }
