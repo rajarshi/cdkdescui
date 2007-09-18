@@ -154,7 +154,6 @@ public class ApplicationUI {
                 // disable parts of the descriptor tree that
                 // cannot be evaluated for SMILES
                 if (CDKDescUtils.isSMILESFormat(sdFile.getAbsolutePath())) {
-                    JTree tree = descriptorTree.getTree();
                     DefaultMutableTreeNode root = descriptorTree.getRootNode();
                     CheckTreeManager checks = descriptorTree.getCheckTreeManager();
                     checks.getSelectionModel().removeSelectionPath(new TreePath(root));
@@ -164,13 +163,16 @@ public class ApplicationUI {
                             TreePath path = new TreePath(new Object[]{root, child});
                             checks.getSelectionModel().setSelectionPath(path);
                             break;
-                        } else {
                         }
                     }
-                } else {
-                    outFile = fileDialog.getSelectedFile();
-                    outFileTextField.setText(outFile.getAbsolutePath());
+                } else { // lets just select everything, since we might have had a SMI file
+                    DefaultMutableTreeNode root = descriptorTree.getRootNode();
+                    CheckTreeManager checks = descriptorTree.getCheckTreeManager();
+                    checks.getSelectionModel().setSelectionPath(new TreePath(root));
                 }
+            } else {
+                outFile = fileDialog.getSelectedFile();
+                outFileTextField.setText(outFile.getAbsolutePath());
             }
         }
     }
