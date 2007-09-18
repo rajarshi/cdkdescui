@@ -68,21 +68,6 @@ public class DescriptorSwingWorker {
                     "CDKDescUI Error",
                     JOptionPane.ERROR_MESSAGE);
         }
-
-        // find out how many molecules we have
-//        try {
-//            numIMolecule = CDKDescUtils.countMolecules(ui.getSdfFileTextField().getText());
-//        } catch (Exception e) {
-//            inputFormat = "invalid";
-//            done = true;
-//            canceled = true;
-//            JOptionPane.showMessageDialog(null,
-//                    "Input file format was not recognized. It should be SDF or SMI",
-//                    "CDKDescUI Error",
-//                    JOptionPane.ERROR_MESSAGE);
-//        }
-
-//        lengthOfTask = descriptors.size() * numIMolecule;
     }
 
     public void go() {
