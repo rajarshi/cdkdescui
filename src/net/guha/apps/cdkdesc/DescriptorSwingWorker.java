@@ -6,6 +6,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.MDLWriter;
@@ -21,6 +22,7 @@ import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -64,7 +66,8 @@ public class DescriptorSwingWorker {
             progressBar.setIndeterminate(false);
             JOptionPane.showMessageDialog(null,
                     "Input file format was not recognized. It should be SDF or SMI" +
-                            "\nYou should avoid supplying Markush structures",
+                            "\nYou should avoid supplying Markush structures since" +
+                            "\n will be ignored anyway",
                     "CDKDescUI Error",
                     JOptionPane.ERROR_MESSAGE);
         }
@@ -143,24 +146,45 @@ public class DescriptorSwingWorker {
                     if (canceled) return false;
                     IMolecule molecule = (IMolecule) iterReader.next();
 
+                    // for now we loop over the atoms, and see if any are
+                    // R. If so we skip this structure. Ideally we should
+                    // be able to check a flag on the molecule, rather than
+                    // do this loop
+                    Iterator<IAtom> atoms = molecule.atoms();
+                    boolean isMarkush = false;
+                    while (atoms.hasNext()) {
+                        IAtom atom = atoms.next();
+                        if (atom.getSymbol().equals("R")) {
+                            isMarkush = true;
+                            break;
+                        }
+                    }
+                    if (isMarkush) {
+                        exceptionList.add(new ExceptionInfo(molCount + 1, molecule, new CDKException("Skipping Markush structure")));
+                        molCount++;
+                        continue;
+                    }
+
+                    // Check for salts and such
                     if (!ConnectivityChecker.isConnected(molecule)) {
                         // lets see if we have just two parts if so, we assume its a salt and just work
                         // on the larger part. Ideally we should have a check to ensure that the smaller
                         //  part is a metal/halogen etc.
                         IMoleculeSet fragments = ConnectivityChecker.partitionIntoMolecules(molecule);
                         if (fragments.getMoleculeCount() > 2) {
-                            exceptionList.add(new ExceptionInfo(molCount, molecule, new CDKException("More than 2 components. Skipped")));
+                            exceptionList.add(new ExceptionInfo(molCount + 1, molecule, new CDKException("More than 2 components. Skipped")));
                         } else {
                             IMolecule frag1 = fragments.getMolecule(0);
                             IMolecule frag2 = fragments.getMolecule(1);
                             if (frag1.getAtomCount() > frag2.getAtomCount()) molecule = frag1;
                             else molecule = frag2;
-                            exceptionList.add(new ExceptionInfo(molCount, molecule, new CDKException("2 disconnected components. Using the larger one")));
+                            exceptionList.add(new ExceptionInfo(molCount + 1, molecule, new CDKException("2 disconnected components. Using the larger one")));
                         }
                         molCount++;
                         continue;
                     }
 
+                    // OK, we can now eval the descriptors
                     StringWriter stringWriter = new StringWriter();
                     for (Object object : descriptors) {
                         if (canceled) return false;
@@ -191,7 +215,7 @@ public class DescriptorSwingWorker {
                             }
                             current++;
                         } catch (CDKException e) {
-                            exceptionList.add(new ExceptionInfo(molCount, molecule, e));
+                            exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e));
 
                         }
                     }
@@ -208,7 +232,7 @@ public class DescriptorSwingWorker {
                     }
 
                     String title = (String) molecule.getProperty(CDKConstants.TITLE);
-                    if (title == null) title = String.valueOf(molCount);
+                    if (title == null) title = String.valueOf(molCount + 1);
                     tmpWriter.write(title + itemSep + dataLine);
                     tmpWriter.flush();
                     molCount++;
