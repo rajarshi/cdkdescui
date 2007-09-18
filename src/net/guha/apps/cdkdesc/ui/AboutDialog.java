@@ -63,7 +63,7 @@ public class AboutDialog extends JDialog {
 
     private String getMeText() {
         String txt =
-                "The CDK Descriptor Calculator (v0.69) allows easy evaluation\n" +
+                "The CDK Descriptor Calculator (v0.70) allows easy evaluation\n" +
                         "of the CDK molecular descriptors. By default, all\n" +
                         "descriptors will be evaluated though it is easy to select\n" +
                         "individual descriptors or groups of descriptors.\n\n" +
