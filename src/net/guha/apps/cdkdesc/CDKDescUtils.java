@@ -47,9 +47,9 @@ public class CDKDescUtils {
         assert line != null;
 
         String[] tokens = line.split("\\s+");
-        if (tokens.length < 2) return false;
+        if (tokens.length == 0) return false;
 
-        SmilesParser sp = new SmilesParser();
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         try {
             IMolecule m = sp.parseSmiles(tokens[0].trim());
         } catch (InvalidSmilesException ise) {
