@@ -140,12 +140,12 @@
             description="compile module(s) CDKDescUI test classes" unless="skip.tests"/>
 
     <target name="clean.module.cdkdescui" description="cleanup module">
-      <delete dir="${cdkdescui.output.dir}"/>
-      <delete dir="${cdkdescui.testoutput.dir}"/>
-      <delete file="CDKDescUI.jar" />
-      <delete>
-	<fileset dir="." includes="*.tgz" />
-      </delete>
+        <delete dir="${cdkdescui.output.dir}"/>
+        <delete dir="${cdkdescui.testoutput.dir}"/>
+        <delete file="CDKDescUI.jar"/>
+        <delete>
+            <fileset dir="." includes="*.tgz"/>
+        </delete>
     </target>
 
     <target name="jar" description="Create JAR" depends="init, compile.module.cdkdescui">
@@ -175,6 +175,7 @@
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-reaction.jar"/>
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-nonotify.jar"/>
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-valencycheck.jar"/>
+        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-atomtype.jar"/>
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.deps}/Jama-1.0.1.jar"/>
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.deps}/jgrapht-0.6.0.jar"/>
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.deps}/vecmath1.2-1.14.jar"/>
@@ -189,28 +190,28 @@
 
 
     <target name="release" description="Create and deploy distribution">
-      <antcall target="jar" />
-      <scp localfile="CDKDescUI.jar" 
-	   remoteTofile="rguha@${release.path}/CDKDescUIsmall.jar" 
-	   verbose="true"
-	   password="${password}"
-	   />
-      <antcall target="bigjar" />
-      <scp localfile="CDKDescUI.jar" 
-	   remoteTodir="rguha@${release.path}" 
-	   verbose="true"
-	   password="${password}"
-	   />
-      <antcall target="clean" />
-      <tar destfile="CDKDescUI-${version}.tgz"
-	   basedir="${module.cdkdescui.basedir}"
-	   excludes="x*"
-	   compression="gzip" />
-      <scp localfile="CDKDescUI-${version}.tgz" 
-	   remoteTodir="rguha@${release.path}" 
-	   verbose="true"
-	   password="${password}"
-	   />
+        <antcall target="jar"/>
+        <scp localfile="CDKDescUI.jar"
+             remoteTofile="rguha@${release.path}/CDKDescUIsmall.jar"
+             verbose="true"
+             password="${password}"
+                />
+        <antcall target="bigjar"/>
+        <scp localfile="CDKDescUI.jar"
+             remoteTodir="rguha@${release.path}"
+             verbose="true"
+             password="${password}"
+                />
+        <antcall target="clean"/>
+        <tar destfile="CDKDescUI-${version}.tgz"
+             basedir="${module.cdkdescui.basedir}"
+             excludes="x*"
+             compression="gzip"/>
+        <scp localfile="CDKDescUI-${version}.tgz"
+             remoteTodir="rguha@${release.path}"
+             verbose="true"
+             password="${password}"
+                />
     </target>
 
     <target name="init" description="Build initialization">
