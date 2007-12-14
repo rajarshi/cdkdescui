@@ -32,11 +32,12 @@ public class CDKDescUtils {
      * @return true if the file is in SMI format, otherwise false
      */
     public static boolean isSMILESFormat(String filename) {
-        String line = null;
-
+        String line1 = null;
+        String line2 = null;
         try {
             BufferedReader in = new BufferedReader(new FileReader(filename));
-            line = in.readLine();
+            line1 = in.readLine();
+            line2 = in.readLine();
             in.close();
         } catch (FileNotFoundException fnfe) {
             fnfe.printStackTrace();
@@ -44,9 +45,9 @@ public class CDKDescUtils {
             ioe.printStackTrace();
         }
 
-        assert line != null;
+        assert line1 != null;
 
-        String[] tokens = line.split("\\s+");
+        String[] tokens = line1.split("\\s+");
         if (tokens.length == 0) return false;
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -55,6 +56,23 @@ public class CDKDescUtils {
         } catch (InvalidSmilesException ise) {
             return false;
         }
+
+        // now check the second line
+        // if there is no second line this probably a smiles
+        // file
+        if (line2 == null) return true;
+
+        // o0k we have a second line, so lets see if it's a smiles
+        tokens = line2.split("\\s+");
+        if (tokens.length == 0) return false;
+
+        sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        try {
+            IMolecule m = sp.parseSmiles(tokens[0].trim());
+        } catch (InvalidSmilesException ise) {
+            return false;
+        }
+
         return true;
     }
 
