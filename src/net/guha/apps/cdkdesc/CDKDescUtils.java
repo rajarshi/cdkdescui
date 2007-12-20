@@ -124,5 +124,10 @@ public class CDKDescUtils {
         return numMol;
     }
 
+    public static boolean isMacOs() {
+        String lcOSName = System.getProperty("os.name").toLowerCase();
+        return lcOSName.startsWith("mac os x");
+    }
+
 }
         
