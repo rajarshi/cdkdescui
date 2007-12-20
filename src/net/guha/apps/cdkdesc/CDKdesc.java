@@ -56,6 +56,10 @@ public class CDKdesc extends JFrame implements DropTargetListener {
     public CDKdesc() {
         super("CDK Descriptor Calculator");
 
+        if (CDKDescUtils.isMacOs()) {
+            System.setProperty("apple.laf.useScreenMenuBar", "true");
+        }
+
         Calendar cal = new GregorianCalendar();
         long time = cal.getTimeInMillis();
 
