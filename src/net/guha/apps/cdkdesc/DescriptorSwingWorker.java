@@ -4,6 +4,7 @@ package net.guha.apps.cdkdesc;
 import net.guha.apps.cdkdesc.ui.ApplicationUI;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
@@ -184,6 +185,20 @@ public class DescriptorSwingWorker {
                         continue;
                     }
 
+                    // Do the configuration
+//                    try {
+//                        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+//                    } catch (CDKException e) {
+//                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+//                    }
+
+                    // do a aromaticity check
+                    try {
+                        CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+                    } catch (CDKException e) {
+                        e.printStackTrace();
+                    }
+
                     // OK, we can now eval the descriptors
                     StringWriter stringWriter = new StringWriter();
                     for (Object object : descriptors) {
@@ -217,6 +232,14 @@ public class DescriptorSwingWorker {
                         } catch (CDKException e) {
                             exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e));
 
+                            // if we're here, no values were calculated, so we should
+                            // fill up the line with the appropriate number of NA's
+                            int nvalues = descriptor.getDescriptorResultType().length();
+                            for (int i = 0; i < nvalues; i++) stringWriter.write("NA" + itemSep);
+                        } catch (IllegalArgumentException e) {
+                            exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e));
+                            int nvalues = descriptor.getDescriptorResultType().length();
+                            for (int i = 0; i < nvalues; i++) stringWriter.write("NA" + itemSep);
                         }
                     }
 
