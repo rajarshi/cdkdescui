@@ -56,10 +56,6 @@ public class CDKdesc extends JFrame implements DropTargetListener {
     public CDKdesc() {
         super("CDK Descriptor Calculator");
 
-        if (CDKDescUtils.isMacOs()) {
-            System.setProperty("apple.laf.useScreenMenuBar", "true");
-        }
-
         Calendar cal = new GregorianCalendar();
         long time = cal.getTimeInMillis();
 
@@ -71,10 +67,31 @@ public class CDKdesc extends JFrame implements DropTargetListener {
         tempFile.deleteOnExit();
 
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            e.printStackTrace();
+            UIManager.LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();
+            for (UIManager.LookAndFeelInfo plaf : plafs) {
+                System.out.println("plaf.getName() = " + plaf.getClassName());
+            }
+            if (CDKDescUtils.isMacOs()) {
+                UIManager.setLookAndFeel("apple.laf.AquaLookAndFeel");
+//                System.setProperty("apple.laf.useScreenMenuBar", "true");
+                System.setProperty("dock:name", "CDK Descriptor Calculator");
+                System.setProperty("com.apple.mrj.application.growbox.intrudes", "false");
+                System.setProperty("com.apple.macos.useScreenMenuBar ", "true");
+            } else {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (InstantiationException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (ClassNotFoundException e) {
+            System.out.println("Look and feel clas not found.");
         }
+        UIManager.put("ProgressBar.foreground", new java.awt.Color(156, 154, 206));
+        UIManager.put("ProgressBar.background", java.awt.Color.lightGray);
+        UIManager.put("Label.foreground", java.awt.Color.black);
 
 
         getContentPane().setLayout(new BorderLayout());

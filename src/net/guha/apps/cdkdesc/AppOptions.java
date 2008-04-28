@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * @author Rajarshi Guha
  */
 package net.guha.apps.cdkdesc;
@@ -20,7 +20,7 @@ public class AppOptions {
     }
 
     public void setOutputMethod(String outputMethod) {
-        this.outputMethod = outputMethod;
+        AppOptions.outputMethod = outputMethod;
     }
 
     private static AppOptions ourInstance = new AppOptions();

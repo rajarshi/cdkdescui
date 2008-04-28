@@ -8,6 +8,7 @@ import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.MDLWriter;
@@ -115,6 +116,54 @@ public class DescriptorSwingWorker {
     }
 
 
+    private IAtomContainer checkAndCleanMolecule(IAtomContainer molecule) throws CDKException {
+        Iterator<IAtom> atoms = molecule.atoms();
+        boolean isMarkush = false;
+        while (atoms.hasNext()) {
+            IAtom atom = atoms.next();
+            if (atom.getSymbol().equals("R")) {
+                isMarkush = true;
+                break;
+            }
+        }
+
+        if (isMarkush) {
+            throw new CDKException("Skipping Markush structure");
+        }
+
+        // Check for salts and such
+        if (!ConnectivityChecker.isConnected(molecule)) {
+            // lets see if we have just two parts if so, we assume its a salt and just work
+            // on the larger part. Ideally we should have a check to ensure that the smaller
+            //  part is a metal/halogen etc.
+            IMoleculeSet fragments = ConnectivityChecker.partitionIntoMolecules(molecule);
+            if (fragments.getMoleculeCount() > 2) {
+                throw new CDKException("More than 2 components. Skipped");
+            } else {
+                IMolecule frag1 = fragments.getMolecule(0);
+                IMolecule frag2 = fragments.getMolecule(1);
+                if (frag1.getAtomCount() > frag2.getAtomCount()) molecule = frag1;
+                else molecule = frag2;
+            }
+        }
+
+        // Do the configuration
+//                    try {
+//                        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+//                    } catch (CDKException e) {
+//                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+//                    }
+
+        // do a aromaticity check
+        try {
+            CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+        } catch (CDKException e) {
+            throw new CDKException("Error in aromaticity detection");
+        }
+
+        return molecule;
+    }
+
     class ActualTask {
 
         private boolean evalToTextFile(String sdfFileName, String outputFormat) {
@@ -147,56 +196,12 @@ public class DescriptorSwingWorker {
                     if (canceled) return false;
                     IMolecule molecule = (IMolecule) iterReader.next();
 
-                    // for now we loop over the atoms, and see if any are
-                    // R. If so we skip this structure. Ideally we should
-                    // be able to check a flag on the molecule, rather than
-                    // do this loop
-                    Iterator<IAtom> atoms = molecule.atoms();
-                    boolean isMarkush = false;
-                    while (atoms.hasNext()) {
-                        IAtom atom = atoms.next();
-                        if (atom.getSymbol().equals("R")) {
-                            isMarkush = true;
-                            break;
-                        }
-                    }
-                    if (isMarkush) {
-                        exceptionList.add(new ExceptionInfo(molCount + 1, molecule, new CDKException("Skipping Markush structure")));
-                        molCount++;
-                        continue;
-                    }
-
-                    // Check for salts and such
-                    if (!ConnectivityChecker.isConnected(molecule)) {
-                        // lets see if we have just two parts if so, we assume its a salt and just work
-                        // on the larger part. Ideally we should have a check to ensure that the smaller
-                        //  part is a metal/halogen etc.
-                        IMoleculeSet fragments = ConnectivityChecker.partitionIntoMolecules(molecule);
-                        if (fragments.getMoleculeCount() > 2) {
-                            exceptionList.add(new ExceptionInfo(molCount + 1, molecule, new CDKException("More than 2 components. Skipped")));
-                        } else {
-                            IMolecule frag1 = fragments.getMolecule(0);
-                            IMolecule frag2 = fragments.getMolecule(1);
-                            if (frag1.getAtomCount() > frag2.getAtomCount()) molecule = frag1;
-                            else molecule = frag2;
-                            exceptionList.add(new ExceptionInfo(molCount + 1, molecule, new CDKException("2 disconnected components. Using the larger one")));
-                        }
-                        molCount++;
-                        continue;
-                    }
-
-                    // Do the configuration
-//                    try {
-//                        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
-//                    } catch (CDKException e) {
-//                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//                    }
-
-                    // do a aromaticity check
                     try {
-                        CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+                        molecule = (IMolecule) checkAndCleanMolecule(molecule);
                     } catch (CDKException e) {
-                        e.printStackTrace();
+                        exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e));
+                        molCount++;
+                        continue;
                     }
 
                     // OK, we can now eval the descriptors
@@ -285,6 +290,15 @@ public class DescriptorSwingWorker {
                 while (iterReader.hasNext()) {
                     if (canceled) return false;
                     IMolecule molecule = (IMolecule) iterReader.next();
+
+                    try {
+                        molecule = (IMolecule) checkAndCleanMolecule(molecule);
+                    } catch (CDKException e) {
+                        exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e));
+                        molCount++;
+                        continue;
+                    }
+
                     HashMap<String, Object> map = new HashMap<String, Object>();
                     for (Object object : descriptors) {
                         if (canceled) return false;
