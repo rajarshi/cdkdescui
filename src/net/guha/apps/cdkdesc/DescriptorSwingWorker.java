@@ -19,6 +19,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.*;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.swing.*;
 import java.io.*;
@@ -148,11 +149,11 @@ public class DescriptorSwingWorker {
         }
 
         // Do the configuration
-//                    try {
-//                        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
-//                    } catch (CDKException e) {
-//                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//                    }
+        try {
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        } catch (CDKException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
 
         // do a aromaticity check
         try {
