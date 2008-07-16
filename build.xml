@@ -186,7 +186,7 @@
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.deps}/jama-1.0.2.jar"/>
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.deps}/jgrapht-0.6.0.jar"/>
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.deps}/vecmath1.2-1.14.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.deps}/jumbo52.jar"/>
+        <unjar dest="${cdkdescui.output.dir}" src="${cdk.deps}/jumbo-5.4.2-b1.jar"/>
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.deps}/xom-1.1.jar"/>
         <jar jarfile="CDKDescUI.jar" basedir="${cdkdescui.output.dir}">
             <manifest>
