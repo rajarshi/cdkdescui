@@ -261,6 +261,7 @@ public class DescriptorSwingWorker {
                     String pattern = itemSep + lineSep;
                     headerLine = headerLine.replace(pattern, lineSep);
                     dataLine = dataLine.replace(pattern, lineSep);
+                    dataLine = dataLine.replace("NaN", "NA");
 
                     if (firstTime) {
                         tmpWriter.write("Title" + itemSep + headerLine);
