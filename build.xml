@@ -160,11 +160,17 @@
     <target name="bigjar" description="Create a big JAR" depends="init, compile.module.cdkdescui">
         <unjar dest="${cdkdescui.output.dir}" src="libs/CheckBoxTree.jar"/>
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-qsar.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-qsar-cml.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-qsar-pdb.jar"/>
+        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-qsarcml.jar"/>
+        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-formula.jar"/>
+        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-qsarprotein.jar"/>
+        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-qsarmolecular.jar"/>
+        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-qsarbond.jar"/>
+        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-qsaratomic.jar"/>
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-pdb.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-libio-cml.jar"/>
+        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-libiocml.jar"/>
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-io.jar"/>
+        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-isomorphism.jar"/>
+        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-dict.jar"/>
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-interfaces.jar"/>
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-data.jar"/>
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-core.jar"/>
@@ -176,7 +182,8 @@
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-nonotify.jar"/>
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-valencycheck.jar"/>
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-atomtype.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.deps}/Jama-1.0.1.jar"/>
+        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-ionpot.jar"/>
+        <unjar dest="${cdkdescui.output.dir}" src="${cdk.deps}/jama-1.0.2.jar"/>
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.deps}/jgrapht-0.6.0.jar"/>
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.deps}/vecmath1.2-1.14.jar"/>
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.deps}/jumbo52.jar"/>

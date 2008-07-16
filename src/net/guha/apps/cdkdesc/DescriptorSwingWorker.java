@@ -82,7 +82,13 @@ public class DescriptorSwingWorker {
                 current = 0;
                 done = false;
                 canceled = false;
+		try {
                 return new ActualTask();
+		} catch (CDKException e) {
+		System.out.println("Problem!! Contact rguha@indiana.edu\n\n"+e.toString());
+		System.exit(0);
+		}
+		return null;
             }
         };
         worker.start();
@@ -167,7 +173,7 @@ public class DescriptorSwingWorker {
 
     class ActualTask {
 
-        private boolean evalToTextFile(String sdfFileName, String outputFormat) {
+        private boolean evalToTextFile(String sdfFileName, String outputFormat) throws CDKException{
             String lineSep = System.getProperty("line.separator");
             String itemSep = " ";
 
@@ -344,7 +350,7 @@ public class DescriptorSwingWorker {
         }
 
 
-        ActualTask() {
+        ActualTask() throws CDKException {
             String outputMethod = AppOptions.getInstance().getOutputMethod();
             String sdfFileName = ui.getSdfFileTextField().getText();
 
