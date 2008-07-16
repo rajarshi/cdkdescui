@@ -55,16 +55,26 @@ public class ExceptionListDialog extends JDialog {
 
         JScrollPane scrollPane = new JScrollPane(textArea);
 
-        JButton button = new JButton("Save");
-        button.addActionListener(new ActionListener() {
+        JButton saveButton = new JButton("Save");
+        saveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
             }
         });
 
+        JButton closeButton = new JButton("Close");
+        closeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onCancel();
+            }
+        });
+
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        buttonPanel.add(closeButton);
+        buttonPanel.add(saveButton);
 
         panel.add(scrollPane, BorderLayout.CENTER);
-        panel.add(button, BorderLayout.SOUTH);
+        panel.add(buttonPanel, BorderLayout.SOUTH);
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
