@@ -90,8 +90,6 @@ public class CDKdesc extends JFrame implements DropTargetListener {
 
 
         getContentPane().setLayout(new BorderLayout());
-        ApplicationMenu appMenu = new ApplicationMenu();
-        setJMenuBar(appMenu.createMenu());
 
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -139,6 +137,9 @@ public class CDKdesc extends JFrame implements DropTargetListener {
                 HORIZONTAL_SCROLLBAR_AS_NEEDED);
         ui.getSubpanel().add(sp, BorderLayout.CENTER);
         getContentPane().add(ui.getPanel(), BorderLayout.CENTER);
+
+        ApplicationMenu appMenu = new ApplicationMenu(ui);
+        setJMenuBar(appMenu.createMenu());
 
         dropTarget = new DropTarget(ui.getSdfFileTextField(), this);
 

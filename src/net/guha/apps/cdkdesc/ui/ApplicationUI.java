@@ -1,5 +1,6 @@
 package net.guha.apps.cdkdesc.ui;
 
+import net.guha.apps.cdkdesc.AppOptions;
 import net.guha.apps.cdkdesc.CDKDescUtils;
 import net.guha.ui.checkboxtree.CheckTreeManager;
 
@@ -11,6 +12,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * @author Rajarshi Guha
@@ -137,6 +140,27 @@ public class ApplicationUI {
         c.fill = GridBagConstraints.BOTH;
         panel.add(subpanel, c);
 
+    }
+
+    public void checkSelectedDescriptors() {
+        Map<String, Boolean> selDescMap = AppOptions.getInstance().getSelectedDescriptors();
+        TreeNode rootNode = descriptorTree.getRootNode();
+        CheckTreeManager checks = descriptorTree.getCheckTreeManager();
+
+        checks.getSelectionModel().removeSelectionPath(new TreePath(rootNode));
+        java.util.List<TreePath> selectedPaths = new ArrayList<TreePath>();
+        for (int i = 0; i < rootNode.getChildCount(); i++) {  // the class nodes
+            TreeNode childNode = rootNode.getChildAt(i);
+            for (int j = 0; j < childNode.getChildCount(); j++) { // individual descriptors
+                DefaultMutableTreeNode node = (DefaultMutableTreeNode) childNode.getChildAt(j);
+                TreePath path = new TreePath(node.getPath());
+                DescriptorTreeLeaf leaf = (DescriptorTreeLeaf) node.getUserObject();
+                String specRef = leaf.getSpec().getSpecificationReference();
+                boolean isSelected = selDescMap.get(specRef);
+                if (isSelected) selectedPaths.add(path);
+            }
+        }
+        checks.getSelectionModel().setSelectionPaths(selectedPaths.toArray(new TreePath[]{}));
     }
 
     private void onBrowse(ActionEvent e) {
