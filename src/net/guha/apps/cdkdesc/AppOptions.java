@@ -15,7 +15,7 @@ public class AppOptions {
     private static DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
     private static Map<String, Boolean> selectedDescriptors = new HashMap<String, Boolean>();
 
-    public static Map<String, Boolean> getSelectedDescriptors() {
+    public Map<String, Boolean> getSelectedDescriptors() {
         return selectedDescriptors;
     }
 
