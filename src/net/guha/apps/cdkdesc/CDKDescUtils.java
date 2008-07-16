@@ -7,9 +7,11 @@ import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
+import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.smiles.SmilesParser;
 
 import java.io.*;
+import java.util.Comparator;
 
 /**
  * @author Rajarshi Guha
@@ -129,5 +131,17 @@ public class CDKDescUtils {
         return lcOSName.startsWith("mac os x");
     }
 
+    public static Comparator getDescriptorComparator() {
+        return new Comparator() {
+            public int compare(Object o1, Object o2) {
+                IDescriptor desc1 = (IDescriptor) o1;
+                IDescriptor desc2 = (IDescriptor) o2;
+
+                String[] comp1 = desc1.getSpecification().getSpecificationReference().split("#");
+                String[] comp2 = desc2.getSpecification().getSpecificationReference().split("#");
+
+                return comp1[1].compareTo(comp2[1]);
+            }
+        };
+    }
 }
-        

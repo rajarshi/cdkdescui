@@ -8,6 +8,7 @@ import org.openscience.cdk.qsar.IDescriptor;
 import javax.swing.*;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
+import javax.swing.Timer;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
@@ -23,9 +24,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.*;
 import java.util.List;
 
 /**
@@ -68,12 +67,8 @@ public class CDKdesc extends JFrame implements DropTargetListener {
 
         try {
             UIManager.LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();
-            for (UIManager.LookAndFeelInfo plaf : plafs) {
-                System.out.println("plaf.getName() = " + plaf.getClassName());
-            }
             if (CDKDescUtils.isMacOs()) {
                 UIManager.setLookAndFeel("apple.laf.AquaLookAndFeel");
-//                System.setProperty("apple.laf.useScreenMenuBar", "true");
                 System.setProperty("dock:name", "CDK Descriptor Calculator");
                 System.setProperty("com.apple.mrj.application.growbox.intrudes", "false");
                 System.setProperty("com.apple.macos.useScreenMenuBar ", "true");
@@ -87,7 +82,7 @@ public class CDKdesc extends JFrame implements DropTargetListener {
         } catch (InstantiationException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } catch (ClassNotFoundException e) {
-            System.out.println("Look and feel clas not found.");
+            System.out.println("Look and feel class not found.");
         }
         UIManager.put("ProgressBar.foreground", new java.awt.Color(156, 154, 206));
         UIManager.put("ProgressBar.background", java.awt.Color.lightGray);
@@ -204,6 +199,7 @@ public class CDKdesc extends JFrame implements DropTargetListener {
             DescriptorTreeLeaf aLeaf = (DescriptorTreeLeaf) ((DefaultMutableTreeNode) procPath.getLastPathComponent()).getUserObject();
             selectedDescriptors.add(aLeaf.getInstance());
         }
+        Collections.sort(selectedDescriptors, CDKDescUtils.getDescriptorComparator());
 
         if (selectedDescriptors.size() == 0) {
             JOptionPane.showMessageDialog(null,
