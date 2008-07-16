@@ -40,7 +40,9 @@ public class TreeHandler extends MouseAdapter implements TreeSelectionListener {
 
     void mTree_mouseClicked(java.awt.event.MouseEvent event) {
         TreePath path = mTree.getPathForLocation(event.getX(), event.getY());
+
         if (path == null) return;
+
         if (event.getModifiers() == InputEvent.BUTTON1_MASK) {  // left click implies selection
             Map<String, Boolean> selDescMap = AppOptions.getInstance().getSelectedDescriptors();
 
@@ -78,12 +80,21 @@ public class TreeHandler extends MouseAdapter implements TreeSelectionListener {
                 selDescMap.put(specRef, pathIsSelected);
             }
         }
-//        if (event.getModifiers() == InputEvent.BUTTON3_MASK) {//right button click on mouse
-//            if ((mCount == 3) && (mPathComponent.equals("UR_NODE_NAME1"))) {
-//                   NODE_NAME1_PopupMenu.show(mTree, event.getX(), event.getY());
-//                System.out.println("mPathComponent = " + mPathComponent);
-//            }
-//        }
+        if (event.getModifiers() == InputEvent.BUTTON3_MASK) {//right button click on mouse
+            if ((mCount == 3)) {
+                JPopupMenu pm = getPopupMenu(mPathComponent);
+                pm.show(mTree, event.getX(), event.getY());
+            }
+        }
+    }
+
+    private JPopupMenu getPopupMenu(String name) {
+        JMenuItem item1 = new JMenuItem("Option 1");
+        JMenuItem item2 = new JMenuItem("Option 2");
+        JPopupMenu ret = new JPopupMenu(name);
+        ret.add(item1);
+        ret.add(item2);
+        return ret;
     }
 
     public void valueChanged(TreeSelectionEvent aTreeEvent) {
