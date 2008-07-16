@@ -14,6 +14,15 @@ public class AppOptions {
     private static String outputMethod = CDKDescConstants.OUTPUT_SPC;
     private static DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
     private static Map<String, Boolean> selectedDescriptors = new HashMap<String, Boolean>();
+    private static String settingsFile = "";
+
+    public String getSettingsFile() {
+        return settingsFile;
+    }
+
+    public void setSettingsFile(String settingsFile) {
+        AppOptions.settingsFile = settingsFile;
+    }
 
     public Map<String, Boolean> getSelectedDescriptors() {
         return selectedDescriptors;
