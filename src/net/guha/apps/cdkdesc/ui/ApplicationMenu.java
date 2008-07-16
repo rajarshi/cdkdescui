@@ -33,7 +33,9 @@ public class ApplicationMenu {
         JMenuItem saveSel = new JMenuItem("Save descriptor selections");
         JMenuItem loadSel = new JMenuItem("Load descriptor selections");
         saveSel.addActionListener(new SelectionAction());
+        saveSel.setName("saveSel");
         loadSel.addActionListener(new SelectionAction());
+        loadSel.setName("loadSel");
         selectionMenu.add(saveSel);
         selectionMenu.add(loadSel);
         optionMenu.add(selectionMenu);
@@ -111,7 +113,11 @@ public class ApplicationMenu {
 
     class SelectionAction implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-
+            if (((JMenuItem) e.getSource()).getName().equals("saveSel")) {
+                System.out.println("save selection");
+            } else if (((JMenuItem) e.getSource()).getName().equals("loadSel")) {
+                System.out.println("load selection");
+            }
         }
     }
 }
