@@ -69,8 +69,8 @@ public class DescriptorSwingWorker {
             progressBar.setIndeterminate(false);
             JOptionPane.showMessageDialog(null,
                     "Input file format was not recognized. It should be SDF or SMI" +
-                            "\nYou should avoid supplying Markush structures since" +
-                            "\n will be ignored anyway",
+                            "\nYou should avoid supplying Markush structures since will be" +
+                            "\nignored anyway",
                     "CDKDescUI Error",
                     JOptionPane.ERROR_MESSAGE);
         }
@@ -82,13 +82,13 @@ public class DescriptorSwingWorker {
                 current = 0;
                 done = false;
                 canceled = false;
-		try {
-                return new ActualTask();
-		} catch (CDKException e) {
-		System.out.println("Problem!! Contact rguha@indiana.edu\n\n"+e.toString());
-		System.exit(0);
-		}
-		return null;
+                try {
+                    return new ActualTask();
+                } catch (CDKException e) {
+                    System.out.println("Problem! Contact rguha@indiana.edu\n\n" + e.toString());
+                    System.exit(0);
+                }
+                return null;
             }
         };
         worker.start();
@@ -158,7 +158,7 @@ public class DescriptorSwingWorker {
         try {
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         } catch (CDKException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            throw new CDKException("Error in atom typing" + e.toString());
         }
 
         // do a aromaticity check
@@ -173,7 +173,7 @@ public class DescriptorSwingWorker {
 
     class ActualTask {
 
-        private boolean evalToTextFile(String sdfFileName, String outputFormat) throws CDKException{
+        private boolean evalToTextFile(String sdfFileName, String outputFormat) throws CDKException {
             String lineSep = System.getProperty("line.separator");
             String itemSep = " ";
 
