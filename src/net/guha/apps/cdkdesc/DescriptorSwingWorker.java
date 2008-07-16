@@ -174,6 +174,7 @@ public class DescriptorSwingWorker {
     class ActualTask {
 
         private boolean evalToTextFile(String sdfFileName, String outputFormat) throws CDKException {
+
             String lineSep = System.getProperty("line.separator");
             String itemSep = " ";
 
@@ -206,7 +207,7 @@ public class DescriptorSwingWorker {
                     try {
                         molecule = (IMolecule) checkAndCleanMolecule(molecule);
                     } catch (CDKException e) {
-                        exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e));
+                        exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e, ""));
                         molCount++;
                         continue;
                     }
@@ -242,14 +243,14 @@ public class DescriptorSwingWorker {
                             }
                             current++;
                         } catch (CDKException e) {
-                            exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e));
+                            exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e, comps[1]));
 
                             // if we're here, no values were calculated, so we should
                             // fill up the line with the appropriate number of NA's
                             int nvalues = descriptor.getDescriptorResultType().length();
                             for (int i = 0; i < nvalues; i++) stringWriter.write("NA" + itemSep);
                         } catch (IllegalArgumentException e) {
-                            exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e));
+                            exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e, comps[1]));
                             int nvalues = descriptor.getDescriptorResultType().length();
                             for (int i = 0; i < nvalues; i++) stringWriter.write("NA" + itemSep);
                         }
@@ -301,7 +302,7 @@ public class DescriptorSwingWorker {
                     try {
                         molecule = (IMolecule) checkAndCleanMolecule(molecule);
                     } catch (CDKException e) {
-                        exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e));
+                        exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e, ""));
                         molCount++;
                         continue;
                     }
@@ -330,7 +331,7 @@ public class DescriptorSwingWorker {
                             }
                             current++;
                         } catch (CDKException e) {
-                            exceptionList.add(new ExceptionInfo(counter, molecule, e));
+                            exceptionList.add(new ExceptionInfo(counter, molecule, e, descName));
                             System.err.println("Molecule " + counter + " failed on " + descriptor.getSpecification().getImplementationIdentifier());
                         }
                     }

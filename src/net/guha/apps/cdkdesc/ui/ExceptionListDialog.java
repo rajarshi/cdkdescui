@@ -24,6 +24,7 @@ public class ExceptionListDialog extends JDialog {
         errorText += "<table>" +
                 "<tr>" +
                 "<td><b>Serial Number</b></td><td><b>Title</b></td><td><b>Exception Message</b></td>" +
+                "<td><b>Descriptor</b></td>" +
                 "</tr>";
         for (ExceptionInfo ei : list) {
             int molnum = ei.getSerial();
@@ -31,10 +32,11 @@ public class ExceptionListDialog extends JDialog {
             String title = (String) molecule.getProperty(CDKConstants.TITLE);
             if (title == null) title = "";
             String excepText = ei.getException().getMessage();
+            String descName = ei.getDescriptorName();
 
             errorText += "<tr>" + "<td>" + molnum + "</td>" +
                     "<td>" + title + "</td>" +
-                    "<td>" + excepText + "</td></tr>";
+                    "<td>" + excepText + "</td><td>" + descName + "</td></tr>";
         }
         errorText += "</table></body></html>";
     }

@@ -11,10 +11,11 @@ public class ExceptionInfo {
     String descriptorName;
     Exception exception;
 
-    public ExceptionInfo(int serial, IMolecule molecule, Exception exception) {
+    public ExceptionInfo(int serial, IMolecule molecule, Exception exception, String name) {
         this.serial = serial;
         this.molecule = molecule;
         this.exception = exception;
+        this.descriptorName = name;
     }
 
     public String getDescriptorName() {
