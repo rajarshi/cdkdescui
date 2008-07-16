@@ -6,6 +6,7 @@ import net.guha.apps.cdkdesc.CDKDescConstants;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.Map;
 
 /**
@@ -35,8 +36,12 @@ public class ApplicationMenu {
         JMenuItem loadSel = new JMenuItem("Load descriptor selections");
         saveSel.addActionListener(new SelectionAction());
         saveSel.setName("saveSel");
+        saveSel.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
+
         loadSel.addActionListener(new SelectionAction());
         loadSel.setName("loadSel");
+        loadSel.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.CTRL_MASK));
+
         selectionMenu.add(saveSel);
         selectionMenu.add(loadSel);
         optionMenu.add(selectionMenu);
