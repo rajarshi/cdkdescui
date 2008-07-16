@@ -29,6 +29,15 @@ public class ApplicationMenu {
         JMenu optionMenu = new JMenu("Options");
         mb.add(optionMenu);
 
+        JMenu selectionMenu = new JMenu("Selection");
+        JMenuItem saveSel = new JMenuItem("Save descriptor selections");
+        JMenuItem loadSel = new JMenuItem("Load descriptor selections");
+        saveSel.addActionListener(new SelectionAction());
+        loadSel.addActionListener(new SelectionAction());
+        selectionMenu.add(saveSel);
+        selectionMenu.add(loadSel);
+        optionMenu.add(selectionMenu);
+
         JMenu outputFormatMenu = new JMenu("Output Method");
         ButtonGroup group = new ButtonGroup();
 
@@ -100,5 +109,9 @@ public class ApplicationMenu {
         }
     }
 
+    class SelectionAction implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
 
+        }
+    }
 }
