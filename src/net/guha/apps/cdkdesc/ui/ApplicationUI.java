@@ -24,14 +24,12 @@ public class ApplicationUI {
     private JButton sdfBrowseButton;
     private JButton outBrowseButton;
 
-
     private File sdFile;
     private File outFile;
 
     private JPanel subpanel;
 
     private DescriptorTree descriptorTree;
-
 
     public JPanel getSubpanel() {
         return subpanel;
