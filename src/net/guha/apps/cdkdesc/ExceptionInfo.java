@@ -8,12 +8,21 @@ import org.openscience.cdk.interfaces.IMolecule;
 public class ExceptionInfo {
     int serial;
     IMolecule molecule;
+    String descriptorName;
     Exception exception;
 
     public ExceptionInfo(int serial, IMolecule molecule, Exception exception) {
         this.serial = serial;
         this.molecule = molecule;
         this.exception = exception;
+    }
+
+    public String getDescriptorName() {
+        return descriptorName;
+    }
+
+    public void setDescriptorName(String descriptorName) {
+        this.descriptorName = descriptorName;
     }
 
     public int getSerial() {
