@@ -6,6 +6,7 @@ import net.guha.apps.cdkdesc.CDKDescConstants;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 /**
  * @author Rajarshi Guha
@@ -114,7 +115,10 @@ public class ApplicationMenu {
     class SelectionAction implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if (((JMenuItem) e.getSource()).getName().equals("saveSel")) {
-                System.out.println("save selection");
+                Map<String, Boolean> selDescMap = AppOptions.getInstance().getSelectedDescriptors();
+                for (String key : selDescMap.keySet()) {
+                    System.out.println("key = " + key + " value = " + selDescMap.get(key));
+                }
             } else if (((JMenuItem) e.getSource()).getName().equals("loadSel")) {
                 System.out.println("load selection");
             }

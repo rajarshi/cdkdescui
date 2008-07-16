@@ -47,7 +47,6 @@ public class DescriptorTree {
         };
         ToolTipManager.sharedInstance().registerComponent(tree);
 
-
         String[] availableClasses = AppOptions.getInstance().getEngine().getAvailableDictionaryClasses();
 
         // make a HashMap for the available classes
@@ -98,7 +97,10 @@ public class DescriptorTree {
         CheckTreeSelectionModel selModel = checkTreeManager.getSelectionModel();
         selModel.setSelectionPaths(new TreePath[]{path});
 
-
+        // here we handle clicks on node to update the selected decriptor list
+        TreeHandler myTreeHandler = new TreeHandler(tree, checkTreeManager);
+        tree.addMouseListener(myTreeHandler);
+        tree.addTreeSelectionListener(myTreeHandler);
     }
 
     public JTree getTree() {
@@ -125,8 +127,7 @@ public class DescriptorTree {
                                              boolean shouldBeVisible,
                                              DefaultMutableTreeNode rootNode,
                                              DefaultTreeModel treeModel) {
-        DefaultMutableTreeNode childNode =
-                new DefaultMutableTreeNode(child);
+        DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(child);
 
         if (parent == null) {
             parent = rootNode;
