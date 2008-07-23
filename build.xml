@@ -177,6 +177,7 @@
 	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-extra.jar"/>
 	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-smiles.jar"/>
 	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-smarts.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-experimental.jar"/>
 	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-charges.jar"/>
 	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-reaction.jar"/>
 	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-nonotify.jar"/>
