@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="cdkdescui" default="all">
 
+    <taskdef resource="net/sf/antcontrib/antlib.xml"/>
 
     <property file="cdkdescui.properties"/>
-    <!-- Uncomment the following property if no tests compilation is needed -->
-    <!--
-   <property name="skip.tests" value="true"/>
-    -->
 
     <!-- Compiler options -->
 
@@ -15,40 +12,40 @@
     <property name="compiler.args" value=""/>
     <property name="compiler.max.memory" value="128m"/>
     <patternset id="ignored.files">
-        <exclude name="**/CVS/**"/>
-        <exclude name="**/SCCS/**"/>
-        <exclude name="**/RCS/**"/>
-        <exclude name="**/rcs/**"/>
-        <exclude name="**/.DS_Store/**"/>
-        <exclude name="**/.svn/**"/>
+	<exclude name="**/CVS/**"/>
+	<exclude name="**/SCCS/**"/>
+	<exclude name="**/RCS/**"/>
+	<exclude name="**/rcs/**"/>
+	<exclude name="**/.DS_Store/**"/>
+	<exclude name="**/.svn/**"/>
     </patternset>
     <patternset id="compiler.resources">
-        <include name="**/?*.properties"/>
-        <include name="**/?*.xml"/>
-        <include name="**/?*.gif"/>
-        <include name="**/?*.png"/>
-        <include name="**/?*.jpeg"/>
-        <include name="**/?*.jpg"/>
-        <include name="**/?*.html"/>
-        <include name="**/?*.dtd"/>
-        <include name="**/?*.tld"/>
+	<include name="**/?*.properties"/>
+	<include name="**/?*.xml"/>
+	<include name="**/?*.gif"/>
+	<include name="**/?*.png"/>
+	<include name="**/?*.jpeg"/>
+	<include name="**/?*.jpg"/>
+	<include name="**/?*.html"/>
+	<include name="**/?*.dtd"/>
+	<include name="**/?*.tld"/>
     </patternset>
 
     <!-- JDK definitions -->
     <path id="jdk.classpath.jdk_1.5">
-        <fileset dir="${jdk.home.jdk_1.5}">
-            <include name="jre/lib/jce.jar"/>
-            <include name="jre/lib/charsets.jar"/>
-            <include name="jre/lib/jsse.jar"/>
-            <include name="jre/lib/plugin.jar"/>
-            <include name="jre/lib/javaws.jar"/>
-            <include name="jre/lib/rt.jar"/>
-            <include name="jre/lib/deploy.jar"/>
-            <include name="jre/lib/ext/sunpkcs11.jar"/>
-            <include name="jre/lib/ext/localedata.jar"/>
-            <include name="jre/lib/ext/sunjce_provider.jar"/>
-            <include name="jre/lib/ext/dnsns.jar"/>
-        </fileset>
+	<fileset dir="${jdk.home.jdk_1.5}">
+	    <include name="jre/lib/jce.jar"/>
+	    <include name="jre/lib/charsets.jar"/>
+	    <include name="jre/lib/jsse.jar"/>
+	    <include name="jre/lib/plugin.jar"/>
+	    <include name="jre/lib/javaws.jar"/>
+	    <include name="jre/lib/rt.jar"/>
+	    <include name="jre/lib/deploy.jar"/>
+	    <include name="jre/lib/ext/sunpkcs11.jar"/>
+	    <include name="jre/lib/ext/localedata.jar"/>
+	    <include name="jre/lib/ext/sunjce_provider.jar"/>
+	    <include name="jre/lib/ext/dnsns.jar"/>
+	</fileset>
     </path>
 
     <property name="project.jdk.home" value="${jdk.home.jdk_1.5}"/>
@@ -58,15 +55,15 @@
     <!-- Global Libraries -->
 
     <path id="library.cdk_jars.classpath">
-        <fileset dir="${cdk.libs}">
-            <include name="*.jar"/>
-        </fileset>
+	<fileset dir="${cdk.libs}">
+	    <include name="*.jar"/>
+	</fileset>
     </path>
 
     <path id="library.cdk_deps.classpath">
-        <fileset dir="${cdk.deps}">
-            <include name="*.jar"/>
-        </fileset>
+	<fileset dir="${cdk.deps}">
+	    <include name="*.jar"/>
+	</fileset>
     </path>
 
 
@@ -77,9 +74,6 @@
 
     <dirname property="module.cdkdescui.basedir" file="${ant.file}"/>
 
-    <property name="version" value="0.44"/>
-
-
     <property name="module.jdk.home.cdkdescui" value="${project.jdk.home}"/>
     <property name="module.jdk.classpath.cdkdescui" value="${project.jdk.classpath}"/>
 
@@ -89,140 +83,161 @@
     <property name="cdkdescui.testoutput.dir" value="${module.cdkdescui.basedir}/classes"/>
 
     <path id="cdkdescui.module.bootclasspath">
-        <!-- Paths to be included in compilation bootclasspath -->
+	<!-- Paths to be included in compilation bootclasspath -->
     </path>
 
     <path id="cdkdescui.module.classpath">
-        <path refid="${module.jdk.classpath.cdkdescui}"/>
-        <path refid="library.cdk_deps.classpath"/>
-        <path refid="library.cdk_jars.classpath"/>
-        <pathelement location="libs/CheckBoxTree.jar"/>
+	<path refid="${module.jdk.classpath.cdkdescui}"/>
+	<path refid="library.cdk_deps.classpath"/>
+	<path refid="library.cdk_jars.classpath"/>
+	<pathelement location="libs/CheckBoxTree.jar"/>
     </path>
 
 
     <patternset id="excluded.from.module.cdkdescui">
-        <patternset refid="ignored.files"/>
+	<patternset refid="ignored.files"/>
     </patternset>
 
     <patternset id="excluded.from.compilation.cdkdescui">
-        <patternset refid="excluded.from.module.cdkdescui"/>
+	<patternset refid="excluded.from.module.cdkdescui"/>
     </patternset>
 
     <path id="cdkdescui.module.sourcepath">
-        <dirset dir="${module.cdkdescui.basedir}">
-            <include name="src"/>
-        </dirset>
+	<dirset dir="${module.cdkdescui.basedir}">
+	    <include name="src"/>
+	</dirset>
     </path>
 
 
     <target name="compile.module.cdkdescui" depends="compile.module.cdkdescui.production,compile.module.cdkdescui.tests"
-            description="compile module(s) CDKDescUI"/>
+	    description="compile module(s) CDKDescUI"/>
 
     <target name="compile.module.cdkdescui.production" description="compile module(s) CDKDescUI production classes">
-        <mkdir dir="${cdkdescui.output.dir}"/>
-        <javac destdir="${cdkdescui.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}"
-               memoryMaximumSize="${compiler.max.memory}" fork="true"
-               executable="${module.jdk.home.cdkdescui}/bin/javac">
-            <compilerarg line="${compiler.args.cdkdescui}"/>
-            <bootclasspath refid="cdkdescui.module.bootclasspath"/>
-            <classpath refid="cdkdescui.module.classpath"/>
-            <src refid="cdkdescui.module.sourcepath"/>
-        </javac>
-        <copy todir="${cdkdescui.output.dir}">
-            <fileset dir="${module.cdkdescui.basedir}/src">
-                <patternset refid="compiler.resources"/>
-                <type type="file"/>
-            </fileset>
-        </copy>
+	<mkdir dir="${cdkdescui.output.dir}"/>
+	<javac destdir="${cdkdescui.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}"
+	       memoryMaximumSize="${compiler.max.memory}" fork="true"
+	       executable="${module.jdk.home.cdkdescui}/bin/javac">
+	    <compilerarg line="${compiler.args.cdkdescui}"/>
+	    <bootclasspath refid="cdkdescui.module.bootclasspath"/>
+	    <classpath refid="cdkdescui.module.classpath"/>
+	    <src refid="cdkdescui.module.sourcepath"/>
+	</javac>
+	<copy todir="${cdkdescui.output.dir}">
+	    <fileset dir="${module.cdkdescui.basedir}/src">
+		<patternset refid="compiler.resources"/>
+		<type type="file"/>
+	    </fileset>
+	</copy>
     </target>
 
     <target name="compile.module.cdkdescui.tests" depends="compile.module.cdkdescui.production"
-            description="compile module(s) CDKDescUI test classes" unless="skip.tests"/>
+	    description="compile module(s) CDKDescUI test classes" unless="skip.tests"/>
 
     <target name="clean.module.cdkdescui" description="cleanup module">
-        <delete dir="${cdkdescui.output.dir}"/>
-        <delete dir="${cdkdescui.testoutput.dir}"/>
-        <delete file="CDKDescUI.jar"/>
-        <delete>
-            <fileset dir="." includes="*.tgz"/>
-        </delete>
+	<delete dir="${cdkdescui.output.dir}"/>
+	<delete dir="${cdkdescui.testoutput.dir}"/>
+	<delete file="CDKDescUI.jar"/>
+	<delete>
+	    <fileset dir="." includes="*.tgz"/>
+	</delete>
+    </target>
+
+    <target name="getversion">
+	
+	
     </target>
 
     <target name="jar" description="Create JAR" depends="init, compile.module.cdkdescui">
-        <unjar dest="${cdkdescui.output.dir}" src="libs/CheckBoxTree.jar"/>
-        <jar jarfile="CDKDescUI.jar" basedir="${cdkdescui.output.dir}">
-            <manifest>
-                <attribute name="Main-Class" value="net.guha.apps.cdkdesc.CDKdesc"/>
-            </manifest>
-        </jar>
+	<unjar dest="${cdkdescui.output.dir}" src="libs/CheckBoxTree.jar"/>
+	<jar jarfile="CDKDescUI.jar" basedir="${cdkdescui.output.dir}">
+	    <manifest>
+		<attribute name="Main-Class" value="net.guha.apps.cdkdesc.CDKdesc"/>
+	    </manifest>
+	</jar>
     </target>
 
     <target name="bigjar" description="Create a big JAR" depends="init, compile.module.cdkdescui">
-        <unjar dest="${cdkdescui.output.dir}" src="libs/CheckBoxTree.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-qsar.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-qsarcml.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-formula.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-qsarprotein.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-qsarmolecular.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-qsarbond.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-qsaratomic.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-pdb.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-libiocml.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-io.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-isomorphism.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-dict.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-interfaces.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-data.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-core.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-standard.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-extra.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-smiles.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-charges.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-reaction.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-nonotify.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-valencycheck.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-atomtype.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-ionpot.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.deps}/jama-1.0.2.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.deps}/jgrapht-0.6.0.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.deps}/vecmath1.2-1.14.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.deps}/jumbo-5.4.2-b1.jar"/>
-        <unjar dest="${cdkdescui.output.dir}" src="${cdk.deps}/xom-1.1.jar"/>
-        <jar jarfile="CDKDescUI.jar" basedir="${cdkdescui.output.dir}">
-            <manifest>
-                <attribute name="Main-Class" value="net.guha.apps.cdkdesc.CDKdesc"/>
-            </manifest>
-        </jar>
+	<unjar dest="${cdkdescui.output.dir}" src="libs/CheckBoxTree.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-qsar.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-qsarcml.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-formula.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-qsarprotein.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-qsarmolecular.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-qsarbond.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-qsaratomic.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-pdb.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-libiocml.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-io.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-isomorphism.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-dict.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-interfaces.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-data.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-core.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-standard.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-extra.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-smiles.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-smarts.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-charges.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-reaction.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-nonotify.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-valencycheck.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-atomtype.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-ionpot.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.deps}/jama-1.0.2.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.deps}/jgrapht-0.6.0.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.deps}/vecmath1.2-1.14.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.deps}/jumbo-5.4.2-b1.jar"/>
+	<unjar dest="${cdkdescui.output.dir}" src="${cdk.deps}/xom-1.1.jar"/>
+	<jar jarfile="CDKDescUI.jar" basedir="${cdkdescui.output.dir}">
+	    <manifest>
+		<attribute name="Main-Class" value="net.guha.apps.cdkdesc.CDKdesc"/>
+	    </manifest>
+	</jar>
+
+	<echo message="${version}" />
     </target>
 
 
     <target name="release" description="Create and deploy distribution">
-        <antcall target="jar"/>
-        <scp localfile="CDKDescUI.jar"
-             remoteTofile="rguha@${release.path}/CDKDescUIsmall.jar"
-             verbose="true"
-             password="${password}"
-                />
-        <antcall target="bigjar"/>
-        <scp localfile="CDKDescUI.jar"
-             remoteTodir="rguha@${release.path}"
-             verbose="true"
-             password="${password}"
-                />
-        <antcall target="clean"/>
-        <tar destfile="CDKDescUI-${version}.tgz"
-             basedir="${module.cdkdescui.basedir}"
-             excludes="x*"
-             compression="gzip"/>
-        <scp localfile="CDKDescUI-${version}.tgz"
-             remoteTodir="rguha@${release.path}"
-             verbose="true"
-             password="${password}"
-                />
+	<antcall target="jar"/>
+	<scp localfile="CDKDescUI.jar"
+	     remoteTofile="rguha@${release.path}/CDKDescUIsmall.jar"
+	     verbose="true"
+	     password="${password}"
+	     />
+	<antcall target="bigjar"/>
+	<scp localfile="CDKDescUI.jar"
+	     remoteTodir="rguha@${release.path}"
+	     verbose="true"
+	     password="${password}"
+	     />
+	<antcall target="clean"/>
+
+	<!-- Here we get the current version of the code -->
+	<loadfile property="version.line" srcfile="src/net/guha/apps/cdkdesc/CDKDescConstants.java">
+	    <filterchain>
+		<linecontainsregexp>
+		    <regexp pattern="public static final String VERSION ="/>
+		</linecontainsregexp>
+	    </filterchain>
+	</loadfile>
+	<propertyregex property="version" input="${version.line}"
+		       regexp="([0-9]*\.[0-9]*)"
+		       select="\1" />
+
+	<tar destfile="CDKDescUI-${version}.tgz"
+	     basedir="${module.cdkdescui.basedir}"
+	     excludes="x*"
+	     compression="gzip"/>
+	<scp localfile="CDKDescUI-${version}.tgz"
+	     remoteTodir="rguha@${release.path}"
+	     verbose="true"
+	     password="${password}"
+	     />
     </target>
 
     <target name="init" description="Build initialization">
-        <!-- Perform any build initialization in this target -->
+	<!-- Perform any build initialization in this target -->
     </target>
 
     <target name="clean" depends="clean.module.cdkdescui" description="cleanup all"/>
