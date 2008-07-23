@@ -197,10 +197,15 @@ public class DescriptorSwingWorker {
 
                 molCount = 0;
 
-                boolean firstTime = true;
-                String headerLine = "";
+                // lets get the header line first
+                for (IDescriptor descriptor : descriptors) {
+                    String[] names = descriptor.getDescriptorNames();
+                    for (String name : names) tmpWriter.write(name + itemSep);
+                }
+                tmpWriter.write(lineSep);
 
-                while (iterReader.hasNext()) {
+                assert iterReader != null;
+                while (iterReader.hasNext()) {  // loop over molecules
                     if (canceled) return false;
                     IMolecule molecule = (IMolecule) iterReader.next();
 
@@ -219,54 +224,35 @@ public class DescriptorSwingWorker {
                         IMolecularDescriptor descriptor = (IMolecularDescriptor) object;
                         String[] comps = descriptor.getSpecification().getSpecificationReference().split("#");
 
-                        try {
-                            DescriptorValue value = descriptor.calculate(molecule);
-                            String[] descName = value.getNames();
 
-                            IDescriptorResult result = value.getValue();
-                            if (result instanceof DoubleResult) {
-                                stringWriter.write(((DoubleResult) result).doubleValue() + itemSep);
-                                if (firstTime) headerLine = headerLine + descName[0] + itemSep;
-                            } else if (result instanceof IntegerResult) {
-                                stringWriter.write(((IntegerResult) result).intValue() + itemSep);
-                                if (firstTime) headerLine = headerLine + descName[0] + itemSep;
-                            } else if (result instanceof DoubleArrayResult) {
-                                for (int i = 0; i < ((DoubleArrayResult) result).length(); i++) {
-                                    stringWriter.write(((DoubleArrayResult) result).get(i) + itemSep);
-                                    if (firstTime) headerLine = headerLine + descName[i] + itemSep;
-                                }
-                            } else if (result instanceof IntegerArrayResult) {
-                                for (int i = 0; i < ((IntegerArrayResult) result).length(); i++) {
-                                    stringWriter.write(((IntegerArrayResult) result).get(i) + itemSep);
-                                    if (firstTime) headerLine = headerLine + descName[i] + itemSep;
-                                }
-                            }
-                            current++;
-                        } catch (CDKException e) {
-                            exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e, comps[1]));
-
-                            // if we're here, no values were calculated, so we should
-                            // fill up the line with the appropriate number of NA's
-                            int nvalues = descriptor.getDescriptorResultType().length();
-                            for (int i = 0; i < nvalues; i++) stringWriter.write("NA" + itemSep);
-                        } catch (IllegalArgumentException e) {
-                            exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e, comps[1]));
-                            int nvalues = descriptor.getDescriptorResultType().length();
-                            for (int i = 0; i < nvalues; i++) stringWriter.write("NA" + itemSep);
+                        DescriptorValue value = descriptor.calculate(molecule);
+                        if (value.getException() != null) {
+                            exceptionList.add(new ExceptionInfo(molCount + 1, molecule, value.getException(), comps[1]));
+                            for (int i = 0; i < value.getNames().length; i++) stringWriter.write("NA" + itemSep);
+                            continue;
                         }
+
+                        IDescriptorResult result = value.getValue();
+                        if (result instanceof DoubleResult) {
+                            stringWriter.write(((DoubleResult) result).doubleValue() + itemSep);
+                        } else if (result instanceof IntegerResult) {
+                            stringWriter.write(((IntegerResult) result).intValue() + itemSep);
+                        } else if (result instanceof DoubleArrayResult) {
+                            for (int i = 0; i < ((DoubleArrayResult) result).length(); i++) {
+                                stringWriter.write(((DoubleArrayResult) result).get(i) + itemSep);
+                            }
+                        } else if (result instanceof IntegerArrayResult) {
+                            for (int i = 0; i < ((IntegerArrayResult) result).length(); i++) {
+                                stringWriter.write(((IntegerArrayResult) result).get(i) + itemSep);
+                            }
+                        }
+                        current++;
                     }
 
-                    headerLine = headerLine + lineSep;
                     String dataLine = stringWriter.toString() + lineSep;
                     String pattern = itemSep + lineSep;
-                    headerLine = headerLine.replace(pattern, lineSep);
                     dataLine = dataLine.replace(pattern, lineSep);
                     dataLine = dataLine.replace("NaN", "NA");
-
-                    if (firstTime) {
-                        tmpWriter.write("Title" + itemSep + headerLine);
-                        firstTime = false;
-                    }
 
                     String title = (String) molecule.getProperty(CDKConstants.TITLE);
                     if (title == null) title = "Mol" + String.valueOf(molCount + 1);
@@ -313,28 +299,31 @@ public class DescriptorSwingWorker {
                         if (canceled) return false;
                         IMolecularDescriptor descriptor = (IMolecularDescriptor) object;
                         String[] comps = descriptor.getSpecification().getSpecificationReference().split("#");
-                        String descName = comps[1];
-                        try {
-                            DescriptorValue value = descriptor.calculate(molecule);
 
-                            IDescriptorResult result = value.getValue();
-                            if (result instanceof DoubleResult) {
-                                map.put(descName, ((DoubleResult) result).doubleValue());
-                            } else if (result instanceof IntegerResult) {
-                                map.put(descName, ((IntegerResult) result).intValue());
-                            } else if (result instanceof DoubleArrayResult) {
-                                for (int i = 0; i < ((DoubleArrayResult) result).length(); i++) {
-                                    map.put(descName + "." + i, ((DoubleArrayResult) result).get(i));
-                                }
-                            } else if (result instanceof IntegerArrayResult) {
-                                for (int i = 0; i < ((IntegerArrayResult) result).length(); i++)
-                                    map.put(descName + "." + i, ((IntegerArrayResult) result).get(i));
-                            }
-                            current++;
-                        } catch (CDKException e) {
-                            exceptionList.add(new ExceptionInfo(counter, molecule, e, descName));
-                            System.err.println("Molecule " + counter + " failed on " + descriptor.getSpecification().getImplementationIdentifier());
+                        DescriptorValue value = descriptor.calculate(molecule);
+                        if (value.getException() != null) {
+                            exceptionList.add(new ExceptionInfo(counter, molecule, value.getException(), comps[1]));
+                            String[] names = value.getNames();
+                            for (String name : names) map.put(name, "NA");
+                            continue;
                         }
+                        String[] names = value.getNames();
+
+                        IDescriptorResult result = value.getValue();
+                        if (result instanceof DoubleResult) {
+                            map.put(value.getNames()[0], ((DoubleResult) result).doubleValue());
+                        } else if (result instanceof IntegerResult) {
+                            map.put(value.getNames()[0], ((IntegerResult) result).intValue());
+                        } else if (result instanceof DoubleArrayResult) {
+                            for (int i = 0; i < ((DoubleArrayResult) result).length(); i++) {
+                                map.put(names[i], ((DoubleArrayResult) result).get(i));
+                            }
+                        } else if (result instanceof IntegerArrayResult) {
+                            for (int i = 0; i < ((IntegerArrayResult) result).length(); i++)
+                                map.put(names[i], ((IntegerArrayResult) result).get(i));
+                        }
+                        current++;
+
                     }
                     tmpWriter.setSdFields(map);
                     tmpWriter.write(molecule);
