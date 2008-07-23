@@ -133,9 +133,16 @@ public class CDKdesc extends JFrame implements DropTargetListener {
             System.out.println("e = " + e);
         }
         ui.setDescriptorTree(descriptorTree);
-        JScrollPane sp = new JScrollPane(descriptorTree.getTree(), VERTICAL_SCROLLBAR_AS_NEEDED,
+
+
+        JScrollPane scrollPane = new JScrollPane(descriptorTree.getTree(), VERTICAL_SCROLLBAR_AS_NEEDED,
                 HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        ui.getSubpanel().add(sp, BorderLayout.CENTER);
+
+        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.add("Descriptors", scrollPane);
+        tabbedPane.add("Fingerprints", new FingerprintPanel());
+
+        ui.getSubpanel().add(tabbedPane, BorderLayout.CENTER);
         getContentPane().add(ui.getPanel(), BorderLayout.CENTER);
 
         ApplicationMenu appMenu = new ApplicationMenu(ui);
