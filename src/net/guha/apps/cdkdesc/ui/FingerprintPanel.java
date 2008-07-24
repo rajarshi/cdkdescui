@@ -1,6 +1,10 @@
 package net.guha.apps.cdkdesc.ui;
 
+import net.guha.apps.cdkdesc.AppOptions;
+
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * @author Rajarshi Guha
@@ -8,6 +12,27 @@ import javax.swing.*;
 public class FingerprintPanel extends JPanel {
 
     public FingerprintPanel() {
-        super();
+        super(true);
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        String[] labels = {"Standard", "Extended", "Graph only", "EState", "MACCS"};
+        FPRadioButtonListener fpButtonListener = new FPRadioButtonListener();
+
+        ButtonGroup buttonGroup = new ButtonGroup();
+        for (String label : labels) {
+            JRadioButton button = new JRadioButton(label);
+            button.setActionCommand(label);
+            button.addActionListener(fpButtonListener);
+            buttonGroup.add(button);
+            add(button);
+        }
     }
+
+    class FPRadioButtonListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent event) {
+            AppOptions.setSelectedFingerprintType(event.getActionCommand());
+        }
+    }
+
 }
