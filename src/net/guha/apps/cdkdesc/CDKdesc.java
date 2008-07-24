@@ -103,6 +103,7 @@ public class CDKdesc extends JFrame implements DropTargetListener {
         goButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (ui.descriptorPaneIsSelected()) goApp(e);
+                else goFingerprintApp(e);
             }
         });
 

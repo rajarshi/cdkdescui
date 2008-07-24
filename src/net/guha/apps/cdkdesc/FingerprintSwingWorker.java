@@ -15,9 +15,6 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.iterator.DefaultIteratingChemObjectReader;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.io.iterator.IteratingSMILESReader;
-import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
-import org.openscience.cdk.qsar.result.*;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.swing.*;
@@ -31,7 +28,7 @@ import java.util.List;
 /**
  * @author Rajarshi Guha
  */
-public class FingerprintSwingWorker {
+public class FingerprintSwingWorker implements ISwingWorker {
 
     private ApplicationUI ui;
     private List<ExceptionInfo> exceptionList;
