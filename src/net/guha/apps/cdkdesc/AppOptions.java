@@ -15,7 +15,7 @@ public class AppOptions {
     private static DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
     private static Map<String, Boolean> selectedDescriptors = new HashMap<String, Boolean>();
     private static String settingsFile = "";
-    private static String selectedFingerprintType = "Standard";
+    private static String selectedFingerprintType = null;
 
     public static String getSelectedFingerprintType() {
         return selectedFingerprintType;
