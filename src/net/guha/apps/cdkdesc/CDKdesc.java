@@ -100,7 +100,7 @@ public class CDKdesc extends JFrame implements DropTargetListener {
         goButton.setName("go");
         goButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                goApp(e);
+                if (ui.descriptorPaneIsSelected()) goApp(e);
             }
         });
 

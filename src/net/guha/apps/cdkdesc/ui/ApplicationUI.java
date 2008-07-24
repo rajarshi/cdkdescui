@@ -67,7 +67,7 @@ public class ApplicationUI {
     }
 
     public boolean descriptorPaneIsSelected() {
-        return true;
+        return tabbedPane.getSelectedIndex() == 0;
     }
 
     public ApplicationUI(DescriptorTree descriptorTree) {
