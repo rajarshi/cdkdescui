@@ -40,7 +40,9 @@ public class CDKdesc extends JFrame implements DropTargetListener {
     private JLabel statusLabel;
     private JButton goButton;
 
-    private DescriptorSwingWorker task;
+    private ISwingWorker task;
+
+
     private Timer timer;
 
     private File tempFile;
@@ -285,6 +287,107 @@ public class CDKdesc extends JFrame implements DropTargetListener {
         timer.start();
     }
 
+    private void goFingerprintApp(ActionEvent e) {
+
+        if (ui.getSdfFileTextField().getText().equals("") ||
+                ui.getOutFileTextField().getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Must provide an input file and an output file",
+                    "CDKDescUI Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+
+        progressBar.setVisible(true);
+        progressBar.setStringPainted(true);
+        progressBar.setIndeterminate(true);
+
+        if (((JButton) e.getSource()).getName().equals("cancel")) {
+            task.stop();
+            return;
+        }
+
+        if (((JButton) e.getSource()).getName().equals("go")) {
+            goButton.setName("cancel");
+            goButton.setText("Cancel");
+            wasCancelled = false;
+        }
+
+        if (AppOptions.getSelectedFingerprintType() == null) {
+            JOptionPane.showMessageDialog(null,
+                    "You need to select a fingerprint type!",
+                    "CDKDescUI Error",
+                    JOptionPane.ERROR_MESSAGE);
+            goButton.setName("go");
+            goButton.setText("Go");
+            progressBar.setValue(0);
+            progressBar.setString("");
+            return;
+        }
+
+
+        task = new FingerprintSwingWorker(ui, progressBar, tempFile);
+        if (task.getInputFormat().equals("invalid")) {
+            goButton.setName("go");
+            goButton.setText("Go");
+            progressBar.setValue(0);
+            progressBar.setString("");
+            return;
+        }
+
+        final int totaLength = task.getLengthOfTask();
+        //progressBar.setMaximum(totaLength);
+        //progressBar.setValue(0);
+        //progressBar.setString("");
+
+
+        timer = new Timer(500, new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                int current = task.getCurrent();
+                //progressBar.setValue(current);
+                //progressBar.setString((int) round(100.0 * current / (double) totaLength, 0) + "%");
+                //goButton.setText("Molecule "+current);
+
+                statusLabel.setText("Mol. " + current);
+
+                if (task.isDone()) {
+                    timer.stop();
+                    goButton.setName("go");
+                    goButton.setText("Go");
+                    progressBar.setIndeterminate(false);
+                    progressBar.setString("Completed");
+                    progressBar.setVisible(false);
+                    statusLabel.setText("Completed (" + current + ")");
+
+                    doSave();
+
+
+                    if (task.getExceptionList().size() > 0) {
+                        ExceptionListDialog eld = new ExceptionListDialog(task.getExceptionList());
+                        eld.setVisible(true);
+                    }
+
+                } else if (task.isCancelled()) {
+                    timer.stop();
+                    goButton.setName("go");
+                    goButton.setText("Go");
+                    //progressBar.setValue(0);
+                    progressBar.setIndeterminate(false);
+                    progressBar.setString("");
+                    progressBar.setVisible(false);
+                    wasCancelled = true;
+                    statusLabel.setText("Cancelled");
+                }
+            }
+        });
+
+        if (wasCancelled) {
+            wasCancelled = false;
+            return;
+        }
+
+        task.go();
+        timer.start();
+    }
 
     private void shutdown() {
         System.exit(0);

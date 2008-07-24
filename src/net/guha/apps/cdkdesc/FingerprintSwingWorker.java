@@ -6,19 +6,16 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.fingerprint.*;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.io.iterator.DefaultIteratingChemObjectReader;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.io.iterator.IteratingSMILESReader;
-import org.openscience.cdk.io.setting.BooleanIOSetting;
-import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.*;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -26,17 +23,17 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.BitSet;
 import java.util.Iterator;
 import java.util.List;
+
 
 /**
  * @author Rajarshi Guha
  */
-public class DescriptorSwingWorker {
+public class FingerprintSwingWorker {
 
     private ApplicationUI ui;
-    private List<IDescriptor> descriptors;
     private List<ExceptionInfo> exceptionList;
 
     private String inputFormat = "mdl";
@@ -49,9 +46,7 @@ public class DescriptorSwingWorker {
     private boolean canceled = false;
 
 
-    public DescriptorSwingWorker(List<IDescriptor> descriptors,
-                                 ApplicationUI ui, JProgressBar progressBar, File tempFile) {
-        this.descriptors = descriptors;
+    public FingerprintSwingWorker(ApplicationUI ui, JProgressBar progressBar, File tempFile) {
         this.ui = ui;
         this.tempFile = tempFile;
 
@@ -177,6 +172,15 @@ public class DescriptorSwingWorker {
 
         private boolean evalToTextFile(String sdfFileName, String outputFormat) throws CDKException {
 
+            String fptype = AppOptions.getSelectedFingerprintType();
+            IFingerprinter printer;
+            if (fptype.equals("Standard")) printer = new Fingerprinter();
+            else if (fptype.equals("Extended")) printer = new ExtendedFingerprinter();
+            else if (fptype.equals("Graph only")) printer = new GraphOnlyFingerprinter();
+            else if (fptype.equals("EState")) printer = new EStateFingerprinter();
+            else if (fptype.equals("MACCS")) printer = new MACCSFingerprinter();
+            else printer = new SubstructureFingerprinter();
+
             String lineSep = System.getProperty("line.separator");
             String itemSep = " ";
 
@@ -191,27 +195,17 @@ public class DescriptorSwingWorker {
             DefaultIteratingChemObjectReader iterReader = null;
             try {
                 BufferedWriter tmpWriter = new BufferedWriter(new FileWriter(tempFile));
-
                 FileInputStream inputStream = new FileInputStream(sdfFileName);
                 if (inputFormat.equals("smi")) iterReader = new IteratingSMILESReader(inputStream);
                 else if (inputFormat.equals("mdl")) {
-                    BooleanIOSetting force3d = new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.LOW,
-                            "Should coordinates always be read as 3D?",
-                            "true");
                     iterReader = new IteratingMDLReader(inputStream, DefaultChemObjectBuilder.getInstance());
-//                    ((IteratingMDLReader)iterReader).
                 }
 
 
                 molCount = 0;
 
                 // lets get the header line first
-                for (IDescriptor descriptor : descriptors) {
-                    String[] names = descriptor.getDescriptorNames();
-                    for (String name : names) tmpWriter.write(name + itemSep);
-                }
-                tmpWriter.write(lineSep);
-
+                tmpWriter.write("CDKDescUI " + printer.getClass().getName() + " " + printer.getSize() + " bits" + lineSep);
                 assert iterReader != null;
                 while (iterReader.hasNext()) {  // loop over molecules
                     if (canceled) return false;
@@ -225,125 +219,24 @@ public class DescriptorSwingWorker {
                         continue;
                     }
 
-                    // OK, we can now eval the descriptors
-                    StringWriter stringWriter = new StringWriter();
-                    for (Object object : descriptors) {
-                        if (canceled) return false;
-                        IMolecularDescriptor descriptor = (IMolecularDescriptor) object;
-                        String[] comps = descriptor.getSpecification().getSpecificationReference().split("#");
-
-
-                        DescriptorValue value = descriptor.calculate(molecule);
-                        if (value.getException() != null) {
-                            exceptionList.add(new ExceptionInfo(molCount + 1, molecule, value.getException(), comps[1]));
-                            for (int i = 0; i < value.getNames().length; i++) stringWriter.write("NA" + itemSep);
-                            continue;
-                        }
-
-                        IDescriptorResult result = value.getValue();
-                        if (result instanceof DoubleResult) {
-                            stringWriter.write(((DoubleResult) result).doubleValue() + itemSep);
-                        } else if (result instanceof IntegerResult) {
-                            stringWriter.write(((IntegerResult) result).intValue() + itemSep);
-                        } else if (result instanceof DoubleArrayResult) {
-                            for (int i = 0; i < ((DoubleArrayResult) result).length(); i++) {
-                                stringWriter.write(((DoubleArrayResult) result).get(i) + itemSep);
-                            }
-                        } else if (result instanceof IntegerArrayResult) {
-                            for (int i = 0; i < ((IntegerArrayResult) result).length(); i++) {
-                                stringWriter.write(((IntegerArrayResult) result).get(i) + itemSep);
-                            }
-                        }
-                        current++;
-                    }
-
-                    String dataLine = stringWriter.toString() + lineSep;
-                    String pattern = itemSep + lineSep;
-                    dataLine = dataLine.replace(pattern, lineSep);
-                    dataLine = dataLine.replace("NaN", "NA");
-
-                    String title = (String) molecule.getProperty(CDKConstants.TITLE);
-                    if (title == null) title = "Mol" + String.valueOf(molCount + 1);
-                    tmpWriter.write(title + itemSep + dataLine);
-                    tmpWriter.flush();
-                    molCount++;
-                }
-                iterReader.close();
-                tmpWriter.close();
-
-                done = true;
-            } catch (IOException exception) {
-                exception.printStackTrace();
-            }
-            return true;
-        }
-
-        private boolean evalToSDF(String sdfFileName) {
-            DefaultIteratingChemObjectReader iterReader = null;
-            try {
-                MDLWriter tmpWriter = new MDLWriter(new FileWriter(tempFile));
-
-                FileInputStream inputStream = new FileInputStream(sdfFileName);
-                if (inputFormat.equals("smi")) iterReader = new IteratingSMILESReader(inputStream);
-                else if (inputFormat.equals("mdl"))
-                    iterReader = new IteratingMDLReader(inputStream, DefaultChemObjectBuilder.getInstance());
-
-                int counter = 1;
-
-                while (iterReader.hasNext()) {
-                    if (canceled) return false;
-                    IMolecule molecule = (IMolecule) iterReader.next();
-
                     try {
-                        molecule = (IMolecule) checkAndCleanMolecule(molecule);
-                    } catch (CDKException e) {
+                        BitSet fingerprint = printer.getFingerprint(molecule);
+                        String title = (String) molecule.getProperty(CDKConstants.TITLE);
+                        if (title == null) title = "Mol" + String.valueOf(molCount + 1);
+                        tmpWriter.write(title + itemSep + fingerprint.toString() + lineSep);
+                        tmpWriter.flush();
+                        molCount++;
+                    } catch (Exception e) {
                         exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e, ""));
                         molCount++;
-                        continue;
                     }
-
-                    HashMap<String, Object> map = new HashMap<String, Object>();
-                    for (Object object : descriptors) {
-                        if (canceled) return false;
-                        IMolecularDescriptor descriptor = (IMolecularDescriptor) object;
-                        String[] comps = descriptor.getSpecification().getSpecificationReference().split("#");
-
-                        DescriptorValue value = descriptor.calculate(molecule);
-                        if (value.getException() != null) {
-                            exceptionList.add(new ExceptionInfo(counter, molecule, value.getException(), comps[1]));
-                            String[] names = value.getNames();
-                            for (String name : names) map.put(name, "NA");
-                            continue;
-                        }
-                        String[] names = value.getNames();
-
-                        IDescriptorResult result = value.getValue();
-                        if (result instanceof DoubleResult) {
-                            map.put(value.getNames()[0], ((DoubleResult) result).doubleValue());
-                        } else if (result instanceof IntegerResult) {
-                            map.put(value.getNames()[0], ((IntegerResult) result).intValue());
-                        } else if (result instanceof DoubleArrayResult) {
-                            for (int i = 0; i < ((DoubleArrayResult) result).length(); i++) {
-                                map.put(names[i], ((DoubleArrayResult) result).get(i));
-                            }
-                        } else if (result instanceof IntegerArrayResult) {
-                            for (int i = 0; i < ((IntegerArrayResult) result).length(); i++)
-                                map.put(names[i], ((IntegerArrayResult) result).get(i));
-                        }
-                        current++;
-
-                    }
-                    tmpWriter.setSdFields(map);
-                    tmpWriter.write(molecule);
-                    counter++;
                 }
+
                 iterReader.close();
                 tmpWriter.close();
                 done = true;
             } catch (IOException exception) {
                 exception.printStackTrace();
-            } catch (Exception e) {
-                e.printStackTrace();
             }
             return true;
         }
@@ -352,20 +245,8 @@ public class DescriptorSwingWorker {
         ActualTask() throws CDKException {
             String outputMethod = AppOptions.getInstance().getOutputMethod();
             String sdfFileName = ui.getSdfFileTextField().getText();
-
-            if (outputMethod.equals(CDKDescConstants.OUTPUT_TAB) ||
-                    outputMethod.equals(CDKDescConstants.OUTPUT_CSV) ||
-                    outputMethod.equals(CDKDescConstants.OUTPUT_SPC)) {
-                boolean status = evalToTextFile(sdfFileName, outputMethod);
-                if (!status) return;
-            } else if (outputMethod.equals(CDKDescConstants.OUTPUT_SDF)) {
-                boolean status = evalToSDF(sdfFileName);
-                if (!status) return;
-            }
-
+            boolean status = evalToTextFile(sdfFileName, outputMethod);
+            if (!status) return;
         }
     }
 }
-
-
-
