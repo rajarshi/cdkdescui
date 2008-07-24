@@ -5,6 +5,8 @@ import net.guha.apps.cdkdesc.CDKDescUtils;
 import net.guha.ui.checkboxtree.CheckTreeManager;
 
 import javax.swing.*;
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
+import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
@@ -31,6 +33,7 @@ public class ApplicationUI {
     private File outFile;
 
     private JPanel subpanel;
+    private JTabbedPane tabbedPane;
 
     private DescriptorTree descriptorTree;
 
@@ -59,13 +62,26 @@ public class ApplicationUI {
         return outBrowseButton;
     }
 
-    public void setDescriptorTree(DescriptorTree tree) {
-        this.descriptorTree = tree;
+    public DescriptorTree getDescriptorTree() {
+        return descriptorTree;
     }
 
-    public ApplicationUI() {
+    public boolean descriptorPaneIsSelected() {
+        return true;
+    }
+
+    public ApplicationUI(DescriptorTree descriptorTree) {
+
+        this.descriptorTree = descriptorTree;
 
         subpanel = new JPanel(new BorderLayout());
+        JScrollPane scrollPane = new JScrollPane(descriptorTree.getTree(), VERTICAL_SCROLLBAR_AS_NEEDED,
+                HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+        tabbedPane = new JTabbedPane();
+        tabbedPane.add("Descriptors", scrollPane);
+        tabbedPane.add("Fingerprints", new FingerprintPanel());
+        subpanel.add(tabbedPane, BorderLayout.CENTER);
 
         sdfBrowseButton = new JButton("Browse");
         sdfBrowseButton.setName("sdfButton");
@@ -208,7 +224,7 @@ public class ApplicationUI {
         }
         JFrame frame = new JFrame("Test Frame");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        ApplicationUI ui = new ApplicationUI();
+        ApplicationUI ui = new ApplicationUI(null);
         frame.add(ui.getPanel());
         frame.pack();
         frame.setVisible(true);

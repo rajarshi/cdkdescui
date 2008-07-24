@@ -6,8 +6,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.IDescriptor;
 
 import javax.swing.*;
-import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
-import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
 import javax.swing.Timer;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -37,7 +35,7 @@ public class CDKdesc extends JFrame implements DropTargetListener {
      */
     private static final long serialVersionUID = 1L;
     private ApplicationUI ui;
-    private DescriptorTree descriptorTree;
+
     private JProgressBar progressBar;
     private JLabel statusLabel;
     private JButton goButton;
@@ -125,24 +123,23 @@ public class CDKdesc extends JFrame implements DropTargetListener {
 
         getContentPane().add(bottomPanel, BorderLayout.SOUTH);
 
-        ui = new ApplicationUI();
 
+        DescriptorTree descriptorTree = null;
         try {
             descriptorTree = new DescriptorTree(true);
         } catch (CDKException e) {
             System.out.println("e = " + e);
         }
-        ui.setDescriptorTree(descriptorTree);
+        ui = new ApplicationUI(descriptorTree);
 
+//        JScrollPane scrollPane = new JScrollPane(descriptorTree.getTree(), VERTICAL_SCROLLBAR_AS_NEEDED,
+//                HORIZONTAL_SCROLLBAR_AS_NEEDED);
+//
+//        JTabbedPane tabbedPane = new JTabbedPane();
+//        tabbedPane.add("Descriptors", scrollPane);
+//        tabbedPane.add("Fingerprints", new FingerprintPanel());
 
-        JScrollPane scrollPane = new JScrollPane(descriptorTree.getTree(), VERTICAL_SCROLLBAR_AS_NEEDED,
-                HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
-        JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.add("Descriptors", scrollPane);
-        tabbedPane.add("Fingerprints", new FingerprintPanel());
-
-        ui.getSubpanel().add(tabbedPane, BorderLayout.CENTER);
+//        ui.getSubpanel().add(tabbedPane, BorderLayout.CENTER);
         getContentPane().add(ui.getPanel(), BorderLayout.CENTER);
 
         ApplicationMenu appMenu = new ApplicationMenu(ui);
@@ -175,6 +172,7 @@ public class CDKdesc extends JFrame implements DropTargetListener {
 
 
     private void goApp(ActionEvent e) {
+
         if (ui.getSdfFileTextField().getText().equals("") ||
                 ui.getOutFileTextField().getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Must provide an input file and an output file",
@@ -199,6 +197,7 @@ public class CDKdesc extends JFrame implements DropTargetListener {
         }
 
 
+        DescriptorTree descriptorTree = ui.getDescriptorTree();
         List checkedDescriptors = CheckBoxTreeUtils.getCheckedLeaves(
                 descriptorTree.getCheckTreeManager(), descriptorTree.getTree());
         List<IDescriptor> selectedDescriptors = new ArrayList<IDescriptor>();
