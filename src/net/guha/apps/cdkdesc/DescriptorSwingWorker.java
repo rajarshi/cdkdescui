@@ -2,6 +2,8 @@ package net.guha.apps.cdkdesc;
 
 
 import net.guha.apps.cdkdesc.interfaces.ISwingWorker;
+import net.guha.apps.cdkdesc.interfaces.ITextOutput;
+import net.guha.apps.cdkdesc.output.PlainTextOutput;
 import net.guha.apps.cdkdesc.ui.ApplicationUI;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -26,10 +28,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.swing.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Rajarshi Guha
@@ -177,21 +176,10 @@ public class DescriptorSwingWorker implements ISwingWorker {
     class ActualTask {
 
         private boolean evalToTextFile(String sdfFileName, String outputFormat) throws CDKException {
-
-            String lineSep = System.getProperty("line.separator");
-            String itemSep = " ";
-
-            if (outputFormat.equals(CDKDescConstants.OUTPUT_TAB)) {
-                itemSep = "\t";
-            } else if (outputFormat.equals(CDKDescConstants.OUTPUT_CSV)) {
-                itemSep = ",";
-            } else if (outputFormat.equals(CDKDescConstants.OUTPUT_SPC)) {
-                itemSep = " ";
-            }
-
             DefaultIteratingChemObjectReader iterReader = null;
+            BufferedWriter tmpWriter;
             try {
-                BufferedWriter tmpWriter = new BufferedWriter(new FileWriter(tempFile));
+                tmpWriter = new BufferedWriter(new FileWriter(tempFile));
 
                 FileInputStream inputStream = new FileInputStream(sdfFileName);
                 if (inputFormat.equals("smi")) iterReader = new IteratingSMILESReader(inputStream);
@@ -202,82 +190,125 @@ public class DescriptorSwingWorker implements ISwingWorker {
                     iterReader = new IteratingMDLReader(inputStream, DefaultChemObjectBuilder.getInstance());
 //                    ((IteratingMDLReader)iterReader).
                 }
+            } catch (IOException exception) {
+                JOptionPane.showMessageDialog(null, "Error opening input or output files",
+                        "CDKDescUI Error", JOptionPane.ERROR_MESSAGE);
+                done = true;
+                return false;
+            }
+
+            ITextOutput textOutput = null;
+            if (outputFormat.equals(CDKDescConstants.OUTPUT_TAB)) {
+                textOutput = new PlainTextOutput(tmpWriter);
+                textOutput.setItemSeparator("\t");
+            } else if (outputFormat.equals(CDKDescConstants.OUTPUT_CSV)) {
+                textOutput = new PlainTextOutput(tmpWriter);
+                textOutput.setItemSeparator(",");
+            } else if (outputFormat.equals(CDKDescConstants.OUTPUT_SPC)) {
+                textOutput = new PlainTextOutput(tmpWriter);
+                textOutput.setItemSeparator(" ");
+            } else if (outputFormat.equals(CDKDescConstants.OUTPUT_ARFF)) {
+            }
 
 
-                molCount = 0;
+            molCount = 0;
 
-                // lets get the header line first
-                for (IDescriptor descriptor : descriptors) {
-                    String[] names = descriptor.getDescriptorNames();
-                    for (String name : names) tmpWriter.write(name + itemSep);
+            // lets get the header line first
+            List<String> headerItems = new ArrayList<String>();
+            for (IDescriptor descriptor : descriptors) {
+                String[] names = descriptor.getDescriptorNames();
+                headerItems.addAll(Arrays.asList(names));
+            }
+            try {
+                textOutput.writeHeader(headerItems.toArray(new String[]{}));
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Error writing header line",
+                        "CDKDescUI Error", JOptionPane.ERROR_MESSAGE);
+                done = true;
+                return false;
+            }
+
+            assert iterReader != null;
+            while (iterReader.hasNext()) {  // loop over molecules
+                if (canceled) return false;
+                IMolecule molecule = (IMolecule) iterReader.next();
+                String title = (String) molecule.getProperty(CDKConstants.TITLE);
+                if (title == null) title = "Mol" + String.valueOf(molCount + 1);
+
+                try {
+                    molecule = (IMolecule) checkAndCleanMolecule(molecule);
+                } catch (CDKException e) {
+                    exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e, ""));
+                    molCount++;
+                    continue;
                 }
-                tmpWriter.write(lineSep);
 
-                assert iterReader != null;
-                while (iterReader.hasNext()) {  // loop over molecules
+                // OK, we can now eval the descriptors
+                List<String> dataItems = new ArrayList<String>();
+                dataItems.add(title);
+
+                for (Object object : descriptors) {
                     if (canceled) return false;
-                    IMolecule molecule = (IMolecule) iterReader.next();
+                    IMolecularDescriptor descriptor = (IMolecularDescriptor) object;
+                    String[] comps = descriptor.getSpecification().getSpecificationReference().split("#");
 
-                    try {
-                        molecule = (IMolecule) checkAndCleanMolecule(molecule);
-                    } catch (CDKException e) {
-                        exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e, ""));
-                        molCount++;
+
+                    DescriptorValue value = descriptor.calculate(molecule);
+                    if (value.getException() != null) {
+                        exceptionList.add(new ExceptionInfo(molCount + 1, molecule, value.getException(), comps[1]));
+                        for (int i = 0; i < value.getNames().length; i++)
+                            dataItems.add("NA");
                         continue;
                     }
 
-                    // OK, we can now eval the descriptors
-                    StringWriter stringWriter = new StringWriter();
-                    for (Object object : descriptors) {
-                        if (canceled) return false;
-                        IMolecularDescriptor descriptor = (IMolecularDescriptor) object;
-                        String[] comps = descriptor.getSpecification().getSpecificationReference().split("#");
-
-
-                        DescriptorValue value = descriptor.calculate(molecule);
-                        if (value.getException() != null) {
-                            exceptionList.add(new ExceptionInfo(molCount + 1, molecule, value.getException(), comps[1]));
-                            for (int i = 0; i < value.getNames().length; i++) stringWriter.write("NA" + itemSep);
-                            continue;
+                    IDescriptorResult result = value.getValue();
+                    if (result instanceof DoubleResult) {
+                        dataItems.add(String.valueOf(((DoubleResult) result).doubleValue()));
+                    } else if (result instanceof IntegerResult) {
+                        dataItems.add(String.valueOf(((IntegerResult) result).intValue()));
+                    } else if (result instanceof DoubleArrayResult) {
+                        for (int i = 0; i < ((DoubleArrayResult) result).length(); i++) {
+                            dataItems.add(String.valueOf(((DoubleArrayResult) result).get(i)));
                         }
-
-                        IDescriptorResult result = value.getValue();
-                        if (result instanceof DoubleResult) {
-                            stringWriter.write(((DoubleResult) result).doubleValue() + itemSep);
-                        } else if (result instanceof IntegerResult) {
-                            stringWriter.write(((IntegerResult) result).intValue() + itemSep);
-                        } else if (result instanceof DoubleArrayResult) {
-                            for (int i = 0; i < ((DoubleArrayResult) result).length(); i++) {
-                                stringWriter.write(((DoubleArrayResult) result).get(i) + itemSep);
-                            }
-                        } else if (result instanceof IntegerArrayResult) {
-                            for (int i = 0; i < ((IntegerArrayResult) result).length(); i++) {
-                                stringWriter.write(((IntegerArrayResult) result).get(i) + itemSep);
-                            }
+                    } else if (result instanceof IntegerArrayResult) {
+                        for (int i = 0; i < ((IntegerArrayResult) result).length(); i++) {
+                            dataItems.add(String.valueOf(((IntegerArrayResult) result).get(i)));
                         }
-                        current++;
                     }
-
-                    String dataLine = stringWriter.toString() + lineSep;
-                    String pattern = itemSep + lineSep;
-                    dataLine = dataLine.replace(pattern, lineSep);
-                    dataLine = dataLine.replace("NaN", "NA");
-
-                    String title = (String) molecule.getProperty(CDKConstants.TITLE);
-                    if (title == null) title = "Mol" + String.valueOf(molCount + 1);
-                    tmpWriter.write(title + itemSep + dataLine);
-                    tmpWriter.flush();
-                    molCount++;
+                    current++;
                 }
+
+                for (int i = 0; i < dataItems.size(); i++) {
+                    if (dataItems.get(i).equals("NaN")) dataItems.set(i, "NA");
+                }
+
+                try {
+                    textOutput.writeLine(dataItems.toArray(new String[]{}));
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, "Error writing data line",
+                            "CDKDescUI Error", JOptionPane.ERROR_MESSAGE);
+                    done = true;
+                    return false;
+                }
+
+                molCount++;
+            }
+
+            try {
                 iterReader.close();
                 tmpWriter.close();
-
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Error closing output files",
+                        "CDKDescUI Error", JOptionPane.ERROR_MESSAGE);
                 done = true;
-            } catch (IOException exception) {
-                exception.printStackTrace();
+                return false;
             }
+
+            done = true;
+
             return true;
         }
+
 
         private boolean evalToSDF(String sdfFileName) {
             DefaultIteratingChemObjectReader iterReader = null;
