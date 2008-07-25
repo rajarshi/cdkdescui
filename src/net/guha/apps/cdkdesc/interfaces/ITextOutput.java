@@ -6,7 +6,7 @@ public interface ITextOutput {
 
     public void setItemSeparator(String itemSep);
 
-    public void writeHeader(String[] items) throws IOException;
+    public void writeHeader(String[] items, boolean titleColumn) throws IOException;
 
     public void writeLine(String[] items) throws IOException;
 
