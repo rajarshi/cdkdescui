@@ -2,10 +2,10 @@ package net.guha.apps.cdkdesc.interfaces;
 
 public interface ITextOutput {
 
-    public void writeHeader(String header);
+    public void setItemSeparator(String itemSep);
 
-    public void writeLine(String line);
+    public void writeHeader(String[] items);
 
-    public void writeFooter(String line);
+    public void writeLine(String[] items);
 
 }
