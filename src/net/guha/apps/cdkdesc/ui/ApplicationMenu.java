@@ -57,8 +57,14 @@ public class ApplicationMenu {
         JMenu outputFormatMenu = new JMenu("Output Method");
         ButtonGroup group = new ButtonGroup();
 
+        JRadioButtonMenuItem formatItem = new JRadioButtonMenuItem("ARFF");
+        formatItem.setActionCommand(CDKDescConstants.OUTPUT_ARFF);
+        formatItem.addActionListener(new OutputFormatAction());
+        formatItem.setSelected(false);
+        group.add(formatItem);
+        outputFormatMenu.add(formatItem);
 
-        JRadioButtonMenuItem formatItem = new JRadioButtonMenuItem("Space delimited");
+        formatItem = new JRadioButtonMenuItem("Space delimited");
         formatItem.setActionCommand(CDKDescConstants.OUTPUT_SPC);
         formatItem.addActionListener(new OutputFormatAction());
         formatItem.setSelected(true);
