@@ -158,6 +158,7 @@ public class CDKdesc extends JFrame implements DropTargetListener {
         if (AppOptions.getInstance().getOutputMethod().equals(CDKDescConstants.OUTPUT_CSV) ||
                 AppOptions.getInstance().getOutputMethod().equals(CDKDescConstants.OUTPUT_SPC) ||
                 AppOptions.getInstance().getOutputMethod().equals(CDKDescConstants.OUTPUT_TAB) ||
+                AppOptions.getInstance().getOutputMethod().equals(CDKDescConstants.OUTPUT_ARFF) ||
                 AppOptions.getInstance().getOutputMethod().equals(CDKDescConstants.OUTPUT_SDF)
                 ) {
             try {
