@@ -2,6 +2,8 @@ package net.guha.apps.cdkdesc;
 
 import net.guha.apps.cdkdesc.interfaces.ISwingWorker;
 import net.guha.apps.cdkdesc.ui.*;
+import net.guha.apps.cdkdesc.workers.DescriptorSwingWorker;
+import net.guha.apps.cdkdesc.workers.FingerprintSwingWorker;
 import net.guha.ui.checkboxtree.CheckBoxTreeUtils;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.IDescriptor;
