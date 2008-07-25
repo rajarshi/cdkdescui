@@ -1,5 +1,6 @@
 package net.guha.apps.cdkdesc;
 
+import net.guha.apps.cdkdesc.interfaces.ISwingWorker;
 import net.guha.apps.cdkdesc.ui.*;
 import net.guha.ui.checkboxtree.CheckBoxTreeUtils;
 import org.openscience.cdk.exception.CDKException;
