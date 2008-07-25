@@ -3,6 +3,7 @@ package net.guha.apps.cdkdesc;
 
 import net.guha.apps.cdkdesc.interfaces.ISwingWorker;
 import net.guha.apps.cdkdesc.interfaces.ITextOutput;
+import net.guha.apps.cdkdesc.output.ARFFTextOutput;
 import net.guha.apps.cdkdesc.output.PlainTextOutput;
 import net.guha.apps.cdkdesc.ui.ApplicationUI;
 import org.openscience.cdk.CDKConstants;
@@ -208,6 +209,7 @@ public class DescriptorSwingWorker implements ISwingWorker {
                 textOutput = new PlainTextOutput(tmpWriter);
                 textOutput.setItemSeparator(" ");
             } else if (outputFormat.equals(CDKDescConstants.OUTPUT_ARFF)) {
+                textOutput = new ARFFTextOutput(tmpWriter);
             }
 
 
@@ -215,11 +217,13 @@ public class DescriptorSwingWorker implements ISwingWorker {
 
             // lets get the header line first
             List<String> headerItems = new ArrayList<String>();
+            headerItems.add("Title");
             for (IDescriptor descriptor : descriptors) {
                 String[] names = descriptor.getDescriptorNames();
                 headerItems.addAll(Arrays.asList(names));
             }
             try {
+                assert textOutput != null;
                 textOutput.writeHeader(headerItems.toArray(new String[]{}));
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(null, "Error writing header line",
@@ -387,6 +391,7 @@ public class DescriptorSwingWorker implements ISwingWorker {
 
             if (outputMethod.equals(CDKDescConstants.OUTPUT_TAB) ||
                     outputMethod.equals(CDKDescConstants.OUTPUT_CSV) ||
+                    outputMethod.equals(CDKDescConstants.OUTPUT_ARFF) ||
                     outputMethod.equals(CDKDescConstants.OUTPUT_SPC)) {
                 boolean status = evalToTextFile(sdfFileName, outputMethod);
                 if (!status) return;
