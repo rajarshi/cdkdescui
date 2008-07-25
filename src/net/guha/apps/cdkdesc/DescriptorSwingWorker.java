@@ -33,7 +33,7 @@ import java.util.List;
 /**
  * @author Rajarshi Guha
  */
-public class DescriptorSwingWorker {
+public class DescriptorSwingWorker implements ISwingWorker {
 
     private ApplicationUI ui;
     private List<IDescriptor> descriptors;
