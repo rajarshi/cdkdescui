@@ -19,7 +19,7 @@ import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.io.iterator.DefaultIteratingChemObjectReader;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.io.iterator.IteratingSMILESReader;
-import org.openscience.cdk.io.setting.BooleanIOSetting;
+import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IDescriptor;
@@ -174,6 +174,20 @@ public class DescriptorSwingWorker implements ISwingWorker {
         return molecule;
     }
 
+    class MyListener implements IChemObjectIOListener {
+
+        public void processIOSettingQuestion(IOSetting setting) {
+            if ("ForceReadAs3DCoordinates".equals(setting.getName())) {
+                try {
+                    setting.setSetting("true");
+                } catch (CDKException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+            }
+        }
+
+    }
+
     class ActualTask {
 
         private boolean evalToTextFile(String sdfFileName, String outputFormat) throws CDKException {
@@ -185,11 +199,9 @@ public class DescriptorSwingWorker implements ISwingWorker {
                 FileInputStream inputStream = new FileInputStream(sdfFileName);
                 if (inputFormat.equals("smi")) iterReader = new IteratingSMILESReader(inputStream);
                 else if (inputFormat.equals("mdl")) {
-                    BooleanIOSetting force3d = new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.LOW,
-                            "Should coordinates always be read as 3D?",
-                            "true");
                     iterReader = new IteratingMDLReader(inputStream, DefaultChemObjectBuilder.getInstance());
-//                    ((IteratingMDLReader)iterReader).
+                    iterReader.addChemObjectIOListener(new MyListener());
+                    ((IteratingMDLReader) iterReader).customizeJob();
                 }
             } catch (IOException exception) {
                 JOptionPane.showMessageDialog(null, "Error opening input or output files",
