@@ -84,8 +84,9 @@ public class CDKDescUtils {
             File file = new File(filename);
             ReaderFactory factory = new ReaderFactory();
             IChemObjectReader reader = factory.createReader(new FileReader(file));
+            if (reader == null) return false;
             IResourceFormat format = reader.getFormat();
-            flag = reader != null && format.getFormatName().startsWith("MDL Mol");
+            flag = format.getFormatName().startsWith("MDL ");
         } catch (Exception exception) {
             return false;
         }
