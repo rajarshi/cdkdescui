@@ -118,10 +118,9 @@ public class ApplicationMenu {
 
     class PluginAction implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            PluginManager pluginManager = new PluginManager();
-            pluginManager.setTitle("CDK Descriptor Plugin Manager");
-            pluginManager.pack();
-            pluginManager.setVisible(true);
+            PluginUI pui = new PluginUI(null);
+            pui.pack();
+            pui.setVisible(true);
         }
     }
 
