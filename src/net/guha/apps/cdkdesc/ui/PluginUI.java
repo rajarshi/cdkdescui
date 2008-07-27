@@ -6,6 +6,7 @@ import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.net.URL;
 
@@ -17,6 +18,7 @@ public class PluginUI extends JDialog {
 
     public JList pluginList;
     private ImageIcon jarIcon;
+    private JButton disableButton;
 
     public PluginUI(String[] pluginItems) {
 
@@ -47,7 +49,7 @@ public class PluginUI extends JDialog {
                     File[] selectedFiles = fileChooser.getSelectedFiles();
                     DefaultListModel model = (DefaultListModel) pluginList.getModel();
                     for (File selectedFile : selectedFiles) {
-                        model.addElement(selectedFile.getAbsolutePath());
+                        model.addElement(new PluginListEntry(selectedFile.getAbsolutePath(), true));
                     }
                 }
             }
@@ -79,15 +81,31 @@ public class PluginUI extends JDialog {
             }
         });
 
+
+        disableButton = new JButton("Disable");
+        disableButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Object[] selectedValues = pluginList.getSelectedValues();
+                for (Object object : selectedValues) {
+                    PluginListEntry ple = (PluginListEntry) object;
+                    if (ple.isEnabled()) ple.setEnabled(false);
+                    else
+                        ple.setEnabled(true);
+                }
+                pluginList.repaint();
+            }
+        });
+
         buttonPanel.add(addButton);
         buttonPanel.add(deleteButton);
+        buttonPanel.add(disableButton);
         buttonPanel.add(okButton);
         buttonPanel.add(cancelButton);
 
         // now make the list pane and scroll pane        
         DefaultListModel listModel = new DefaultListModel();
         if (pluginItems != null) {
-            for (String s : pluginItems) listModel.addElement(s);
+            for (String s : pluginItems) listModel.addElement(new PluginListEntry(s, true));
         }
         pluginList = new JList(listModel);
         JarListRenderer renderer = new JarListRenderer();
@@ -114,13 +132,19 @@ public class PluginUI extends JDialog {
         mainPanel.add(dummy2, BorderLayout.NORTH);
         mainPanel.add(dummy3, BorderLayout.SOUTH);
 
+        mainPanel.registerKeyboardAction(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        setContentPane(mainPanel);
 
         setContentPane(mainPanel);
         setModal(true);
         setTitle("CDK Descriptor Plugins");
-        setSize(350, 411);
-        setResizable(false);
+        setSize(450, 411);
     }
+
 
     public static void main(String[] args) {
         PluginUI pui = new PluginUI(new String[]{"dgasdfasdfasfasfasfsdf",
@@ -156,10 +180,49 @@ public class PluginUI extends JDialog {
                 setForeground(jList.getForeground());
             }
 
+            PluginListEntry ple = (PluginListEntry) o;
             setIcon(jarIcon);
-            setText((String) o);
+            setText(ple.toString());
 
+            if (isSelected) {
+                setBackground(new Color(153, 204, 255));
+                if (ple.isEnabled()) disableButton.setText("Disable");
+                else
+                    disableButton.setText("Enable");
+            } else {
+                if (!ple.isEnabled())
+                    setBackground(Color.gray);
+                else
+                    setBackground(Color.white);
+            }
             return this;
         }
     }
+
+    class PluginListEntry {
+        String text;
+        boolean enabled;
+
+        public String getText() {
+            return text;
+        }
+
+        public PluginListEntry(String text, boolean isEnabled) {
+            this.text = text;
+            this.enabled = isEnabled;
+        }
+
+        public String toString() {
+            return text;
+        }
+
+        public boolean isEnabled() {
+            return enabled;
+        }
+
+        public void setEnabled(boolean flag) {
+            enabled = flag;
+        }
+    }
+
 }
