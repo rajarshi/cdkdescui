@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.prefs.Preferences;
 
 /**
  * @author Rajarshi Guha
@@ -180,13 +181,20 @@ public class ApplicationUI {
     }
 
     private void onBrowse(ActionEvent e) {
+        Preferences prefs = Preferences.userNodeForPackage(this.getClass());
+        String lastInputDirectory = prefs.get("LAST_INPUT_DIR", "");
+
         String buttonName = ((JButton) e.getSource()).getName();
         JFileChooser fileDialog = new JFileChooser();
+        if (!lastInputDirectory.equals("")) fileDialog.setCurrentDirectory(new File(lastInputDirectory));
+
         int status = fileDialog.showOpenDialog(this.getPanel());
         if (status == JFileChooser.APPROVE_OPTION) {
             if (buttonName.equals("sdfButton")) {
                 sdFile = fileDialog.getSelectedFile();
                 sdfFileTextField.setText(sdFile.getAbsolutePath());
+
+                prefs.put("LAST_INPUT_DIR", sdFile.getAbsolutePath());
 
                 // check to see if it's a SMILES file. If so,
                 // disable parts of the descriptor tree that
