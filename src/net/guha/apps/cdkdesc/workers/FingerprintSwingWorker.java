@@ -23,7 +23,6 @@ import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -120,10 +119,8 @@ public class FingerprintSwingWorker implements ISwingWorker {
 
 
     private IAtomContainer checkAndCleanMolecule(IAtomContainer molecule) throws CDKException {
-        Iterator<IAtom> atoms = molecule.atoms();
         boolean isMarkush = false;
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : molecule.atoms()) {
             if (atom.getSymbol().equals("R")) {
                 isMarkush = true;
                 break;

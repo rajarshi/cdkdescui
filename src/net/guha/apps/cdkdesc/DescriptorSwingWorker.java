@@ -29,7 +29,10 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.swing.*;
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author Rajarshi Guha
@@ -127,10 +130,8 @@ public class DescriptorSwingWorker implements ISwingWorker {
 
 
     private IAtomContainer checkAndCleanMolecule(IAtomContainer molecule) throws CDKException {
-        Iterator<IAtom> atoms = molecule.atoms();
         boolean isMarkush = false;
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : molecule.atoms()) {
             if (atom.getSymbol().equals("R")) {
                 isMarkush = true;
                 break;
