@@ -39,6 +39,11 @@ public class ApplicationMenu {
         JMenu optionMenu = new JMenu("Options");
         mb.add(optionMenu);
 
+        JCheckBoxMenuItem addH = new JCheckBoxMenuItem("Add explicit H");
+        addH.addActionListener(new AddHAction());
+        addH.setSelected(AppOptions.getInstance().isAddH());
+        optionMenu.add(addH);
+
         JMenu selectionMenu = new JMenu("Selection");
         JMenuItem saveSel = new JMenuItem("Save descriptor selections");
         JMenuItem loadSel = new JMenuItem("Load descriptor selections");
@@ -107,6 +112,15 @@ public class ApplicationMenu {
         mb.add(helpMenu);
         helpMenu.add(aboutMenuItem);
         return mb;
+    }
+
+
+    class AddHAction implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            boolean state = AppOptions.getInstance().isAddH();
+            AppOptions.getInstance().setAddH(!state);
+            ((JCheckBoxMenuItem) event.getSource()).setSelected(!state);
+        }
     }
 
     class AboutAction implements ActionListener {

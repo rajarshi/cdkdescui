@@ -16,6 +16,7 @@ public class AppOptions {
     private static Map<String, Boolean> selectedDescriptors = new HashMap<String, Boolean>();
     private static String settingsFile = "";
     private static String selectedFingerprintType = null;
+    private static boolean addH = true;
 
     public static String getSelectedFingerprintType() {
         return selectedFingerprintType;
@@ -56,5 +57,13 @@ public class AppOptions {
     }
 
     private AppOptions() {
+    }
+
+    public boolean isAddH() {
+        return addH;
+    }
+
+    public void setAddH(boolean addH) {
+        AppOptions.addH = addH;
     }
 }
