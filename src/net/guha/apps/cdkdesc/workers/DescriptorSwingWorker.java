@@ -26,6 +26,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.*;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.swing.*;
@@ -164,6 +165,14 @@ public class DescriptorSwingWorker implements ISwingWorker {
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         } catch (CDKException e) {
             throw new CDKException("Error in atom typing" + e.toString());
+        }
+
+        // add explicit H's if required
+        if (AppOptions.getInstance().isAddH()) {
+            CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(molecule.getBuilder());
+            adder.addImplicitHydrogens(molecule);
+            AtomContainerManipulator.convertImplicitToExplicitHydrogens(molecule);
+
         }
 
         // do a aromaticity check
