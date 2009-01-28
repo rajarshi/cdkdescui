@@ -67,26 +67,22 @@ public class CDKdesc extends JFrame implements DropTargetListener {
             e.printStackTrace();
         }
         tempFile.deleteOnExit();
-
+        if (CDKDescUtils.isMacOs()) {
+            System.setProperty("apple.laf.useScreenMenuBar", "true");
+            System.setProperty("com.apple.mrj.application.apple.menu.about.name", "CDKDescUI");
+        }
         try {
-            UIManager.LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();
-            if (CDKDescUtils.isMacOs()) {
-                UIManager.setLookAndFeel("apple.laf.AquaLookAndFeel");
-                System.setProperty("dock:name", "CDK Descriptor Calculator");
-                System.setProperty("com.apple.mrj.application.growbox.intrudes", "false");
-                System.setProperty("com.apple.macos.useScreenMenuBar ", "true");
-            } else {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            }
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (InstantiationException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } catch (IllegalAccessException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (InstantiationException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (ClassNotFoundException e) {
-            System.out.println("Look and feel class not found.");
         }
+
         UIManager.put("ProgressBar.foreground", new java.awt.Color(156, 154, 206));
         UIManager.put("ProgressBar.background", java.awt.Color.lightGray);
         UIManager.put("Label.foreground", java.awt.Color.black);
