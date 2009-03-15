@@ -43,6 +43,8 @@ public class FingerprintSwingWorker implements ISwingWorker {
     private boolean done = false;
     private boolean canceled = false;
 
+    private double elapsedTime;
+
 
     public FingerprintSwingWorker(ApplicationUI ui, JProgressBar progressBar, File tempFile) {
         this.ui = ui;
@@ -77,10 +79,11 @@ public class FingerprintSwingWorker implements ISwingWorker {
                 current = 0;
                 done = false;
                 canceled = false;
+                elapsedTime = System.currentTimeMillis();
                 try {
                     return new ActualTask();
                 } catch (CDKException e) {
-                    System.out.println("Problem! Contact rguha@indiana.edu\n\n" + e.toString());
+                    System.out.println("Problem! Contact rajarshi.guha@gmail.com\n\n" + e.toString());
                     System.exit(0);
                 }
                 return null;
@@ -115,6 +118,10 @@ public class FingerprintSwingWorker implements ISwingWorker {
 
     public boolean isCancelled() {
         return canceled;
+    }
+
+    public double getElapsedTime() {
+        return elapsedTime;
     }
 
 
@@ -175,6 +182,7 @@ public class FingerprintSwingWorker implements ISwingWorker {
             else if (fptype.equals("Graph only")) printer = new GraphOnlyFingerprinter();
             else if (fptype.equals("EState")) printer = new EStateFingerprinter();
             else if (fptype.equals("MACCS")) printer = new MACCSFingerprinter();
+            else if (fptype.equals("Pubchem")) printer = new PubchemFingerprinter();
             else printer = new SubstructureFingerprinter();
 
             String lineSep = System.getProperty("line.separator");
@@ -228,6 +236,8 @@ public class FingerprintSwingWorker implements ISwingWorker {
                     }
                 }
 
+                elapsedTime = ((System.currentTimeMillis() - elapsedTime) / 1000.0);
+                
                 iterReader.close();
                 tmpWriter.close();
                 done = true;

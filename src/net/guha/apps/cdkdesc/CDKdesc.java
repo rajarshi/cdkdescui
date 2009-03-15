@@ -357,7 +357,7 @@ public class CDKdesc extends JFrame implements DropTargetListener {
                     progressBar.setIndeterminate(false);
                     progressBar.setString("Completed");
                     progressBar.setVisible(false);
-                    statusLabel.setText("Completed (" + current + ")");
+                    statusLabel.setText("Completed (" + current + " in " + task.getElapsedTime()+"s)");
 
                     doSave();
 

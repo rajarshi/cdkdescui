@@ -5,7 +5,7 @@ package net.guha.apps.cdkdesc;
  */
 public class CDKDescConstants {
 
-    public static final String VERSION = "0.95";
+    public static final String VERSION = "0.97";
 
     public static final String OUTPUT_CSV = "CSV";
     public static final String OUTPUT_TAB = "TAB";

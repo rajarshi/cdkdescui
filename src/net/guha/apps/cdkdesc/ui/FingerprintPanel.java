@@ -15,7 +15,7 @@ public class FingerprintPanel extends JPanel {
         super(true);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        String[] labels = {"Standard", "Extended", "Graph only", "EState", "MACCS"};
+        String[] labels = {"Standard", "Extended", "Graph only", "EState", "MACCS", "Pubchem"};
         FPRadioButtonListener fpButtonListener = new FPRadioButtonListener();
 
         ButtonGroup buttonGroup = new ButtonGroup();

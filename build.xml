@@ -168,6 +168,7 @@
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-pdb.jar"/>
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-libiocml.jar"/>
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-io.jar"/>
+        <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-ioformats.jar"/>
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-isomorphism.jar"/>
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-dict.jar"/>
         <unjar dest="${cdkdescui.output.dir}" src="${cdk.libs}/cdk-interfaces.jar"/>

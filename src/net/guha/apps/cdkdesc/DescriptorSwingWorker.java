@@ -51,6 +51,7 @@ public class DescriptorSwingWorker implements ISwingWorker {
     private int molCount = 0;
     private boolean done = false;
     private boolean canceled = false;
+    private float elapsedTime;
 
 
     public DescriptorSwingWorker(List<IDescriptor> descriptors,
@@ -88,10 +89,11 @@ public class DescriptorSwingWorker implements ISwingWorker {
                 current = 0;
                 done = false;
                 canceled = false;
+                elapsedTime = System.currentTimeMillis();
                 try {
                     return new ActualTask();
                 } catch (CDKException e) {
-                    System.out.println("Problem! Contact rguha@indiana.edu\n\n" + e.toString());
+                    System.out.println("Problem! Contact rajarshi.guha@gmail.com\n\n" + e.toString());
                     System.exit(0);
                 }
                 return null;
@@ -126,6 +128,10 @@ public class DescriptorSwingWorker implements ISwingWorker {
 
     public boolean isCancelled() {
         return canceled;
+    }
+
+    public double getElapsedTime() {
+        return elapsedTime;
     }
 
 
@@ -311,6 +317,8 @@ public class DescriptorSwingWorker implements ISwingWorker {
                 molCount++;
             }
 
+            elapsedTime = (float) ((System.currentTimeMillis() - elapsedTime) / 1000.0);
+
             try {
                 iterReader.close();
                 tmpWriter.close();
@@ -351,7 +359,7 @@ public class DescriptorSwingWorker implements ISwingWorker {
                         continue;
                     }
 
-                    HashMap<String, Object> map = new HashMap<String, Object>();
+                    HashMap<Object, Object> map = new HashMap<Object, Object>();
                     for (Object object : descriptors) {
                         if (canceled) return false;
                         IMolecularDescriptor descriptor = (IMolecularDescriptor) object;
@@ -382,10 +390,12 @@ public class DescriptorSwingWorker implements ISwingWorker {
                         current++;
 
                     }
-                    tmpWriter.setSdFields(map);
+                    molecule.setProperties(map);
                     tmpWriter.write(molecule);
                     counter++;
                 }
+                elapsedTime = (float) ((System.currentTimeMillis() - elapsedTime) / 1000.0);
+                
                 iterReader.close();
                 tmpWriter.close();
                 done = true;

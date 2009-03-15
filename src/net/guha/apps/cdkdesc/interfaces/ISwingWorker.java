@@ -24,4 +24,6 @@ public interface ISwingWorker {
     boolean isDone();
 
     boolean isCancelled();
+
+    double getElapsedTime();
 }

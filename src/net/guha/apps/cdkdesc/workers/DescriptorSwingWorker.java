@@ -31,10 +31,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.swing.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Rajarshi Guha
@@ -53,6 +50,8 @@ public class DescriptorSwingWorker implements ISwingWorker {
     private int molCount = 0;
     private boolean done = false;
     private boolean canceled = false;
+
+    private double elapsedTime;
 
 
     public DescriptorSwingWorker(List<IDescriptor> descriptors,
@@ -90,6 +89,7 @@ public class DescriptorSwingWorker implements ISwingWorker {
                 current = 0;
                 done = false;
                 canceled = false;
+                elapsedTime = System.currentTimeMillis();
                 try {
                     return new ActualTask();
                 } catch (CDKException e) {
@@ -128,6 +128,10 @@ public class DescriptorSwingWorker implements ISwingWorker {
 
     public boolean isCancelled() {
         return canceled;
+    }
+
+    public double getElapsedTime() {
+        return elapsedTime;
     }
 
 
@@ -261,7 +265,7 @@ public class DescriptorSwingWorker implements ISwingWorker {
                 IMolecule molecule = (IMolecule) iterReader.next();
                 String title = (String) molecule.getProperty(CDKConstants.TITLE);
                 if (title == null) title = "Mol" + String.valueOf(molCount + 1);
-
+                
                 try {
                     molecule = (IMolecule) checkAndCleanMolecule(molecule);
                 } catch (CDKException e) {
@@ -278,7 +282,6 @@ public class DescriptorSwingWorker implements ISwingWorker {
                     if (canceled) return false;
                     IMolecularDescriptor descriptor = (IMolecularDescriptor) object;
                     String[] comps = descriptor.getSpecification().getSpecificationReference().split("#");
-
 
                     DescriptorValue value = descriptor.calculate(molecule);
                     if (value.getException() != null) {
@@ -321,6 +324,9 @@ public class DescriptorSwingWorker implements ISwingWorker {
                 molCount++;
             }
 
+            // calculation is done, lets eval the elapsed time
+            elapsedTime = ((System.currentTimeMillis() - elapsedTime) / 1000.0);
+            
             try {
                 iterReader.close();
                 tmpWriter.close();
@@ -361,7 +367,7 @@ public class DescriptorSwingWorker implements ISwingWorker {
                         continue;
                     }
 
-                    HashMap<String, Object> map = new HashMap<String, Object>();
+                    HashMap<Object, Object> map = new HashMap<Object, Object>();
                     for (Object object : descriptors) {
                         if (canceled) return false;
                         IMolecularDescriptor descriptor = (IMolecularDescriptor) object;
@@ -392,10 +398,12 @@ public class DescriptorSwingWorker implements ISwingWorker {
                         current++;
 
                     }
-                    tmpWriter.setSdFields(map);
+                    molecule.setProperties(map);
                     tmpWriter.write(molecule);
                     counter++;
                 }
+                elapsedTime = ((System.currentTimeMillis() - elapsedTime) / 1000.0);
+                
                 iterReader.close();
                 tmpWriter.close();
                 done = true;
