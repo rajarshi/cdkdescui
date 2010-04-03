@@ -74,8 +74,8 @@ public class AboutDialog extends JDialog {
                         "version of this application restricts itself to the default\n" +
                         "parameter settings for each descriptor\n\n" +
                         "Author: Rajarshi Guha\n" +
-                        "Email: rguha@indiana.edu\n" +
-                        "http://cheminfo.informatics.indiana.edu/~rguha/code/java/cdkdesc.html\n";
+                        "Email: rajarshi.guha@gmail.com\n" +
+                        "http://rguha.net/code/java/cdkdesc.html\n";
         return txt;
     }
 
