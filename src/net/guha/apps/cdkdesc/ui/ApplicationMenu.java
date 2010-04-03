@@ -157,7 +157,7 @@ public class ApplicationMenu {
             if (((JMenuItem) e.getSource()).getName().equals("saveSel")) {
                 // first get a filename, using the loaded filename if available
                 JFileChooser fileDialog = new JFileChooser();
-                int status = fileDialog.showOpenDialog(ui.getSubpanel());
+                int status = fileDialog.showDialog(ui.getSubpanel(), "Open");
                 if (status != JFileChooser.APPROVE_OPTION) return;
 
                 File settingsFile = fileDialog.getSelectedFile();
