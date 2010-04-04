@@ -188,7 +188,7 @@ public class ApplicationUI {
         JFileChooser fileDialog = new JFileChooser();
         if (!lastInputDirectory.equals("")) fileDialog.setCurrentDirectory(new File(lastInputDirectory));
 
-        int status = fileDialog.showOpenDialog(this.getPanel());
+        int status = fileDialog.showDialog(this.getPanel(), "Browse");
         if (status == JFileChooser.APPROVE_OPTION) {
             if (buttonName.equals("sdfButton")) {
                 sdFile = fileDialog.getSelectedFile();
