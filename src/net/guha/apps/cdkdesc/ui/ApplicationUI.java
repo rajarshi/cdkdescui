@@ -2,6 +2,7 @@ package net.guha.apps.cdkdesc.ui;
 
 import net.guha.apps.cdkdesc.AppOptions;
 import net.guha.apps.cdkdesc.CDKDescUtils;
+import net.guha.apps.cdkdesc.FileDrop;
 import net.guha.ui.checkboxtree.CheckTreeManager;
 
 import javax.swing.*;
@@ -157,6 +158,17 @@ public class ApplicationUI {
         c.fill = GridBagConstraints.BOTH;
         panel.add(subpanel, c);
 
+        new FileDrop(System.out, tabbedPane, new MyFileDropListener());
+        new FileDrop(System.out, descriptorTree.getTree(), new MyFileDropListener());
+        new FileDrop(System.out, sdfFileTextField, new MyFileDropListener());
+    }
+
+    private class MyFileDropListener implements FileDrop.Listener {
+        public void filesDropped(File[] files) {
+            if (!(files == null || files.length == 0)) {
+                sdfFileTextField.setText(files[0].getAbsolutePath());
+            }
+        }
     }
 
     public void checkSelectedDescriptors() {
