@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="cdkdescui" default="all">
 
-    <taskdef resource="net/sf/antcontrib/antlib.xml"/>
+    <taskdef resource="net/sf/antcontrib/antlib.xml">
+    </taskdef>
 
     <property file="cdkdescui.properties"/>
 
@@ -117,6 +118,7 @@
             description="compile module(s) CDKDescUI"/>
 
     <target name="compile.module.cdkdescui.production" description="compile module(s) CDKDescUI production classes">
+        <antcall target="getversion"/>
         <mkdir dir="${cdkdescui.output.dir}"/>
         <javac destdir="${cdkdescui.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}"
                memoryMaximumSize="${compiler.max.memory}" fork="true"
@@ -148,8 +150,16 @@
     </target>
 
     <target name="getversion">
-
-
+        <loadfile property="version.line" srcfile="src/net/guha/apps/cdkdesc/CDKDescConstants.java">
+            <filterchain>
+                <linecontainsregexp>
+                    <regexp pattern="public static final String VERSION ="/>
+                </linecontainsregexp>
+            </filterchain>
+        </loadfile>
+        <propertyregex property="version" input="${version.line}"
+                       regexp="([0-9]*\.[0-9]*\.[0-9]*)"
+                       select="\1"/>
     </target>
 
     <target name="copyOut2Build" id="copyOut2Build">
@@ -214,27 +224,11 @@
                 <attribute name="Main-Class" value="net.guha.apps.cdkdesc.CDKdesc"/>
             </manifest>
         </jar>
-
-        <echo message="${version}"/>
     </target>
 
 
     <target name="release" description="Create and deploy distribution">
-        <antcall target="jar"/>
-        <scp localfile="CDKDescUI.jar"
-             remoteTofile="rguha@${release.path}/CDKDescUIsmall.jar"
-             verbose="true"
-             password="${password}"
-                />
-        <antcall target="bigjar"/>
-        <scp localfile="CDKDescUI.jar"
-             remoteTodir="rguha@${release.path}"
-             verbose="true"
-             password="${password}"
-                />
-        <antcall target="clean"/>
 
-        <!-- Here we get the current version of the code -->
         <loadfile property="version.line" srcfile="src/net/guha/apps/cdkdesc/CDKDescConstants.java">
             <filterchain>
                 <linecontainsregexp>
@@ -243,18 +237,35 @@
             </filterchain>
         </loadfile>
         <propertyregex property="version" input="${version.line}"
-                       regexp="([0-9]*\.[0-9]*)"
+                       regexp="([0-9]*\.[0-9]*\.[0-9]*)"
                        select="\1"/>
 
+        <antcall target="clean"/>
+        <echo message="${module.cdkdescui.basedir}"/>
         <tar destfile="CDKDescUI-${version}.tgz"
              basedir="${module.cdkdescui.basedir}"
-             excludes="x*"
+             excludes=".git/**"
              compression="gzip"/>
-        <scp localfile="CDKDescUI-${version}.tgz"
-             remoteTodir="rguha@${release.path}"
-             verbose="true"
-             password="${password}"
-                />
+        <!--<scp localfile="CDKDescUI-${version}.tgz"-->
+        <!--remoteTodir="rguha@${release.path}"-->
+        <!--verbose="true"-->
+        <!--password="${password}"-->
+        <!--/>-->
+
+        <antcall target="jar"/>
+        <rename src="CDKDescUI.jar" dest="CDKDescUIsmall.jar"/>
+        <!--<scp localfile="CDKDescUI.jar"-->
+        <!--remoteTofile="rguha@${release.path}/CDKDescUIsmall.jar"-->
+        <!--verbose="true"-->
+        <!--password="${password}"-->
+        <!--/>-->
+        <!--<antcall  target="clean"/>-->
+        <antcall target="bigjar"/>
+        <!--<scp localfile="CDKDescUI.jar"-->
+        <!--remoteTodir="rguha@${release.path}"-->
+        <!--verbose="true"-->
+        <!--password="${password}"-->
+        <!--/>-->
     </target>
 
     <target name="init" description="Build initialization">
