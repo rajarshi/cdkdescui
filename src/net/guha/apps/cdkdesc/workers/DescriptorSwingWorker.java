@@ -5,6 +5,7 @@ import net.guha.apps.cdkdesc.AppOptions;
 import net.guha.apps.cdkdesc.CDKDescConstants;
 import net.guha.apps.cdkdesc.CDKDescUtils;
 import net.guha.apps.cdkdesc.ExceptionInfo;
+import net.guha.apps.cdkdesc.SDFormatListener;
 import net.guha.apps.cdkdesc.SwingWorker;
 import net.guha.apps.cdkdesc.interfaces.ISwingWorker;
 import net.guha.apps.cdkdesc.interfaces.ITextOutput;
@@ -19,8 +20,6 @@ import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.io.iterator.DefaultIteratingChemObjectReader;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.io.iterator.IteratingSMILESReader;
-import org.openscience.cdk.io.listener.IChemObjectIOListener;
-import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -142,20 +141,6 @@ public class DescriptorSwingWorker implements ISwingWorker {
         return elapsedTime;
     }
 
-    class MyListener implements IChemObjectIOListener {
-
-        public void processIOSettingQuestion(IOSetting setting) {
-            if ("ForceReadAs3DCoordinates".equals(setting.getName())) {
-                try {
-                    setting.setSetting("true");
-                } catch (CDKException e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                }
-            }
-        }
-
-    }
-
     class ActualTask {
 
         private boolean evalToTextFile(String sdfFileName, String outputFormat) throws CDKException {
@@ -168,7 +153,7 @@ public class DescriptorSwingWorker implements ISwingWorker {
                 if (inputFormat.equals("smi")) iterReader = new IteratingSMILESReader(inputStream);
                 else if (inputFormat.equals("mdl")) {
                     iterReader = new IteratingMDLReader(inputStream, DefaultChemObjectBuilder.getInstance());
-                    iterReader.addChemObjectIOListener(new MyListener());
+                    iterReader.addChemObjectIOListener(new SDFormatListener());
                     ((IteratingMDLReader) iterReader).customizeJob();
                 }
             } catch (IOException exception) {
