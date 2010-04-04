@@ -41,14 +41,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import java.awt.*;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
-import java.awt.dnd.DropTargetDragEvent;
-import java.awt.dnd.DropTargetDropEvent;
-import java.awt.dnd.DropTargetEvent;
-import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -72,7 +65,7 @@ import java.util.List;
 /**
  * @author Rajarshi Guha
  */
-public class CDKdesc extends JFrame implements DropTargetListener {
+public class CDKdesc extends JFrame {
 
     /**
      *
@@ -187,9 +180,6 @@ public class CDKdesc extends JFrame implements DropTargetListener {
 
         ApplicationMenu appMenu = new ApplicationMenu(ui);
         setJMenuBar(appMenu.createMenu());
-
-        dropTarget = new DropTarget(ui.getSdfFileTextField(), this);
-
     }
 
 
@@ -669,41 +659,4 @@ public class CDKdesc extends JFrame implements DropTargetListener {
             app.batch(inputFile, outputFile, descriptorType, verbose);
         }
     }
-
-    public void dragEnter(DropTargetDragEvent dtde) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public void dragOver(DropTargetDragEvent dtde) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public void dropActionChanged(DropTargetDragEvent dtde) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public void dragExit(DropTargetEvent dte) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public void drop(DropTargetDropEvent dtde) {
-        System.out.println("drop");
-        dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
-        Transferable trans = dtde.getTransferable();
-        boolean gotData = false;
-        try {
-            if (trans.isDataFlavorSupported(DataFlavor.stringFlavor)) {
-                String s = (String) trans.getTransferData(DataFlavor.stringFlavor);
-                this.ui.getSdfFileTextField().setText(s.substring(7));
-                gotData = true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            dtde.dropComplete(gotData);
-        }
-
-
-    }
-
 }
