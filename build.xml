@@ -160,7 +160,7 @@
 
     <target name="jar" description="Create JAR" depends="init, compile.module.cdkdescui">
         <mkdir dir="${cdkdescui.build.dir}"/>
-        <antcall target="copyOut2Build" />
+        <antcall target="copyOut2Build"/>
         <unjar dest="${cdkdescui.build.dir}" src="libs/CheckBoxTree.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="libs/commons-cli-1.0.jar"/>
         <jar jarfile="CDKDescUI.jar" basedir="${cdkdescui.build.dir}">
@@ -172,108 +172,43 @@
 
     <target name="bigjar" description="Create a big JAR" depends="init, compile.module.cdkdescui">
         <mkdir dir="${cdkdescui.build.dir}"/>
-        <antcall target="copyOut2Build" />
+        <antcall target="copyOut2Build"/>
         <unjar dest="${cdkdescui.build.dir}" src="libs/CheckBoxTree.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="libs/commons-cli-1.0.jar"/>
 
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-annotation.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-atomtype.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-builder3d.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-builder3dtools.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-charges.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-control.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-core.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-data.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-datadebug.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-dict.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-diff.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-extra.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-fingerprint.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-forcefield.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-formula.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-inchi.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-interfaces.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-io.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-ioformats.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-ionpot.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-isomorphism.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-libiocml.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-libiomd.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-log4j.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-nonotify.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-pcore.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-pdb.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-pdbcml.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-qm.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-qsar.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-qsaratomic.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-qsarbond.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-qsarcml.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-qsarionpot.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-qsarmolecular.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-qsarprotein.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-reaction.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-render.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-sdg.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-smarts.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-smiles.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-standard.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-structgen.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-valencycheck.jar" />
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-qsar.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-qsarionpot.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-qsarcml.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-qsarprotein.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-qsarmolecular.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-qsarbond.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-qsaratomic.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-formula.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-pdb.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-libiocml.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-io.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-ioformats.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-isomorphism.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-dict.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-interfaces.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-data.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-core.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-standard.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-extra.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-fingerprint.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-smiles.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-smarts.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-charges.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-reaction.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-nonotify.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-valencycheck.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-atomtype.jar"/>
 
-
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-qsar.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-qsarionpot.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-qsarcml.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-qsarprotein.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-qsarmolecular.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-qsarbond.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-qsaratomic.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-formula.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-pdb.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-libiocml.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-io.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-ioformats.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-isomorphism.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-dict.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-interfaces.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-data.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-core.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-standard.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-extra.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-fingerprint.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-smiles.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-smarts.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-charges.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-reaction.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-nonotify.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-valencycheck.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-atomtype.jar"/>-->
-
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-annotation.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-forcefield.jar"/>-->
-
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/JRI.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/antlr.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/cmlxom-2.5-b1.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/commons-cli-1.0.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/jama-1.0.2.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/javacc.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/jgrapht-0.6.0.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/jniinchi-0.5.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/log4j.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/sjava-0.68.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/vecmath1.2-1.14.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/xercesImpl-2.9.0.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/xml-apis.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/xom-1.1.jar" />
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/xpp3-1.1.4c.jar" />
-
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/jama-1.0.2.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/jgrapht-0.6.0.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/vecmath1.2-1.14.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/xom-1.1.jar"/>-->
-        <!--<unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/cmlxom-2.5-b1.jar"/>-->
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/jama-1.0.2.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/jgrapht-0.6.0.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/vecmath1.2-1.14.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/xom-1.1.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/cmlxom-2.5-b1.jar"/>
         <jar jarfile="CDKDescUI.jar" basedir="${cdkdescui.build.dir}">
             <manifest>
                 <attribute name="Main-Class" value="net.guha.apps.cdkdesc.CDKdesc"/>
