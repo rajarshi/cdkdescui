@@ -1,7 +1,11 @@
 package net.guha.apps.cdkdesc.workers;
 
 
-import net.guha.apps.cdkdesc.*;
+import net.guha.apps.cdkdesc.AppOptions;
+import net.guha.apps.cdkdesc.CDKDescConstants;
+import net.guha.apps.cdkdesc.CDKDescUtils;
+import net.guha.apps.cdkdesc.ExceptionInfo;
+import net.guha.apps.cdkdesc.SwingWorker;
 import net.guha.apps.cdkdesc.interfaces.ISwingWorker;
 import net.guha.apps.cdkdesc.interfaces.ITextOutput;
 import net.guha.apps.cdkdesc.output.ARFFTextOutput;
@@ -9,13 +13,8 @@ import net.guha.apps.cdkdesc.output.PlainTextOutput;
 import net.guha.apps.cdkdesc.ui.ApplicationUI;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.io.iterator.DefaultIteratingChemObjectReader;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
@@ -25,13 +24,22 @@ import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
-import org.openscience.cdk.qsar.result.*;
-import org.openscience.cdk.tools.CDKHydrogenAdder;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
+import org.openscience.cdk.qsar.result.IntegerArrayResult;
+import org.openscience.cdk.qsar.result.IntegerResult;
 
 import javax.swing.*;
-import java.io.*;
-import java.util.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author Rajarshi Guha
@@ -134,61 +142,6 @@ public class DescriptorSwingWorker implements ISwingWorker {
         return elapsedTime;
     }
 
-
-    private IAtomContainer checkAndCleanMolecule(IAtomContainer molecule) throws CDKException {
-        boolean isMarkush = false;
-        for (IAtom atom : molecule.atoms()) {
-            if (atom.getSymbol().equals("R")) {
-                isMarkush = true;
-                break;
-            }
-        }
-
-        if (isMarkush) {
-            throw new CDKException("Skipping Markush structure");
-        }
-
-        // Check for salts and such
-        if (!ConnectivityChecker.isConnected(molecule)) {
-            // lets see if we have just two parts if so, we assume its a salt and just work
-            // on the larger part. Ideally we should have a check to ensure that the smaller
-            //  part is a metal/halogen etc.
-            IMoleculeSet fragments = ConnectivityChecker.partitionIntoMolecules(molecule);
-            if (fragments.getMoleculeCount() > 2) {
-                throw new CDKException("More than 2 components. Skipped");
-            } else {
-                IMolecule frag1 = fragments.getMolecule(0);
-                IMolecule frag2 = fragments.getMolecule(1);
-                if (frag1.getAtomCount() > frag2.getAtomCount()) molecule = frag1;
-                else molecule = frag2;
-            }
-        }
-
-        // Do the configuration
-        try {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-        } catch (CDKException e) {
-            throw new CDKException("Error in atom typing" + e.toString());
-        }
-
-        // add explicit H's if required
-        if (AppOptions.getInstance().isAddH()) {
-            CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(molecule.getBuilder());
-            adder.addImplicitHydrogens(molecule);
-            AtomContainerManipulator.convertImplicitToExplicitHydrogens(molecule);
-
-        }
-
-        // do a aromaticity check
-        try {
-            CDKHueckelAromaticityDetector.detectAromaticity(molecule);
-        } catch (CDKException e) {
-            throw new CDKException("Error in aromaticity detection");
-        }
-
-        return molecule;
-    }
-
     class MyListener implements IChemObjectIOListener {
 
         public void processIOSettingQuestion(IOSetting setting) {
@@ -265,9 +218,9 @@ public class DescriptorSwingWorker implements ISwingWorker {
                 IMolecule molecule = (IMolecule) iterReader.next();
                 String title = (String) molecule.getProperty(CDKConstants.TITLE);
                 if (title == null) title = "Mol" + String.valueOf(molCount + 1);
-                
+
                 try {
-                    molecule = (IMolecule) checkAndCleanMolecule(molecule);
+                    molecule = (IMolecule) CDKDescUtils.checkAndCleanMolecule(molecule);
                 } catch (CDKException e) {
                     exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e, ""));
                     molCount++;
@@ -326,7 +279,7 @@ public class DescriptorSwingWorker implements ISwingWorker {
 
             // calculation is done, lets eval the elapsed time
             elapsedTime = ((System.currentTimeMillis() - elapsedTime) / 1000.0);
-            
+
             try {
                 iterReader.close();
                 tmpWriter.close();
@@ -360,7 +313,7 @@ public class DescriptorSwingWorker implements ISwingWorker {
                     IMolecule molecule = (IMolecule) iterReader.next();
 
                     try {
-                        molecule = (IMolecule) checkAndCleanMolecule(molecule);
+                        molecule = (IMolecule) CDKDescUtils.checkAndCleanMolecule(molecule);
                     } catch (CDKException e) {
                         exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e, ""));
                         molCount++;
@@ -403,7 +356,7 @@ public class DescriptorSwingWorker implements ISwingWorker {
                     counter++;
                 }
                 elapsedTime = ((System.currentTimeMillis() - elapsedTime) / 1000.0);
-                
+
                 iterReader.close();
                 tmpWriter.close();
                 done = true;

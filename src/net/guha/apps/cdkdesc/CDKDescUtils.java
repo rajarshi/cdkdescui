@@ -1,16 +1,29 @@
 package net.guha.apps.cdkdesc;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Comparator;
 
 /**
@@ -25,10 +38,8 @@ public class CDKDescUtils {
     /**
      * Checks whether the input file is in SMI format.
      * <p/>
-     * The approach I take is to read the first line of the file.
-     * This should splittable to give two parts. The first part should
-     * be a valid SMILES string. If so this method returns true, otherwise
-     * false
+     * The approach I take is to read the first line of the file. This should splittable to give two parts. The first
+     * part should be a valid SMILES string. If so this method returns true, otherwise false
      *
      * @param filename The file to consider
      * @return true if the file is in SMI format, otherwise false
@@ -144,5 +155,60 @@ public class CDKDescUtils {
                 return comp1[1].compareTo(comp2[1]);
             }
         };
+    }
+
+
+    public static IAtomContainer checkAndCleanMolecule(IAtomContainer molecule) throws CDKException {
+        boolean isMarkush = false;
+        for (IAtom atom : molecule.atoms()) {
+            if (atom.getSymbol().equals("R")) {
+                isMarkush = true;
+                break;
+            }
+        }
+
+        if (isMarkush) {
+            throw new CDKException("Skipping Markush structure");
+        }
+
+        // Check for salts and such
+        if (!ConnectivityChecker.isConnected(molecule)) {
+            // lets see if we have just two parts if so, we assume its a salt and just work
+            // on the larger part. Ideally we should have a check to ensure that the smaller
+            //  part is a metal/halogen etc.
+            IMoleculeSet fragments = ConnectivityChecker.partitionIntoMolecules(molecule);
+            if (fragments.getMoleculeCount() > 2) {
+                throw new CDKException("More than 2 components. Skipped");
+            } else {
+                IMolecule frag1 = fragments.getMolecule(0);
+                IMolecule frag2 = fragments.getMolecule(1);
+                if (frag1.getAtomCount() > frag2.getAtomCount()) molecule = frag1;
+                else molecule = frag2;
+            }
+        }
+
+        // Do the configuration
+        try {
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        } catch (CDKException e) {
+            throw new CDKException("Error in atom typing" + e.toString());
+        }
+
+        // add explicit H's if required
+        if (AppOptions.getInstance().isAddH()) {
+            CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(molecule.getBuilder());
+            adder.addImplicitHydrogens(molecule);
+            AtomContainerManipulator.convertImplicitToExplicitHydrogens(molecule);
+
+        }
+
+        // do a aromaticity check
+        try {
+            CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+        } catch (CDKException e) {
+            throw new CDKException("Error in aromaticity detection");
+        }
+
+        return molecule;
     }
 }
