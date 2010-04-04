@@ -1,15 +1,24 @@
 package net.guha.apps.cdkdesc;
 
 import net.guha.apps.cdkdesc.interfaces.ISwingWorker;
-import net.guha.apps.cdkdesc.ui.*;
+import net.guha.apps.cdkdesc.ui.ApplicationMenu;
+import net.guha.apps.cdkdesc.ui.ApplicationUI;
+import net.guha.apps.cdkdesc.ui.DescriptorTree;
+import net.guha.apps.cdkdesc.ui.DescriptorTreeLeaf;
+import net.guha.apps.cdkdesc.ui.ExceptionListDialog;
 import net.guha.apps.cdkdesc.workers.DescriptorSwingWorker;
 import net.guha.apps.cdkdesc.workers.FingerprintSwingWorker;
 import net.guha.ui.checkboxtree.CheckBoxTreeUtils;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.PosixParser;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.IDescriptor;
 
 import javax.swing.*;
-import javax.swing.Timer;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
@@ -18,15 +27,28 @@ import javax.swing.tree.TreePath;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
-import java.awt.dnd.*;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetDragEvent;
+import java.awt.dnd.DropTargetDropEvent;
+import java.awt.dnd.DropTargetEvent;
+import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.channels.FileChannel;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.GregorianCalendar;
 import java.util.List;
+
 
 /**
  * @author Rajarshi Guha
@@ -357,7 +379,7 @@ public class CDKdesc extends JFrame implements DropTargetListener {
                     progressBar.setIndeterminate(false);
                     progressBar.setString("Completed");
                     progressBar.setVisible(false);
-                    statusLabel.setText("Completed (" + current + " in " + task.getElapsedTime()+"s)");
+                    statusLabel.setText("Completed (" + current + " in " + task.getElapsedTime() + "s)");
 
                     doSave();
 
@@ -390,15 +412,79 @@ public class CDKdesc extends JFrame implements DropTargetListener {
         timer.start();
     }
 
+    private void batch(String inputFile, String outputFile, String descriptorType, boolean verbose) {
+        if (verbose) {
+            System.out.println("INFO: input:\t" + inputFile);
+            System.out.println("INFO: output:\t" + outputFile);
+            System.out.println("INFO: type:\t" + descriptorType);
+        }
+    }
+
     private void shutdown() {
         System.exit(0);
     }
 
 
+    private static void usage(Options options) {
+        HelpFormatter helpFormatter = new HelpFormatter();
+        helpFormatter.printHelp("cdkdescui [OPTIONS] inputfile\n", options);
+        System.out.println("\nCDKDescUI v"+CDKDescConstants.VERSION+" Rajarshi Guha <rajarshi.guha@gmail.com>\n");
+        System.exit(-1);
+    }
+
     public static void main(String[] args) {
+        String outputFile = "output.txt";
+        String inputFile = null;
+        String descriptorType = "all";
+        boolean batchMode = false;
+        boolean verbose = false;
+
+        Options options = new Options();
+        options.addOption("b", false, "Batch mode");
+        options.addOption("h", false, "Help");
+        options.addOption("v", false, "Verbose output");
+        options.addOption("o", true, "Output file");
+        options.addOption("t", true, "Descriptor type: all, topological, geometric, constitutional, electronic, hybrid");
+
+        CommandLineParser parser = new PosixParser();
+        try {
+            CommandLine cmd = parser.parse(options, args);
+            if (cmd.hasOption("h")) usage(options);
+            if (cmd.hasOption("b")) {
+                batchMode = true;
+                String[] tmp = cmd.getArgs();
+                if (tmp.length != 1) {
+                    System.out.println("Must specify a single input file");
+                    usage(options);
+                } else inputFile = tmp[0];
+            }
+            if (cmd.hasOption("v")) verbose = true;
+            if (cmd.hasOption("o")) outputFile = cmd.getOptionValue("o");
+            if (cmd.hasOption("t")) {
+                descriptorType = cmd.getOptionValue("t");
+                String[] validTypes = new String[]{"all", "topological", "geometric", "constitutional", "electronic", "hybrid"};
+                boolean typeOk = false;
+                for (String s : validTypes) {
+                    if (s.equals(descriptorType)) {
+                        typeOk = true;
+                        break;
+                    }
+                }
+                if (!typeOk) usage(options);
+            }
+        } catch (ParseException e) {
+            System.out.println("Error parsing command line");
+            System.exit(-1);
+        }
+
+
         CDKdesc app = new CDKdesc();
-        app.pack();
-        app.setVisible(true);
+        if (!batchMode) {
+            app.pack();
+            app.setVisible(true);
+        } else {
+            app.batch(inputFile, outputFile, descriptorType, verbose);
+        }
     }
 
     public void dragEnter(DropTargetDragEvent dtde) {
