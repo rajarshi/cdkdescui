@@ -74,7 +74,7 @@ public class FingerprintSwingWorker implements ISwingWorker {
     }
 
     public void go() {
-        final SwingWorker worker = new SwingWorker() {
+        final net.guha.apps.cdkdesc.SwingWorker worker = new net.guha.apps.cdkdesc.SwingWorker() {
             public Object construct() {
                 current = 0;
                 done = false;

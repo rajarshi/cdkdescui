@@ -213,6 +213,7 @@
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-nonotify.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-valencycheck.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-atomtype.jar"/>
+	<unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-ionpot.jar"/>
 
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/jama-1.0.2.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/jgrapht-0.6.0.jar"/>
