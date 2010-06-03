@@ -449,9 +449,9 @@ public class CDKdesc extends JFrame {
             String lineSep = System.getProperty("line.separator");
             String itemSep = " ";
             String inputFormat = "invalid";
-	    if (CDKDescUtils.isSMILESFormat(ui.getSdfFileTextField().getText())) {
+	    if (CDKDescUtils.isSMILESFormat(inputFile)) {
 		inputFormat = "smi";
-	    } else if (CDKDescUtils.isMDLFormat(ui.getSdfFileTextField().getText())) {
+	    } else if (CDKDescUtils.isMDLFormat(inputFile)) {
 		inputFormat = "mdl";
 	    }
 
@@ -742,7 +742,6 @@ public class CDKdesc extends JFrame {
             app.pack();
             app.setVisible(true);
         } else {
-	    System.out.println("ready to roll");
 	    if (fpType == null && descriptorType == null) throw new CDKException("One of -t or -f must be specified");
 	    else if (fpType != null && descriptorType != null) throw new CDKException("One of -t or -f must be specified");
             if (descriptorType != null) app.batch(inputFile, outputFile, descriptorType, verbose);
