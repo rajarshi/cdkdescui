@@ -1,5 +1,8 @@
 package net.guha.apps.cdkdesc;
 
+import org.openscience.cdk.fingerprint.*;
+import java.util.BitSet;
+
 import net.guha.apps.cdkdesc.interfaces.ISwingWorker;
 import net.guha.apps.cdkdesc.interfaces.ITextOutput;
 import net.guha.apps.cdkdesc.output.PlainTextOutput;
@@ -421,6 +424,83 @@ public class CDKdesc extends JFrame {
         timer.start();
     }
 
+    private void batchFingerprint(String inputFile, String outputFile, String fpType, boolean verbose) throws CDKException {
+        if (verbose) {
+            System.out.println("INFO: input:\t" + inputFile);
+            System.out.println("INFO: output:\t" + outputFile);
+            System.out.println("INFO: type:\t" + fpType);
+        }
+
+	IFingerprinter fprinter = null;
+	if (fpType.equals("standard")) fprinter = new Fingerprinter();
+	else if (fpType.equals("extended")) fprinter = new ExtendedFingerprinter();
+	else if (fpType.equals("pubchem")) fprinter = new PubchemFingerprinter();
+	else if (fpType.equals("graph")) fprinter = new GraphOnlyFingerprinter();
+	else if (fpType.equals("maccs")) fprinter = new MACCSFingerprinter();
+	else if (fpType.equals("estate")) fprinter = new EStateFingerprinter();
+	else if (fpType.equals("substructure")) fprinter = new SubstructureFingerprinter();
+	else throw new CDKException("Invalid fingerprint type specified");
+
+	DefaultIteratingChemObjectReader iterReader = null;
+	try {
+	    BufferedWriter tmpWriter = new BufferedWriter(new FileWriter(outputFile));
+	    FileInputStream inputStream = new FileInputStream(inputFile);
+
+            String lineSep = System.getProperty("line.separator");
+            String itemSep = " ";
+            String inputFormat = "invalid";
+	    if (CDKDescUtils.isSMILESFormat(ui.getSdfFileTextField().getText())) {
+		inputFormat = "smi";
+	    } else if (CDKDescUtils.isMDLFormat(ui.getSdfFileTextField().getText())) {
+		inputFormat = "mdl";
+	    }
+
+	    if (inputFormat.equals("smi")) iterReader = new IteratingSMILESReader(inputStream);
+	    else if (inputFormat.equals("mdl")) {
+		iterReader = new IteratingMDLReader(inputStream, DefaultChemObjectBuilder.getInstance());
+	    }
+	    
+	    
+	    int molCount = 0;
+	    
+	    // lets get the header line first
+	    tmpWriter.write("CDKDescUI " + fprinter.getClass().getName() + " " + fprinter.getSize() + " bits" + lineSep);
+	    assert iterReader != null;
+	    double elapsedTime = System.currentTimeMillis();
+
+	    while (iterReader.hasNext()) {  // loop over molecules
+		IMolecule molecule = (IMolecule) iterReader.next();
+		
+		try {
+		    molecule = (IMolecule) CDKDescUtils.checkAndCleanMolecule(molecule);
+		} catch (CDKException e) {
+//		    exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e, ""));
+		    molCount++;
+		    continue;
+		}
+
+		try {
+		    BitSet fingerprint = fprinter.getFingerprint(molecule);
+		    String title = (String) molecule.getProperty(CDKConstants.TITLE);
+		    if (title == null) title = "Mol" + String.valueOf(molCount + 1);
+		    tmpWriter.write(title + itemSep + fingerprint.toString() + lineSep);
+		    tmpWriter.flush();
+		    molCount++;
+		} catch (Exception e) {
+		    //		    exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e, ""));
+		    molCount++;
+		}
+	    }
+
+	    elapsedTime = ((System.currentTimeMillis() - elapsedTime) / 1000.0);
+            
+	    iterReader.close();
+	    tmpWriter.close();
+    } catch (IOException exception) {
+	exception.printStackTrace();
+    }
+}
+
     private void batch(String inputFile, String outputFile, String descriptorType, boolean verbose) {
 
         if (verbose) {
@@ -500,6 +580,7 @@ public class CDKdesc extends JFrame {
         }
 
         double elapsedTime = System.currentTimeMillis();
+
         List<ExceptionInfo> exceptionList = new ArrayList<ExceptionInfo>();
         int nmol = 0;
 
@@ -605,10 +686,11 @@ public class CDKdesc extends JFrame {
         System.exit(-1);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CDKException {
         String outputFile = "output.txt";
         String inputFile = null;
-        String descriptorType = "all";
+        String descriptorType = null;
+	String fpType = null;
         boolean batchMode = false;
         boolean verbose = false;
 
@@ -618,6 +700,7 @@ public class CDKdesc extends JFrame {
         options.addOption("v", false, "Verbose output");
         options.addOption("o", true, "Output file");
         options.addOption("t", true, "Descriptor type: all, topological, geometric, constitutional, electronic, hybrid");
+	options.addOption("f", true, "Fingerprint type: estate, extended, graph, standard, pubchem, substructure");
 
         CommandLineParser parser = new PosixParser();
         try {
@@ -633,6 +716,9 @@ public class CDKdesc extends JFrame {
             }
             if (cmd.hasOption("v")) verbose = true;
             if (cmd.hasOption("o")) outputFile = cmd.getOptionValue("o");
+	    if (cmd.hasOption("f")) {
+		fpType = cmd.getOptionValue("f");
+	    }
             if (cmd.hasOption("t")) {
                 descriptorType = cmd.getOptionValue("t");
                 String[] validTypes = new String[]{"all", "topological", "geometric", "protein", "constitutional", "electronic", "hybrid"};
@@ -656,7 +742,11 @@ public class CDKdesc extends JFrame {
             app.pack();
             app.setVisible(true);
         } else {
-            app.batch(inputFile, outputFile, descriptorType, verbose);
+	    System.out.println("ready to roll");
+	    if (fpType == null && descriptorType == null) throw new CDKException("One of -t or -f must be specified");
+	    else if (fpType != null && descriptorType != null) throw new CDKException("One of -t or -f must be specified");
+            if (descriptorType != null) app.batch(inputFile, outputFile, descriptorType, verbose);
+	    else if (fpType != null) app.batchFingerprint(inputFile, outputFile, fpType, verbose);
         }
     }
 }
