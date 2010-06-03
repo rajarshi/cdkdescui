@@ -493,7 +493,7 @@ public class CDKdesc extends JFrame {
 	    }
 
 	    elapsedTime = ((System.currentTimeMillis() - elapsedTime) / 1000.0);
-            
+            if (verbose) System.out.println("Total time = "+elapsedTime+"s ("+ (elapsedTime/molCount) +" s/mol)");
 	    iterReader.close();
 	    tmpWriter.close();
     } catch (IOException exception) {
