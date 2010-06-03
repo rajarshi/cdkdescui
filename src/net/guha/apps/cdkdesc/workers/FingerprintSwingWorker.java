@@ -1,14 +1,24 @@
 package net.guha.apps.cdkdesc.workers;
 
 
-import net.guha.apps.cdkdesc.*;
+import net.guha.apps.cdkdesc.AppOptions;
+import net.guha.apps.cdkdesc.CDKDescConstants;
+import net.guha.apps.cdkdesc.CDKDescUtils;
+import net.guha.apps.cdkdesc.ExceptionInfo;
 import net.guha.apps.cdkdesc.interfaces.ISwingWorker;
 import net.guha.apps.cdkdesc.ui.ApplicationUI;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.fingerprint.*;
+import org.openscience.cdk.fingerprint.EStateFingerprinter;
+import org.openscience.cdk.fingerprint.ExtendedFingerprinter;
+import org.openscience.cdk.fingerprint.Fingerprinter;
+import org.openscience.cdk.fingerprint.GraphOnlyFingerprinter;
+import org.openscience.cdk.fingerprint.IFingerprinter;
+import org.openscience.cdk.fingerprint.MACCSFingerprinter;
+import org.openscience.cdk.fingerprint.PubchemFingerprinter;
+import org.openscience.cdk.fingerprint.SubstructureFingerprinter;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -20,7 +30,11 @@ import org.openscience.cdk.io.iterator.IteratingSMILESReader;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.swing.*;
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
@@ -237,7 +251,7 @@ public class FingerprintSwingWorker implements ISwingWorker {
                 }
 
                 elapsedTime = ((System.currentTimeMillis() - elapsedTime) / 1000.0);
-                
+
                 iterReader.close();
                 tmpWriter.close();
                 done = true;

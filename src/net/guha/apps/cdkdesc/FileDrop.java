@@ -503,8 +503,7 @@ public class FileDrop {
      * Outputs <tt>message</tt> to <tt>out</tt> if it's not null.
      */
     private static void log(java.io.PrintStream out, String message) {   // Log message if requested
-        if (out != null)
-            out.println(message);
+//        if (out != null) out.println(message);
     }   // end log
 
 
@@ -659,7 +658,7 @@ public class FileDrop {
      */
     public static class TransferableObject implements java.awt.datatransfer.Transferable {
         /**
-         * The MIME type for {@link #DATA_FLAVOR} is 
+         * The MIME type for {@link #DATA_FLAVOR} is
          * <tt>application/x-net.iharder.dnd.TransferableObject</tt>.
          *
          * @since 1.1
@@ -671,7 +670,7 @@ public class FileDrop {
          * The default {@link java.awt.datatransfer.DataFlavor} for
          * {@link TransferableObject} has the representation class
          * <tt>net.iharder.dnd.TransferableObject.class</tt>
-         * and the MIME type 
+         * and the MIME type
          * <tt>application/x-net.iharder.dnd.TransferableObject</tt>.
          *
          * @since 1.1
@@ -689,7 +688,7 @@ public class FileDrop {
         /**
          * Creates a new {@link TransferableObject} that wraps <var>data</var>.
          * Along with the {@link #DATA_FLAVOR} associated with this class,
-         * this creates a custom data flavor with a representation class 
+         * this creates a custom data flavor with a representation class
          * determined from <code>data.getClass()</code> and the MIME type
          * <tt>application/x-net.iharder.dnd.TransferableObject</tt>.
          *
@@ -708,8 +707,8 @@ public class FileDrop {
          * No custom data flavor is set other than the default
          * {@link #DATA_FLAVOR}.
          *
-         * @see Fetcher
          * @param fetcher The {@link Fetcher} that will return the data object
+         * @see Fetcher
          * @since 1.1
          */
         public TransferableObject(Fetcher fetcher) {
@@ -725,9 +724,9 @@ public class FileDrop {
          * and the MIME type
          * <tt>application/x-net.iharder.dnd.TransferableObject</tt>.
          *
-         * @see Fetcher
          * @param dataClass The {@link java.lang.Class} to use in the custom data flavor
-         * @param fetcher The {@link Fetcher} that will return the data object
+         * @param fetcher   The {@link Fetcher} that will return the data object
+         * @see Fetcher
          * @since 1.1
          */
         public TransferableObject(Class dataClass, Fetcher fetcher) {
@@ -835,8 +834,8 @@ public class FileDrop {
          * {@link #getObject getObject()} method will be called.
          *
          * @author Robert Harder
-         * @copyright 2001
          * @version 1.1
+         * @copyright 2001
          * @since 1.1
          */
         public static interface Fetcher {
