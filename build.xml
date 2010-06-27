@@ -4,9 +4,13 @@
     <taskdef resource="net/sf/antcontrib/antlib.xml">
     </taskdef>
 
-    <property file="cdkdescui.properties"/>
+    <!--<property file="cdkdescui.properties"/>-->
 
     <!-- Compiler options -->
+
+    <property  name="jdk.home.jdk_1.5" value="/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Home/"/>
+    <property  name="cdk.libs" value="../cdk/dist/jar" />
+    <property  name="cdk.deps" value="../cdk/jar" />
 
     <property name="compiler.debug" value="on"/>
     <property name="compiler.generate.no.warnings" value="off"/>

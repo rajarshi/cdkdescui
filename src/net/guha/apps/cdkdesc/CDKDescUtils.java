@@ -25,6 +25,15 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Comparator;
+import java.util.Map;
+import java.util.HashMap;
+
+import nu.xom.Builder;
+import nu.xom.Document;
+import nu.xom.ParsingException;
+import nu.xom.Element;
+import nu.xom.Elements;
+import nu.xom.ValidityException;
 
 /**
  * @author Rajarshi Guha
@@ -210,5 +219,23 @@ public class CDKDescUtils {
         }
 
         return molecule;
+    }
+
+    public static Map<String, Boolean> loadDescriptorSelections(String fileName) throws ParsingException, IOException {
+        Map<String, Boolean> selDecMap = new HashMap<String, Boolean>();
+        Builder parser = new Builder();
+        Document doc;
+        doc = parser.build(fileName);
+        Element root = doc.getRootElement();
+        Elements elems = root.getChildElements("descriptorList");
+        Elements descriptorList = elems.get(0).getChildElements();
+        for (int i = 0; i < descriptorList.size(); i++) {
+            Element desc = descriptorList.get(i);
+            String spec = desc.getAttribute("spec").getValue();
+            String value = desc.getFirstChildElement("selected").getValue();
+            Boolean isSelected = value.equals("true");
+            selDecMap.put(spec, isSelected);
+        }
+        return selDecMap;
     }
 }

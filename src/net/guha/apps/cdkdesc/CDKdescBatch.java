@@ -2,6 +2,7 @@ package net.guha.apps.cdkdesc;
 
 import net.guha.apps.cdkdesc.interfaces.ITextOutput;
 import net.guha.apps.cdkdesc.output.PlainTextOutput;
+import static net.guha.apps.cdkdesc.CDKDescUtils.loadDescriptorSelections;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -21,6 +22,7 @@ import org.openscience.cdk.qsar.DescriptorEngine;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
@@ -37,6 +39,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
+import java.util.Map;
+
+import nu.xom.ParsingException;
 
 /**
  * Batch mode versions of the descriptor and fingerprint calculator.
@@ -140,27 +145,64 @@ public class CDKdescBatch {
 
     }
 
-    public static void batchDescriptor(String inputFile, String outputFile, String descriptorType, boolean verbose) {
+    /**
+     * Calculate descriptors in batch mode.
+     *
+     * @param inputFile        The input file of molecules
+     * @param outputFile       The output file to dump descriptor values to
+     * @param descriptorType   Either a descriptor type or a file name containing descriptors
+     * @param isDescriptorType if a descriptor type is specified, true otherwise false
+     * @param verbose          should output be verbose or not
+     */
+    public static void batchDescriptor(String inputFile, String outputFile,
+                                       String descriptorType,
+                                       boolean isDescriptorType,
+                                       boolean verbose) {
 
+        Map<String, Boolean> sels = null;
+
+        if (!isDescriptorType) {
+            try {
+                sels = loadDescriptorSelections(descriptorType);
+            } catch (ParsingException e) {
+                System.out.println("ERROR: Invalid XML file supplied");
+                System.exit(-1);
+            } catch (IOException e) {
+                System.out.println("Couldn't read selection file");
+                System.exit(-1);
+            }
+        }
         if (verbose) {
             System.out.println("INFO: input:\t" + inputFile);
             System.out.println("INFO: output:\t" + outputFile);
-            System.out.println("INFO: type:\t" + descriptorType);
+            if (isDescriptorType) System.out.println("INFO: type:\t" + descriptorType);
+            else System.out.println("INFO: using selections from:\t" + descriptorType);
         }
 
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
         List<String> classNames = engine.getDescriptorClassNames();
 
-        List<String> validClassNames;
-        if (descriptorType.equals("all")) {
-            validClassNames = new ArrayList<String>(classNames);
-        } else {
-            validClassNames = new ArrayList<String>();
-            for (String className : classNames) {
-                String[] dictClasses = engine.getDictionaryClass(className);
-                if (dictClasses == null) continue;
-                for (String dictClass : dictClasses) {
-                    if (dictClass.indexOf(descriptorType) != -1) validClassNames.add(className);
+        List<String> validClassNames = new ArrayList<String>();
+
+        if (isDescriptorType) {
+            if (descriptorType.equals("all")) {
+                validClassNames.addAll(classNames);
+            } else {
+                for (String className : classNames) {
+                    String[] dictClasses = engine.getDictionaryClass(className);
+                    if (dictClasses == null) continue;
+                    for (String dictClass : dictClasses) {
+                        if (dictClass.indexOf(descriptorType) != -1) validClassNames.add(className);
+                    }
+                }
+            }
+        } else { // add in selected descriptors
+            List<IDescriptor> descs = engine.getDescriptorInstances();
+            for (String s : sels.keySet()) {
+                Boolean isSelected = sels.get(s);
+                for (IDescriptor desc : descs) {
+                    if (desc.getSpecification().getSpecificationReference().equals(s) && isSelected)
+                        validClassNames.add(desc.getClass().getCanonicalName());
                 }
             }
         }
@@ -271,7 +313,7 @@ public class CDKdescBatch {
                 ndesc++;
 
                 if (verbose) {
-                    System.out.print("\rINFO: Processed " + ndesc + " descriptors for " + nmol + " molecules");
+                    System.out.print("\rINFO: Processed " + ndesc + " descriptors for " + (nmol+1) + " molecules");
                     System.out.flush();
                 }
             }

@@ -415,6 +415,7 @@ public class CDKdesc extends JFrame {
         String outputFile = "output.txt";
         String inputFile = null;
         String descriptorType = null;
+        boolean descTypeSpecified = true;
         String fpType = null;
         boolean batchMode = false;
         boolean verbose = false;
@@ -426,6 +427,7 @@ public class CDKdesc extends JFrame {
         options.addOption("o", true, "Output file");
         options.addOption("t", true, "Descriptor type: all, topological, geometric, constitutional, electronic, hybrid");
         options.addOption("f", true, "Fingerprint type: estate, extended, graph, standard, pubchem, substructure");
+        options.addOption("s", true, "A descriptor selection file. Overrides the descriptor type option");
 
         CommandLineParser parser = new PosixParser();
         try {
@@ -435,7 +437,7 @@ public class CDKdesc extends JFrame {
                 batchMode = true;
                 String[] tmp = cmd.getArgs();
                 if (tmp.length != 1) {
-                    System.out.println("Must specify a single input file");
+                    System.out.println("ERROR: Must specify a single input file");
                     usage(options);
                 } else inputFile = tmp[0];
             }
@@ -456,8 +458,12 @@ public class CDKdesc extends JFrame {
                 }
                 if (!typeOk) usage(options);
             }
+            if (cmd.hasOption("s")) {
+                descTypeSpecified = false;
+                descriptorType = cmd.getOptionValue("s");
+            }
         } catch (ParseException e) {
-            System.out.println("Error parsing command line");
+            System.out.println("ERROR: Error parsing command line");
             System.exit(-1);
         }
 
@@ -469,8 +475,9 @@ public class CDKdesc extends JFrame {
         } else {
             if (fpType == null && descriptorType == null) throw new CDKException("One of -t or -f must be specified");
             else if (fpType != null && descriptorType != null)
-                throw new CDKException("One of -t or -f must be specified");
-            if (descriptorType != null) CDKdescBatch.batchDescriptor(inputFile, outputFile, descriptorType, verbose);
+                throw new CDKException("ERROR: One of -t or -f must be specified");
+            if (descriptorType != null)
+                CDKdescBatch.batchDescriptor(inputFile, outputFile, descriptorType, descTypeSpecified, verbose);
             else CDKdescBatch.batchFingerprint(inputFile, outputFile, fpType, verbose);
         }
     }
