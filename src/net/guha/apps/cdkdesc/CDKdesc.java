@@ -198,6 +198,7 @@ public class CDKdesc extends JFrame {
 
         if (((JButton) e.getSource()).getName().equals("cancel")) {
             task.stop();
+            doSave();
             return;
         }
 
@@ -312,6 +313,7 @@ public class CDKdesc extends JFrame {
 
         if (((JButton) e.getSource()).getName().equals("cancel")) {
             task.stop();
+            doSave();
             return;
         }
 

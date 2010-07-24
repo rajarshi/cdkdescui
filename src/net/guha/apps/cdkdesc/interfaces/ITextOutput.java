@@ -10,4 +10,6 @@ public interface ITextOutput {
 
     public void writeLine(String[] items) throws IOException;
 
+    public void flush() throws IOException;
+
 }

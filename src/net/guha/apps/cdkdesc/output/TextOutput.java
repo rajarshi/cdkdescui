@@ -24,4 +24,8 @@ public abstract class TextOutput implements ITextOutput {
     public abstract void writeHeader(String[] items) throws IOException;
 
     public abstract void writeLine(String[] items) throws IOException;
+
+    public void flush() throws IOException {
+        writer.flush();
+    }
 }

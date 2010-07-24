@@ -2,16 +2,16 @@
 <project relativePaths="false" version="4">
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdkdescui.ipr" afterPath="$PROJECT_DIR$/cdkdescui.ipr" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKdescBatch.java" afterPath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKdescBatch.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/workers/DescriptorSwingWorker.java" afterPath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/workers/DescriptorSwingWorker.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/cdk.jar" afterPath="$PROJECT_DIR$/libs/cdk.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKDescConstants.java" afterPath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKDescConstants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.xml" afterPath="$PROJECT_DIR$/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/ui/FingerprintPanel.java" afterPath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/ui/FingerprintPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/workers/FingerprintSwingWorker.java" afterPath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/workers/FingerprintSwingWorker.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdkdescui.iws" afterPath="$PROJECT_DIR$/cdkdescui.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKDescUtils.java" afterPath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKDescUtils.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKdesc.java" afterPath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKdesc.java" />
     </list>
-    <ignored path=".idea/workspace.xml" />
     <ignored path="cdkdescui.iws" />
+    <ignored path=".idea/workspace.xml" />
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="Commander">
@@ -67,19 +67,55 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="CDKdescBatch.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKdescBatch.java">
+      <file leaf-file-name="CDKdesc.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKdesc.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="164" column="17" selection-start="7433" selection-end="7433" vertical-scroll-proportion="0.010256411">
+            <state line="315" column="21" selection-start="11623" selection-end="11623" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CDKdesc.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKdesc.java">
+      <file leaf-file-name="CDKDescConstants.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKDescConstants.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="443" column="45" selection-start="16367" selection-end="16367" vertical-scroll-proportion="-6.8461537">
+            <state line="20" column="0" selection-start="500" selection-end="500" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DescriptorSwingWorker.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/workers/DescriptorSwingWorker.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="288" column="26" selection-start="11086" selection-end="11086" vertical-scroll-proportion="-7.730769">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TextOutput.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/output/TextOutput.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="51" selection-start="244" selection-end="244" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ITextOutput.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/interfaces/ITextOutput.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="12" column="43" selection-start="326" selection-end="326" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FingerprintSwingWorker.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/workers/FingerprintSwingWorker.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="216" column="31" selection-start="7726" selection-end="7726" vertical-scroll-proportion="0.104761906">
               <folding />
             </state>
           </provider>
@@ -154,6 +190,32 @@
         </PATH_ELEMENT>
         <PATH_ELEMENT>
           <option name="myItemId" value="cdkdesc" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="cdkdescui" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="Cdkdescui" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="cdkdescui" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="src" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="cdkdesc" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="output" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
       </PATH>
@@ -340,13 +402,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="22" width="1369" height="815" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Web Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" />
       <window_info id="Dataflow to this" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" />
-      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2036336" sideWeight="0.6632948" order="0" side_tool="false" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" />
@@ -355,12 +417,12 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32658958" sideWeight="0.5" order="7" side_tool="false" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24981076" sideWeight="0.6632948" order="1" side_tool="false" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.121877365" sideWeight="0.6632948" order="1" side_tool="false" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32658958" sideWeight="0.5" order="2" side_tool="false" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32658958" sideWeight="0.5" order="2" side_tool="false" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" />
-      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" />
@@ -410,23 +472,9 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/workers/FingerprintSwingWorker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="226" column="13" selection-start="8208" selection-end="8208" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/FileDrop.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="474" column="121" selection-start="22128" selection-end="22128" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKDescConstants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="47" selection-start="145" selection-end="145" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -459,16 +507,65 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKdesc.java">
+    <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKdescBatch.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="443" column="45" selection-start="16367" selection-end="16367" vertical-scroll-proportion="-6.8461537">
+        <state line="164" column="17" selection-start="7433" selection-end="7433" vertical-scroll-proportion="0.018489985">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKdescBatch.java">
+    <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/interfaces/ISwingWorker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="164" column="17" selection-start="7433" selection-end="7433" vertical-scroll-proportion="0.010256411">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKdesc.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="315" column="21" selection-start="11623" selection-end="11623" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKDescConstants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="0" selection-start="500" selection-end="500" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/output/PlainTextOutput.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/output/TextOutput.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="51" selection-start="244" selection-end="244" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/interfaces/ITextOutput.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="43" selection-start="326" selection-end="326" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/workers/DescriptorSwingWorker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="288" column="26" selection-start="11086" selection-end="11086" vertical-scroll-proportion="-7.730769">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/workers/FingerprintSwingWorker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="216" column="31" selection-start="7726" selection-end="7726" vertical-scroll-proportion="0.104761906">
           <folding />
         </state>
       </provider>

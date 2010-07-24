@@ -100,7 +100,7 @@ public class DescriptorSwingWorker implements ISwingWorker {
                 try {
                     return new ActualTask();
                 } catch (CDKException e) {
-                    System.out.println("Problem! Contact rguha@indiana.edu\n\n" + e.toString());
+                    System.out.println("Problem! Contact rajarshi.guha@gmail.com\n\n" + e.toString());
                     System.exit(0);
                 }
                 return null;
@@ -252,6 +252,8 @@ public class DescriptorSwingWorker implements ISwingWorker {
 
                 try {
                     textOutput.writeLine(dataItems.toArray(new String[]{}));
+                    textOutput.flush();
+
                 } catch (IOException e) {
                     JOptionPane.showMessageDialog(null, "Error writing data line",
                             "CDKDescUI Error", JOptionPane.ERROR_MESSAGE);
