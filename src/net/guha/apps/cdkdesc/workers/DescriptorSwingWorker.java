@@ -16,7 +16,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.MDLWriter;
+import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.io.iterator.DefaultIteratingChemObjectReader;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.io.iterator.IteratingSMILESReader;
@@ -29,7 +29,8 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -286,7 +287,7 @@ public class DescriptorSwingWorker implements ISwingWorker {
         private boolean evalToSDF(String sdfFileName) {
             DefaultIteratingChemObjectReader iterReader = null;
             try {
-                MDLWriter tmpWriter = new MDLWriter(new FileWriter(tempFile));
+                MDLV2000Writer tmpWriter = new MDLV2000Writer(new FileWriter(tempFile));
 
                 FileInputStream inputStream = new FileInputStream(sdfFileName);
                 if (inputFormat.equals("smi")) iterReader = new IteratingSMILESReader(inputStream);

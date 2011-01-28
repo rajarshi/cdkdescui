@@ -2,7 +2,10 @@ package net.guha.apps.cdkdesc.ui;
 
 import net.guha.apps.cdkdesc.AppOptions;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,7 +18,7 @@ public class FingerprintPanel extends JPanel {
         super(true);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        String[] labels = {"Standard", "Extended", "Graph only", "EState", "MACCS", "Pubchem", "Hybridization"};
+        String[] labels = {"Standard", "Extended", "Graph only", "EState", "MACCS", "Pubchem"};
         FPRadioButtonListener fpButtonListener = new FPRadioButtonListener();
 
         ButtonGroup buttonGroup = new ButtonGroup();

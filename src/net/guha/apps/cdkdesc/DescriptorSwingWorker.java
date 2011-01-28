@@ -15,7 +15,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.io.MDLWriter;
+import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.io.iterator.DefaultIteratingChemObjectReader;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.io.iterator.IteratingSMILESReader;
@@ -24,11 +24,20 @@ import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
-import org.openscience.cdk.qsar.result.*;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
+import org.openscience.cdk.qsar.result.IntegerArrayResult;
+import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import javax.swing.*;
-import java.io.*;
+import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -338,7 +347,7 @@ public class DescriptorSwingWorker implements ISwingWorker {
         private boolean evalToSDF(String sdfFileName) {
             DefaultIteratingChemObjectReader iterReader = null;
             try {
-                MDLWriter tmpWriter = new MDLWriter(new FileWriter(tempFile));
+                MDLV2000Writer tmpWriter = new MDLV2000Writer(new FileWriter(tempFile));
 
                 FileInputStream inputStream = new FileInputStream(sdfFileName);
                 if (inputFormat.equals("smi")) iterReader = new IteratingSMILESReader(inputStream);
@@ -395,7 +404,7 @@ public class DescriptorSwingWorker implements ISwingWorker {
                     counter++;
                 }
                 elapsedTime = (float) ((System.currentTimeMillis() - elapsedTime) / 1000.0);
-                
+
                 iterReader.close();
                 tmpWriter.close();
                 done = true;
