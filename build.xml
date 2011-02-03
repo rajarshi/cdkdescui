@@ -122,7 +122,7 @@
             description="compile module(s) CDKDescUI"/>
 
     <target name="compile.module.cdkdescui.production" description="compile module(s) CDKDescUI production classes">
-        <!--<antcall target="getversion"/>-->
+        <antcall target="getversion"/>
         <mkdir dir="${cdkdescui.output.dir}"/>
         <javac destdir="${cdkdescui.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}"
                memoryMaximumSize="${compiler.max.memory}" fork="true"
@@ -153,18 +153,18 @@
         </delete>
     </target>
 
-    <!--<target name="getversion">-->
-    <!--<loadfile property="version.line" srcfile="src/net/guha/apps/cdkdesc/CDKDescConstants.java">-->
-    <!--<filterchain>-->
-    <!--<linecontainsregexp>-->
-    <!--<regexp pattern="public static final String VERSION ="/>-->
-    <!--</linecontainsregexp>-->
-    <!--</filterchain>-->
-    <!--</loadfile>-->
-    <!--<propertyregex property="version" input="${version.line}"-->
-    <!--regexp="([0-9]*\.[0-9]*\.[0-9]*)"-->
-    <!--select="\1"/>-->
-    <!--</target>-->
+    <target name="getversion">
+    <loadfile property="version.line" srcfile="src/net/guha/apps/cdkdesc/CDKDescConstants.java">
+    <filterchain>
+    <linecontainsregexp>
+    <regexp pattern="public static final String VERSION ="/>
+    </linecontainsregexp>
+    </filterchain>
+    </loadfile>
+    <propertyregex property="version" input="${version.line}"
+    regexp="([0-9]*\.[0-9]*\.[0-9]*)"
+    select="\1"/>
+    </target>
 
     <target name="copyOut2Build" id="copyOut2Build">
         <copy todir="${cdkdescui.build.dir}">

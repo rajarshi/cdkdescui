@@ -2,16 +2,10 @@
 <project relativePaths="false" version="4">
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/workers/DescriptorSwingWorker.java" afterPath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/workers/DescriptorSwingWorker.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/cdk.jar" afterPath="$PROJECT_DIR$/libs/cdk.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/ui/FingerprintPanel.java" afterPath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/ui/FingerprintPanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.xml" afterPath="$PROJECT_DIR$/build.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/workers/FingerprintSwingWorker.java" afterPath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/workers/FingerprintSwingWorker.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdkdescui.iws" afterPath="$PROJECT_DIR$/cdkdescui.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/DescriptorSwingWorker.java" afterPath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/DescriptorSwingWorker.java" />
     </list>
-    <ignored path="cdkdescui.iws" />
     <ignored path=".idea/workspace.xml" />
+    <ignored path="cdkdescui.iws" />
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="Commander">
@@ -66,89 +60,7 @@
     <favorites_list name="cdkdescui" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="DescriptorSwingWorker.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/workers/DescriptorSwingWorker.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="333" column="29" selection-start="13682" selection-end="13682" vertical-scroll-proportion="0.0">
-              <folding>
-                <marker date="1296192138000" expanded="true" signature="48:1734" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="186" column="18" selection-start="7075" selection-end="7075" vertical-scroll-proportion="-7.2105265">
-              <folding>
-                <marker date="1296192138000" expanded="true" signature="710:989" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="1030:1417" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="1485:2123" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="1529:2111" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="2343:2446" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="2379:2434" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="2490:2593" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="2526:2581" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="3271:3350" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="3394:3681" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="3736:3798" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="3857:3936" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="3981:4096" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="4032:4084" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="4220:4274" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="4393:5255" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="4604:5002" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="5049:5241" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="5109:5225" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="5353:5440" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="5514:5797" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="5717:5783" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="6361:6490" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="6407:6476" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="6581:7054" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="6893:7040" placeholder="..." />
-                <marker date="1296192138000" expanded="true" signature="6916:7025" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DescriptorSwingWorker.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/DescriptorSwingWorker.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="349" column="55" selection-start="13463" selection-end="13463" vertical-scroll-proportion="0.0">
-              <folding>
-                <marker date="1296192138000" expanded="true" signature="40:1919" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FingerprintSwingWorker.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/workers/FingerprintSwingWorker.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="0" selection-start="1812" selection-end="1812" vertical-scroll-proportion="0.7619048">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FingerprintPanel.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/ui/FingerprintPanel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="93" selection-start="559" selection-end="559" vertical-scroll-proportion="0.0">
-              <folding>
-                <marker date="1296192138000" expanded="false" signature="42:271" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -178,94 +90,6 @@
         <PATH_ELEMENT>
           <option name="myItemId" value="cdkdescui" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Cdkdescui" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="libs" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="cdkdescui" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Cdkdescui" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="cdkdescui" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Cdkdescui" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="cdkdescui" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="cdkdescui" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Cdkdescui" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="cdkdescui" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="cdkdesc" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="cdkdescui" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Cdkdescui" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="cdkdescui" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="cdkdesc" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="ui" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
       </PATH>
     </subPane>
@@ -451,7 +275,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="16" y="22" width="1369" height="815" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Web Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" />
       <window_info id="Dataflow to this" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" />
@@ -459,14 +283,14 @@
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21574564" sideWeight="0.6632948" order="0" side_tool="false" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21574564" sideWeight="0.6632948" order="0" side_tool="false" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32658958" sideWeight="0.5" order="7" side_tool="false" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14988644" sideWeight="0.6632948" order="1" side_tool="false" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.03633611" sideWeight="0.6632948" order="1" side_tool="false" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32658958" sideWeight="0.5" order="2" side_tool="false" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" />
@@ -592,9 +416,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/AppOptions.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="13" selection-start="181" selection-end="181" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/workers/FingerprintSwingWorker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="0" selection-start="1812" selection-end="1812" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/DescriptorSwingWorker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="349" column="55" selection-start="13463" selection-end="13463" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1296192138000" expanded="true" signature="40:1919" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="186" column="18" selection-start="7075" selection-end="7075" vertical-scroll-proportion="-7.2105265">
+        <state line="186" column="18" selection-start="7075" selection-end="7075" vertical-scroll-proportion="0.0">
           <folding>
             <marker date="1296192138000" expanded="true" signature="710:989" placeholder="..." />
             <marker date="1296192138000" expanded="true" signature="1030:1417" placeholder="..." />
@@ -636,36 +483,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/DescriptorSwingWorker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="349" column="55" selection-start="13463" selection-end="13463" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1296192138000" expanded="true" signature="40:1919" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/AppOptions.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="13" selection-start="181" selection-end="181" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/ui/FingerprintPanel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="93" selection-start="559" selection-end="559" vertical-scroll-proportion="0.0">
           <folding>
             <marker date="1296192138000" expanded="false" signature="42:271" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/workers/FingerprintSwingWorker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="0" selection-start="1812" selection-end="1812" vertical-scroll-proportion="0.7619048">
-          <folding>
-            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
