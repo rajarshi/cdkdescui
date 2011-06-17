@@ -15,6 +15,7 @@ import org.openscience.cdk.fingerprint.EStateFingerprinter;
 import org.openscience.cdk.fingerprint.ExtendedFingerprinter;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.fingerprint.GraphOnlyFingerprinter;
+import org.openscience.cdk.fingerprint.HybridizationFingerprinter;
 import org.openscience.cdk.fingerprint.IFingerprinter;
 import org.openscience.cdk.fingerprint.MACCSFingerprinter;
 import org.openscience.cdk.fingerprint.PubchemFingerprinter;
@@ -29,8 +30,7 @@ import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.io.iterator.IteratingSMILESReader;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import javax.swing.JOptionPane;
-import javax.swing.JProgressBar;
+import javax.swing.*;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -198,7 +198,7 @@ public class FingerprintSwingWorker implements ISwingWorker {
             else if (fptype.equals("EState")) printer = new EStateFingerprinter();
             else if (fptype.equals("MACCS")) printer = new MACCSFingerprinter();
             else if (fptype.equals("Pubchem")) printer = new PubchemFingerprinter();
-//            else if (fptype.equals("Hybridization")) printer = new HybridOnlyFingerprinter();
+            else if (fptype.equals("Hybridization")) printer = new HybridizationFingerprinter();
             else printer = new SubstructureFingerprinter();
 
             String lineSep = System.getProperty("line.separator");
