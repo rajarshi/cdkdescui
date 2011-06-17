@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project relativePaths="false" version="4">
   <component name="ChangeListManager">
-    <list default="true" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/ui/FingerprintPanel.java" afterPath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/ui/FingerprintPanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/workers/FingerprintSwingWorker.java" afterPath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/workers/FingerprintSwingWorker.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdkdescui.iws" afterPath="$PROJECT_DIR$/cdkdescui.iws" />
-    </list>
+    <list default="true" name="Default" comment="" />
     <ignored path="cdkdescui.iws" />
     <ignored path=".idea/workspace.xml" />
   </component>
@@ -66,8 +62,10 @@
       <file leaf-file-name="FingerprintSwingWorker.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/workers/FingerprintSwingWorker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="274" column="96" selection-start="10286" selection-end="10286" vertical-scroll-proportion="0.94721407">
-              <folding />
+            <state line="262" column="158" selection-start="9918" selection-end="9918" vertical-scroll-proportion="0.8504399">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -75,8 +73,10 @@
       <file leaf-file-name="FingerprintPanel.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/ui/FingerprintPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="109" selection-start="575" selection-end="575" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="17" column="109" selection-start="475" selection-end="475" vertical-scroll-proportion="0.0">
+              <folding>
+                <marker date="1308345789000" expanded="false" signature="42:171" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -423,7 +423,7 @@
     <option name="PERFORM_CHECKOUT_IN_BACKGROUND" value="true" />
     <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated to latest cdk master. got rid of hybridization fp" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added in code for hybridization fingerprinter" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
@@ -437,6 +437,7 @@
     <MESSAGE value="Cleaned up batch fp code. Removed some debug output from dnd code" />
     <MESSAGE value="refactored batch methods into their own class" />
     <MESSAGE value="updated to latest cdk master. got rid of hybridization fp" />
+    <MESSAGE value="Added in code for hybridization fingerprinter" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -558,15 +559,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/ui/FingerprintPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="109" selection-start="575" selection-end="575" vertical-scroll-proportion="0.0">
-          <folding />
+        <state line="17" column="109" selection-start="475" selection-end="475" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1308345789000" expanded="false" signature="42:171" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/workers/FingerprintSwingWorker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="274" column="96" selection-start="10286" selection-end="10286" vertical-scroll-proportion="0.94721407">
-          <folding />
+        <state line="262" column="158" selection-start="9918" selection-end="9918" vertical-scroll-proportion="0.8504399">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
