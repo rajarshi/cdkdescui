@@ -1,8 +1,9 @@
 package net.guha.apps.cdkdesc;
 
+import static net.guha.apps.cdkdesc.CDKDescUtils.loadDescriptorSelections;
 import net.guha.apps.cdkdesc.interfaces.ITextOutput;
 import net.guha.apps.cdkdesc.output.PlainTextOutput;
-import static net.guha.apps.cdkdesc.CDKDescUtils.loadDescriptorSelections;
+import nu.xom.ParsingException;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -22,7 +23,6 @@ import org.openscience.cdk.qsar.DescriptorEngine;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
-import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
@@ -40,8 +40,6 @@ import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
 import java.util.Map;
-
-import nu.xom.ParsingException;
 
 /**
  * Batch mode versions of the descriptor and fingerprint calculator.
@@ -177,6 +175,7 @@ public class CDKdescBatch {
             System.out.println("INFO: output:\t" + outputFile);
             if (isDescriptorType) System.out.println("INFO: type:\t" + descriptorType);
             else System.out.println("INFO: using selections from:\t" + descriptorType);
+            System.out.println("INFO: Adding explicit H\t" + AppOptions.getInstance().isAddH());
         }
 
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
@@ -313,7 +312,7 @@ public class CDKdescBatch {
                 ndesc++;
 
                 if (verbose) {
-                    System.out.print("\rINFO: Processed " + ndesc + " descriptors for " + (nmol+1) + " molecules");
+                    System.out.print("\rINFO: Processed " + ndesc + " descriptors for " + (nmol + 1) + " molecules");
                     System.out.flush();
                 }
             }

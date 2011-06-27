@@ -18,7 +18,16 @@ import org.apache.commons.cli.PosixParser;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.IDescriptor;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.Timer;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
@@ -427,6 +436,7 @@ public class CDKdesc extends JFrame {
         options.addOption("h", false, "Help");
         options.addOption("v", false, "Verbose output");
         options.addOption("o", true, "Output file");
+        options.addOption("a", false, "Add explicit H's");
         options.addOption("t", true, "Descriptor type: all, topological, geometric, constitutional, electronic, hybrid");
         options.addOption("f", true, "Fingerprint type: estate, extended, graph, standard, pubchem, substructure");
         options.addOption("s", true, "A descriptor selection file. Overrides the descriptor type option");
@@ -444,6 +454,10 @@ public class CDKdesc extends JFrame {
                 } else inputFile = tmp[0];
             }
             if (cmd.hasOption("v")) verbose = true;
+
+            if (cmd.hasOption("a")) AppOptions.getInstance().setAddH(true);
+            else AppOptions.getInstance().setAddH(false);
+
             if (cmd.hasOption("o")) outputFile = cmd.getOptionValue("o");
             if (cmd.hasOption("f")) {
                 fpType = cmd.getOptionValue("f");
@@ -470,7 +484,7 @@ public class CDKdesc extends JFrame {
         }
 
         if (!batchMode) {
-	    CDKdesc app = new CDKdesc();
+            CDKdesc app = new CDKdesc();
             app.pack();
             app.setVisible(true);
         } else {
