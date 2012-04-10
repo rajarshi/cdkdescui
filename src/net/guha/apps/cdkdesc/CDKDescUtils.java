@@ -1,5 +1,10 @@
 package net.guha.apps.cdkdesc;
 
+import nu.xom.Builder;
+import nu.xom.Document;
+import nu.xom.Element;
+import nu.xom.Elements;
+import nu.xom.ParsingException;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
@@ -7,13 +12,13 @@ import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.formats.IResourceFormat;
-import org.openscience.cdk.io.iterator.IteratingMDLReader;
+import org.openscience.cdk.io.iterator.IteratingSDFReader;
 import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -25,15 +30,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Comparator;
-import java.util.Map;
 import java.util.HashMap;
-
-import nu.xom.Builder;
-import nu.xom.Document;
-import nu.xom.ParsingException;
-import nu.xom.Element;
-import nu.xom.Elements;
-import nu.xom.ValidityException;
+import java.util.Map;
 
 /**
  * @author Rajarshi Guha
@@ -74,7 +72,7 @@ public class CDKDescUtils {
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         try {
-            IMolecule m = sp.parseSmiles(tokens[0].trim());
+            IAtomContainer m = sp.parseSmiles(tokens[0].trim());
         } catch (InvalidSmilesException ise) {
             return false;
         }
@@ -90,7 +88,7 @@ public class CDKDescUtils {
 
         sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         try {
-            IMolecule m = sp.parseSmiles(tokens[0].trim());
+            IAtomContainer m = sp.parseSmiles(tokens[0].trim());
         } catch (InvalidSmilesException ise) {
             return false;
         }
@@ -133,7 +131,7 @@ public class CDKDescUtils {
         } else if (isMDLFormat(filename)) {
             try {
                 FileInputStream inputStream = new FileInputStream(filename);
-                IteratingMDLReader mdlReader = new IteratingMDLReader(inputStream, DefaultChemObjectBuilder.getInstance());
+                IteratingSDFReader mdlReader = new IteratingSDFReader(inputStream, SilentChemObjectBuilder.getInstance());
                 while (mdlReader.hasNext()) {
                     mdlReader.next();
                     numMol++;
@@ -185,12 +183,12 @@ public class CDKDescUtils {
             // lets see if we have just two parts if so, we assume its a salt and just work
             // on the larger part. Ideally we should have a check to ensure that the smaller
             //  part is a metal/halogen etc.
-            IMoleculeSet fragments = ConnectivityChecker.partitionIntoMolecules(molecule);
-            if (fragments.getMoleculeCount() > 2) {
+            IAtomContainerSet fragments = ConnectivityChecker.partitionIntoMolecules(molecule);
+            if (fragments.getAtomContainerCount() > 2) {
                 throw new CDKException("More than 2 components. Skipped");
             } else {
-                IMolecule frag1 = fragments.getMolecule(0);
-                IMolecule frag2 = fragments.getMolecule(1);
+                IAtomContainer frag1 = fragments.getAtomContainer(0);
+                IAtomContainer frag2 = fragments.getAtomContainer(1);
                 if (frag1.getAtomCount() > frag2.getAtomCount()) molecule = frag1;
                 else molecule = frag2;
             }

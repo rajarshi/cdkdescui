@@ -3,6 +3,7 @@ package net.guha.apps.cdkdesc.ui;
 import net.guha.apps.cdkdesc.AppOptions;
 import net.guha.ui.checkboxtree.CheckTreeManager;
 import net.guha.ui.checkboxtree.CheckTreeSelectionModel;
+import org.openscience.cdk.IImplementationSpecification;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.IDescriptor;
@@ -13,9 +14,10 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import static java.util.Collections.sort;
 import java.util.HashMap;
 import java.util.List;
+
+import static java.util.Collections.sort;
 
 /**
  * @author Rajarshi Guha
@@ -74,7 +76,7 @@ public class DescriptorTree {
 
         for (Object object : leaves) {
             DescriptorTreeLeaf aLeaf = (DescriptorTreeLeaf) object;
-            DescriptorSpecification spec = aLeaf.getSpec();
+            IImplementationSpecification spec = aLeaf.getSpec();
             String[] dictClass = AppOptions.getInstance().getEngine().getDictionaryClass(spec);
             if (dictClass == null || dictClass.length == 0) {
                 System.err.println(spec.getImplementationIdentifier() + " : " + "Had no class entries in the dictionary!");

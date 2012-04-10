@@ -154,16 +154,16 @@
     </target>
 
     <target name="getversion">
-    <loadfile property="version.line" srcfile="src/net/guha/apps/cdkdesc/CDKDescConstants.java">
-    <filterchain>
-    <linecontainsregexp>
-    <regexp pattern="public static final String VERSION ="/>
-    </linecontainsregexp>
-    </filterchain>
-    </loadfile>
-    <propertyregex property="version" input="${version.line}"
-    regexp="([0-9]*\.[0-9]*\.[0-9]*)"
-    select="\1"/>
+        <loadfile property="version.line" srcfile="src/net/guha/apps/cdkdesc/CDKDescConstants.java">
+            <filterchain>
+                <linecontainsregexp>
+                    <regexp pattern="public static final String VERSION ="/>
+                </linecontainsregexp>
+            </filterchain>
+        </loadfile>
+        <propertyregex property="version" input="${version.line}"
+                       regexp="([0-9]*\.[0-9]*\.[0-9]*)"
+                       select="\1"/>
     </target>
 
     <target name="copyOut2Build" id="copyOut2Build">
@@ -214,7 +214,7 @@
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-smarts.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-charges.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-reaction.jar"/>
-        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-nonotify.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-silent.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-valencycheck.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-atomtype.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-ionpot.jar"/>

@@ -1,9 +1,13 @@
 package net.guha.apps.cdkdesc;
 
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.io.iterator.IteratingMDLReader;
+import org.openscience.cdk.io.iterator.IteratingSDFReader;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * @author rguha
@@ -81,7 +85,7 @@ public class MoleculeCounterWorker {
             } else if (CDKDescUtils.isMDLFormat(filename)) {
                 try {
                     FileInputStream inputStream = new FileInputStream(filename);
-                    IteratingMDLReader mdlReader = new IteratingMDLReader(inputStream, DefaultChemObjectBuilder.getInstance());
+                    IteratingSDFReader mdlReader = new IteratingSDFReader(inputStream, SilentChemObjectBuilder.getInstance());
                     while (mdlReader.hasNext()) {
                         if (canceled) return false;
                         mdlReader.next();

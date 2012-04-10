@@ -2,7 +2,7 @@ package net.guha.apps.cdkdesc;
 
 import net.guha.apps.cdkdesc.interfaces.ITextOutput;
 import net.guha.apps.cdkdesc.output.PlainTextOutput;
-import static net.guha.apps.cdkdesc.CDKDescUtils.loadDescriptorSelections;
+import nu.xom.ParsingException;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -14,20 +14,20 @@ import org.openscience.cdk.fingerprint.IFingerprinter;
 import org.openscience.cdk.fingerprint.MACCSFingerprinter;
 import org.openscience.cdk.fingerprint.PubchemFingerprinter;
 import org.openscience.cdk.fingerprint.SubstructureFingerprinter;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.iterator.DefaultIteratingChemObjectReader;
-import org.openscience.cdk.io.iterator.IteratingMDLReader;
+import org.openscience.cdk.io.iterator.IteratingSDFReader;
 import org.openscience.cdk.io.iterator.IteratingSMILESReader;
 import org.openscience.cdk.qsar.DescriptorEngine;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
-import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -41,7 +41,7 @@ import java.util.BitSet;
 import java.util.List;
 import java.util.Map;
 
-import nu.xom.ParsingException;
+import static net.guha.apps.cdkdesc.CDKDescUtils.loadDescriptorSelections;
 
 /**
  * Batch mode versions of the descriptor and fingerprint calculator.
@@ -81,11 +81,12 @@ public class CDKdescBatch {
                 inputFormat = "mdl";
             }
 
-            if (inputFormat.equals("smi")) iterReader = new IteratingSMILESReader(inputStream);
+            if (inputFormat.equals("smi"))
+                iterReader = new IteratingSMILESReader(inputStream, SilentChemObjectBuilder.getInstance());
             else if (inputFormat.equals("mdl")) {
-                iterReader = new IteratingMDLReader(inputStream, DefaultChemObjectBuilder.getInstance());
+                iterReader = new IteratingSDFReader(inputStream, DefaultChemObjectBuilder.getInstance());
                 iterReader.addChemObjectIOListener(new SDFormatListener());
-                ((IteratingMDLReader) iterReader).customizeJob();
+                ((IteratingSDFReader) iterReader).customizeJob();
             }
 
 
@@ -97,10 +98,10 @@ public class CDKdescBatch {
             double elapsedTime = System.currentTimeMillis();
 
             while (iterReader.hasNext()) {  // loop over molecules
-                IMolecule molecule = (IMolecule) iterReader.next();
+                IAtomContainer molecule = (IAtomContainer) iterReader.next();
 
                 try {
-                    molecule = (IMolecule) CDKDescUtils.checkAndCleanMolecule(molecule);
+                    molecule = (IAtomContainer) CDKDescUtils.checkAndCleanMolecule(molecule);
                 } catch (CDKException e) {
                     exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e, ""));
                     molCount++;
@@ -227,11 +228,12 @@ public class CDKdescBatch {
             tmpWriter = new BufferedWriter(new FileWriter(outputFile));
 
             FileInputStream inputStream = new FileInputStream(inputFile);
-            if (inputFormat.equals("smi")) iterReader = new IteratingSMILESReader(inputStream);
+            if (inputFormat.equals("smi"))
+                iterReader = new IteratingSMILESReader(inputStream, SilentChemObjectBuilder.getInstance());
             else if (inputFormat.equals("mdl")) {
-                iterReader = new IteratingMDLReader(inputStream, DefaultChemObjectBuilder.getInstance());
+                iterReader = new IteratingSDFReader(inputStream, DefaultChemObjectBuilder.getInstance());
                 iterReader.addChemObjectIOListener(new SDFormatListener());
-                ((IteratingMDLReader) iterReader).customizeJob();
+                ((IteratingSDFReader) iterReader).customizeJob();
             }
         } catch (IOException exception) {
             System.out.println("ERROR: Error opening input file");
@@ -266,12 +268,12 @@ public class CDKdescBatch {
         int nmol = 0;
 
         while (iterReader.hasNext()) {  // loop over molecules
-            IMolecule molecule = (IMolecule) iterReader.next();
+            IAtomContainer molecule = (IAtomContainer) iterReader.next();
             String title = (String) molecule.getProperty(CDKConstants.TITLE);
             if (title == null) title = "Mol" + String.valueOf(nmol + 1);
 
             try {
-                molecule = (IMolecule) CDKDescUtils.checkAndCleanMolecule(molecule);
+                molecule = (IAtomContainer) CDKDescUtils.checkAndCleanMolecule(molecule);
             } catch (CDKException e) {
                 exceptionList.add(new ExceptionInfo(nmol + 1, molecule, e, ""));
                 nmol++;
@@ -313,7 +315,7 @@ public class CDKdescBatch {
                 ndesc++;
 
                 if (verbose) {
-                    System.out.print("\rINFO: Processed " + ndesc + " descriptors for " + (nmol+1) + " molecules");
+                    System.out.print("\rINFO: Processed " + ndesc + " descriptors for " + (nmol + 1) + " molecules");
                     System.out.flush();
                 }
             }
