@@ -469,9 +469,8 @@ public class CDKdesc extends JFrame {
             System.exit(-1);
         }
 
-
-        CDKdesc app = new CDKdesc();
         if (!batchMode) {
+	    CDKdesc app = new CDKdesc();
             app.pack();
             app.setVisible(true);
         } else {
