@@ -1,5 +1,6 @@
 package net.guha.apps.cdkdesc;
 
+import static net.guha.apps.cdkdesc.CDKDescUtils.loadDescriptorSelections;
 import net.guha.apps.cdkdesc.interfaces.ITextOutput;
 import net.guha.apps.cdkdesc.output.PlainTextOutput;
 import nu.xom.ParsingException;
@@ -40,8 +41,6 @@ import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
 import java.util.Map;
-
-import static net.guha.apps.cdkdesc.CDKDescUtils.loadDescriptorSelections;
 
 /**
  * Batch mode versions of the descriptor and fingerprint calculator.
@@ -178,6 +177,7 @@ public class CDKdescBatch {
             System.out.println("INFO: output:\t" + outputFile);
             if (isDescriptorType) System.out.println("INFO: type:\t" + descriptorType);
             else System.out.println("INFO: using selections from:\t" + descriptorType);
+            System.out.println("INFO: Adding explicit H\t" + AppOptions.getInstance().isAddH());
         }
 
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
