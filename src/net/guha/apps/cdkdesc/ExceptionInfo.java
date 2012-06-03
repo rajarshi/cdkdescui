@@ -1,17 +1,17 @@
 package net.guha.apps.cdkdesc;
 
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * @author Rajarshi Guha
  */
 public class ExceptionInfo {
     int serial;
-    IMolecule molecule;
+    IAtomContainer molecule;
     String descriptorName;
     Exception exception;
 
-    public ExceptionInfo(int serial, IMolecule molecule, Exception exception, String name) {
+    public ExceptionInfo(int serial, IAtomContainer molecule, Exception exception, String name) {
         this.serial = serial;
         this.molecule = molecule;
         this.exception = exception;
@@ -34,11 +34,11 @@ public class ExceptionInfo {
         this.serial = serial;
     }
 
-    public IMolecule getMolecule() {
+    public IAtomContainer getMolecule() {
         return molecule;
     }
 
-    public void setMolecule(IMolecule molecule) {
+    public void setMolecule(IAtomContainer molecule) {
         this.molecule = molecule;
     }
 

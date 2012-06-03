@@ -13,11 +13,10 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.io.iterator.DefaultIteratingChemObjectReader;
-import org.openscience.cdk.io.iterator.IteratingMDLReader;
+import org.openscience.cdk.io.iterator.IteratingSDFReader;
 import org.openscience.cdk.io.iterator.IteratingSMILESReader;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.setting.IOSetting;
@@ -29,10 +28,10 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import javax.swing.JOptionPane;
-import javax.swing.JProgressBar;
+import javax.swing.*;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -162,12 +161,12 @@ public class DescriptorSwingWorker implements ISwingWorker {
             // lets see if we have just two parts if so, we assume its a salt and just work
             // on the larger part. Ideally we should have a check to ensure that the smaller
             //  part is a metal/halogen etc.
-            IMoleculeSet fragments = ConnectivityChecker.partitionIntoMolecules(molecule);
-            if (fragments.getMoleculeCount() > 2) {
+            IAtomContainerSet fragments = ConnectivityChecker.partitionIntoMolecules(molecule);
+            if (fragments.getAtomContainerCount() > 2) {
                 throw new CDKException("More than 2 components. Skipped");
             } else {
-                IMolecule frag1 = fragments.getMolecule(0);
-                IMolecule frag2 = fragments.getMolecule(1);
+                IAtomContainer frag1 = fragments.getAtomContainer(0);
+                IAtomContainer frag2 = fragments.getAtomContainer(1);
                 if (frag1.getAtomCount() > frag2.getAtomCount()) molecule = frag1;
                 else molecule = frag2;
             }
@@ -213,11 +212,12 @@ public class DescriptorSwingWorker implements ISwingWorker {
                 tmpWriter = new BufferedWriter(new FileWriter(tempFile));
 
                 FileInputStream inputStream = new FileInputStream(sdfFileName);
-                if (inputFormat.equals("smi")) iterReader = new IteratingSMILESReader(inputStream);
+                if (inputFormat.equals("smi"))
+                    iterReader = new IteratingSMILESReader(inputStream, SilentChemObjectBuilder.getInstance());
                 else if (inputFormat.equals("mdl")) {
-                    iterReader = new IteratingMDLReader(inputStream, DefaultChemObjectBuilder.getInstance());
+                    iterReader = new IteratingSDFReader(inputStream, SilentChemObjectBuilder.getInstance());
                     iterReader.addChemObjectIOListener(new MyListener());
-                    ((IteratingMDLReader) iterReader).customizeJob();
+                    ((IteratingSDFReader) iterReader).customizeJob();
                 }
             } catch (IOException exception) {
                 JOptionPane.showMessageDialog(null, "Error opening input or output files",
@@ -263,12 +263,12 @@ public class DescriptorSwingWorker implements ISwingWorker {
             assert iterReader != null;
             while (iterReader.hasNext()) {  // loop over molecules
                 if (canceled) return false;
-                IMolecule molecule = (IMolecule) iterReader.next();
+                IAtomContainer molecule = (IAtomContainer) iterReader.next();
                 String title = (String) molecule.getProperty(CDKConstants.TITLE);
                 if (title == null) title = "Mol" + String.valueOf(molCount + 1);
 
                 try {
-                    molecule = (IMolecule) checkAndCleanMolecule(molecule);
+                    molecule = (IAtomContainer) checkAndCleanMolecule(molecule);
                 } catch (CDKException e) {
                     exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e, ""));
                     molCount++;
@@ -350,18 +350,19 @@ public class DescriptorSwingWorker implements ISwingWorker {
                 MDLV2000Writer tmpWriter = new MDLV2000Writer(new FileWriter(tempFile));
 
                 FileInputStream inputStream = new FileInputStream(sdfFileName);
-                if (inputFormat.equals("smi")) iterReader = new IteratingSMILESReader(inputStream);
+                if (inputFormat.equals("smi"))
+                    iterReader = new IteratingSMILESReader(inputStream, SilentChemObjectBuilder.getInstance());
                 else if (inputFormat.equals("mdl"))
-                    iterReader = new IteratingMDLReader(inputStream, DefaultChemObjectBuilder.getInstance());
+                    iterReader = new IteratingSDFReader(inputStream, DefaultChemObjectBuilder.getInstance());
 
                 int counter = 1;
 
                 while (iterReader.hasNext()) {
                     if (canceled) return false;
-                    IMolecule molecule = (IMolecule) iterReader.next();
+                    IAtomContainer molecule = (IAtomContainer) iterReader.next();
 
                     try {
-                        molecule = (IMolecule) checkAndCleanMolecule(molecule);
+                        molecule = (IAtomContainer) checkAndCleanMolecule(molecule);
                     } catch (CDKException e) {
                         exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e, ""));
                         molCount++;

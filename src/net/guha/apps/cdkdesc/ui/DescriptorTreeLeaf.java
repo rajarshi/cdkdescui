@@ -2,19 +2,20 @@ package net.guha.apps.cdkdesc.ui;
 
 
 import net.guha.apps.cdkdesc.AppOptions;
+import org.openscience.cdk.IImplementationSpecification;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.IDescriptor;
 
 /**
  * @author Rajarshi Guha
  */
-public class DescriptorTreeLeaf extends Object implements Comparable {
+public class DescriptorTreeLeaf implements Comparable {
     IDescriptor instance;
-    DescriptorSpecification spec;
+    IImplementationSpecification spec;
     String definition;
     String name;
 
-    public DescriptorSpecification getSpec() {
+    public IImplementationSpecification getSpec() {
         return spec;
     }
 
@@ -24,7 +25,7 @@ public class DescriptorTreeLeaf extends Object implements Comparable {
         this.spec = instance.getSpecification();
 
         String[] tmp = this.spec.getSpecificationReference().split("#");
-        this.name = AppOptions.getEngine().getDictionaryTitle(spec);
+        this.name = AppOptions.getEngine().getDictionaryTitle((DescriptorSpecification) spec);
         this.definition = definition;
     }
 

@@ -2,11 +2,18 @@ package net.guha.apps.cdkdesc.ui;
 
 import net.guha.apps.cdkdesc.ExceptionInfo;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.HeadlessException;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -28,7 +35,7 @@ public class ExceptionListDialog extends JDialog {
                 "</tr>";
         for (ExceptionInfo ei : list) {
             int molnum = ei.getSerial();
-            IMolecule molecule = ei.getMolecule();
+            IAtomContainer molecule = ei.getMolecule();
             String title = (String) molecule.getProperty(CDKConstants.TITLE);
             if (title == null) title = "";
             String excepText = ei.getException().getMessage();
