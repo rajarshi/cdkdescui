@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project relativePaths="false" version="4">
   <component name="ChangeListManager">
-    <list default="true" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKdescBatch.java" afterPath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKdescBatch.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKDescConstants.java" afterPath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKDescConstants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKdesc.java" afterPath="$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKdesc.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cdkdescui.iws" afterPath="$PROJECT_DIR$/cdkdescui.iws" />
-    </list>
+    <list default="true" name="Default" comment="" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="cdkdescui.iws" />
   </component>
@@ -67,7 +62,7 @@
       <file leaf-file-name="CDKdescBatch.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKdescBatch.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="177" column="94" selection-start="8171" selection-end="8171" vertical-scroll-proportion="-0.072231136">
+            <state line="177" column="96" selection-start="8173" selection-end="8173" vertical-scroll-proportion="-0.072231136">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -78,8 +73,10 @@
       <file leaf-file-name="CDKdesc.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKdesc.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="448" column="42" selection-start="16520" selection-end="16520" vertical-scroll-proportion="-3.6538463">
-              <folding />
+            <state line="457" column="42" selection-start="16814" selection-end="16814" vertical-scroll-proportion="-3.6538463">
+              <folding>
+                <marker date="1309139411000" expanded="false" signature="39:1888" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -445,7 +442,7 @@
     <option name="PERFORM_CHECKOUT_IN_BACKGROUND" value="true" />
     <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added in code for hybridization fingerprinter" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated to allow user to specify add H's in batch mode" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
@@ -460,6 +457,7 @@
     <MESSAGE value="refactored batch methods into their own class" />
     <MESSAGE value="updated to latest cdk master. got rid of hybridization fp" />
     <MESSAGE value="Added in code for hybridization fingerprinter" />
+    <MESSAGE value="Updated to allow user to specify add H's in batch mode" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -583,14 +581,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKdesc.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="448" column="42" selection-start="16520" selection-end="16520" vertical-scroll-proportion="-3.6538463">
-          <folding />
+        <state line="457" column="42" selection-start="16814" selection-end="16814" vertical-scroll-proportion="-3.6538463">
+          <folding>
+            <marker date="1309139411000" expanded="false" signature="39:1888" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/guha/apps/cdkdesc/CDKdescBatch.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="177" column="94" selection-start="8171" selection-end="8171" vertical-scroll-proportion="-0.072231136">
+        <state line="177" column="96" selection-start="8173" selection-end="8173" vertical-scroll-proportion="-0.072231136">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
