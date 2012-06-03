@@ -161,6 +161,11 @@ public class ApplicationMenu {
                 if (status != JFileChooser.APPROVE_OPTION) return;
 
                 File settingsFile = fileDialog.getSelectedFile();
+                if (!settingsFile.getAbsolutePath().endsWith(".xml")) {
+                    String fname = settingsFile.getAbsolutePath();
+                    fname += ".xml";
+                    settingsFile = new File(fname);
+                }
                 FileOutputStream out = null;
                 try {
                     out = new FileOutputStream(settingsFile);
