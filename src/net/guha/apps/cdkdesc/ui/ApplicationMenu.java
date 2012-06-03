@@ -2,14 +2,24 @@ package net.guha.apps.cdkdesc.ui;
 
 import net.guha.apps.cdkdesc.AppOptions;
 import net.guha.apps.cdkdesc.CDKDescConstants;
-import nu.xom.*;
+import nu.xom.Attribute;
+import nu.xom.Builder;
+import nu.xom.Document;
+import nu.xom.Element;
+import nu.xom.Elements;
+import nu.xom.ParsingException;
+import nu.xom.Serializer;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -195,16 +205,14 @@ public class ApplicationMenu {
 
                 // now write it out
                 Document doc = new Document(root);
-                Serializer serializer = null;
+                Serializer serializer;
                 try {
                     serializer = new Serializer(out, "ISO-8859-1");
+                    serializer.setIndent(4);
+                    serializer.setMaxLength(128);
+                    serializer.write(doc);
                 } catch (UnsupportedEncodingException e1) {
                     showErrorDialog("Error in serialization of XML document");
-                }
-                serializer.setIndent(4);
-                serializer.setMaxLength(128);
-                try {
-                    serializer.write(doc);
                 } catch (IOException e1) {
                     showErrorDialog("Error when writing XML document");
                 }

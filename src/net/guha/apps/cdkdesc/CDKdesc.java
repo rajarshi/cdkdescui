@@ -9,6 +9,7 @@ import net.guha.apps.cdkdesc.ui.ExceptionListDialog;
 import net.guha.apps.cdkdesc.workers.DescriptorSwingWorker;
 import net.guha.apps.cdkdesc.workers.FingerprintSwingWorker;
 import net.guha.ui.checkboxtree.CheckBoxTreeUtils;
+import net.guha.ui.checkboxtree.CheckTreeManager;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -18,20 +19,12 @@ import org.apache.commons.cli.PosixParser;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.IDescriptor;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.Timer;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -49,6 +42,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -149,6 +143,20 @@ public class CDKdesc extends JFrame {
         DescriptorTree descriptorTree = null;
         try {
             descriptorTree = new DescriptorTree(true);
+
+            // at this point all leafs will be selected. So lets ensure
+            // that the global selection map indicates this
+            Map<String, Boolean> selDescMap = AppOptions.getInstance().getSelectedDescriptors();
+            TreeNode rootNode = descriptorTree.getRootNode();
+            for (int i = 0; i < rootNode.getChildCount(); i++) {  // the class nodes
+                TreeNode childNode = rootNode.getChildAt(i);
+                for (int j = 0; j < childNode.getChildCount(); j++) { // individual descriptors
+                    DefaultMutableTreeNode node = (DefaultMutableTreeNode) childNode.getChildAt(j);
+                    DescriptorTreeLeaf leaf = (DescriptorTreeLeaf) node.getUserObject();
+                    String specRef = leaf.getSpec().getSpecificationReference();
+                    selDescMap.put(specRef, true);
+                }
+            }
         } catch (CDKException e) {
             System.out.println("e = " + e);
         }
