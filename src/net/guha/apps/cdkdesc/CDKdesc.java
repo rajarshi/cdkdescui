@@ -9,7 +9,6 @@ import net.guha.apps.cdkdesc.ui.ExceptionListDialog;
 import net.guha.apps.cdkdesc.workers.DescriptorSwingWorker;
 import net.guha.apps.cdkdesc.workers.FingerprintSwingWorker;
 import net.guha.ui.checkboxtree.CheckBoxTreeUtils;
-import net.guha.ui.checkboxtree.CheckTreeManager;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -19,7 +18,16 @@ import org.apache.commons.cli.PosixParser;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.IDescriptor;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.Timer;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
@@ -438,10 +446,12 @@ public class CDKdesc extends JFrame {
         String fpType = null;
         boolean batchMode = false;
         boolean verbose = false;
+        boolean debug = false;
 
         Options options = new Options();
         options.addOption("b", false, "Batch mode");
         options.addOption("h", false, "Help");
+        options.addOption("d", false, "Debug mode");
         options.addOption("v", false, "Verbose output");
         options.addOption("o", true, "Output file");
         options.addOption("a", false, "Add explicit H's");
@@ -465,6 +475,8 @@ public class CDKdesc extends JFrame {
 
             if (cmd.hasOption("a")) AppOptions.getInstance().setAddH(true);
             else AppOptions.getInstance().setAddH(false);
+
+            if (cmd.hasOption("d"))AppOptions.getInstance().setDebug(true);
 
             if (cmd.hasOption("o")) outputFile = cmd.getOptionValue("o");
             if (cmd.hasOption("f")) {

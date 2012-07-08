@@ -31,9 +31,6 @@ public class DescriptorTree {
         rootNode = new DefaultMutableTreeNode("All Descriptors");
         DefaultTreeModel treeModel = new DefaultTreeModel(rootNode);
         tree = new JTree(treeModel) {
-            /**
-             *
-             */
             private static final long serialVersionUID = 1L;
 
             public String getToolTipText(MouseEvent e) {
@@ -50,6 +47,9 @@ public class DescriptorTree {
         ToolTipManager.sharedInstance().registerComponent(tree);
 
         String[] availableClasses = AppOptions.getInstance().getEngine().getAvailableDictionaryClasses();
+        if (AppOptions.getInstance().isDebug()) {
+            for (String klass : availableClasses) System.err.println("DEBUG: descriptor class: " + klass);
+        }
 
         // make a HashMap for the available classes
         HashMap<String, DefaultMutableTreeNode> level1Map = new HashMap<String, DefaultMutableTreeNode>();
@@ -59,13 +59,24 @@ public class DescriptorTree {
         }
 
         List descInst = AppOptions.getEngine().getDescriptorInstances();
-        List descSpec = AppOptions.getInstance().getEngine().getDescriptorSpecifications();
+        List<IImplementationSpecification> descSpec = AppOptions.getInstance().getEngine().getDescriptorSpecifications();
         int ndesc = descInst.size();
 
+        if (AppOptions.getInstance().isDebug()) {
+            System.err.println("DEBUG: Got " + ndesc + " descriptor instances");
+            System.err.println("DEBUG: Got " + descSpec.size() + " descriptor specifications");
+        }
         List leaves = new ArrayList();
         for (int i = 0; i < ndesc; i++) {
             DescriptorSpecification spec = (DescriptorSpecification) descSpec.get(i);
             String definition = AppOptions.getInstance().getEngine().getDictionaryDefinition(spec);
+
+            if (definition == null || definition.equals(""))
+                System.err.println("ERROR: " + spec.getImplementationTitle() + " had no definition!");
+
+            if (AppOptions.getInstance().isDebug())
+                System.err.println("DEBUG: Adding leaf for " + descSpec.get(i).getImplementationTitle());
+
             DescriptorTreeLeaf leaf = new DescriptorTreeLeaf((IDescriptor) descInst.get(i), definition);
             if (leaf.getName() == null || definition == null) {
                 throw new CDKException("Seems that " + leaf.getInstance() + " is missing an entry in the OWL dictionary");
@@ -77,9 +88,13 @@ public class DescriptorTree {
         for (Object object : leaves) {
             DescriptorTreeLeaf aLeaf = (DescriptorTreeLeaf) object;
             IImplementationSpecification spec = aLeaf.getSpec();
+
+            if (AppOptions.getInstance().isDebug())
+                System.err.println("DEBUG: leaf spec = " + spec.getImplementationTitle());
+
             String[] dictClass = AppOptions.getInstance().getEngine().getDictionaryClass(spec);
             if (dictClass == null || dictClass.length == 0) {
-                System.err.println(spec.getImplementationIdentifier() + " : " + "Had no class entries in the dictionary!");
+                System.err.println("ERROR: " + spec.getImplementationIdentifier() + "(" + spec.getImplementationIdentifier() + ") : " + "Had no class entries in the dictionary!");
                 continue;
             }
             DefaultMutableTreeNode parent = level1Map.get(dictClass[0]);

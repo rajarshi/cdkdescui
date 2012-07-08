@@ -17,6 +17,7 @@ public class AppOptions {
     private static String settingsFile = "";
     private static String selectedFingerprintType = null;
     private static boolean addH = true;
+    private static boolean debug = false;
 
     public static String getSelectedFingerprintType() {
         return selectedFingerprintType;
@@ -28,6 +29,14 @@ public class AppOptions {
 
     public String getSettingsFile() {
         return settingsFile;
+    }
+
+    public boolean isDebug() {
+        return debug;
+    }
+
+    public void setDebug(boolean debug) {
+        AppOptions.debug = debug;
     }
 
     public void setSettingsFile(String settingsFile) {
