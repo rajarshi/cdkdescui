@@ -16,9 +16,11 @@ import org.openscience.cdk.fingerprint.ExtendedFingerprinter;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.fingerprint.GraphOnlyFingerprinter;
 import org.openscience.cdk.fingerprint.HybridizationFingerprinter;
+import org.openscience.cdk.fingerprint.IBitFingerprint;
 import org.openscience.cdk.fingerprint.IFingerprinter;
 import org.openscience.cdk.fingerprint.MACCSFingerprinter;
 import org.openscience.cdk.fingerprint.PubchemFingerprinter;
+import org.openscience.cdk.fingerprint.SignatureFingerprinter;
 import org.openscience.cdk.fingerprint.SubstructureFingerprinter;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
@@ -37,7 +39,6 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.List;
 
 
@@ -199,6 +200,7 @@ public class FingerprintSwingWorker implements ISwingWorker {
             else if (fptype.equals("MACCS")) printer = new MACCSFingerprinter();
             else if (fptype.equals("Pubchem")) printer = new PubchemFingerprinter();
             else if (fptype.equals("Hybridization")) printer = new HybridizationFingerprinter();
+            else if (fptype.equals("Signature")) printer = new SignatureFingerprinter();
             else printer = new SubstructureFingerprinter();
 
             String lineSep = System.getProperty("line.separator");
@@ -241,7 +243,7 @@ public class FingerprintSwingWorker implements ISwingWorker {
                     }
 
                     try {
-                        BitSet fingerprint = printer.getFingerprint(molecule);
+                        IBitFingerprint fingerprint = printer.getBitFingerprint(molecule);
                         String title = (String) molecule.getProperty(CDKConstants.TITLE);
                         if (title == null) title = "Mol" + String.valueOf(molCount + 1);
                         tmpWriter.write(title + itemSep + fingerprint.toString() + lineSep);
