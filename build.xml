@@ -16,27 +16,6 @@
     <property name="compiler.generate.no.warnings" value="off"/>
     <property name="compiler.args" value=""/>
     <property name="compiler.max.memory" value="128m"/>
-    <patternset id="ignored.files">
-        <exclude name="**/CVS/**"/>
-        <exclude name="**/SCCS/**"/>
-        <exclude name="**/RCS/**"/>
-        <exclude name="**/rcs/**"/>
-        <exclude name="**/.DS_Store/**"/>
-        <exclude name="**/.svn/**"/>
-        <exclude name="**/.git/**"/>
-    </patternset>
-    <patternset id="compiler.resources">
-        <include name="**/?*.properties"/>
-        <include name="**/?*.xml"/>
-        <include name="**/?*.gif"/>
-        <include name="**/?*.png"/>
-        <include name="**/?*.jpeg"/>
-        <include name="**/?*.jpg"/>
-        <include name="**/?*.html"/>
-        <include name="**/?*.dtd"/>
-        <include name="**/?*.owl"/>
-        <include name="**/?*.tld"/>
-    </patternset>
 
     <!-- JDK definitions -->
     <path id="jdk.classpath.jdk_1.5">
@@ -102,26 +81,13 @@
         <pathelement location="libs/commons-cli-1.0.jar"/>
     </path>
 
-
-    <patternset id="excluded.from.module.cdkdescui">
-        <patternset refid="ignored.files"/>
-    </patternset>
-
-    <patternset id="excluded.from.compilation.cdkdescui">
-        <patternset refid="excluded.from.module.cdkdescui"/>
-    </patternset>
-
     <path id="cdkdescui.module.sourcepath">
         <dirset dir="${module.cdkdescui.basedir}">
             <include name="src"/>
         </dirset>
     </path>
 
-
-    <target name="compile.module.cdkdescui" depends="compile.module.cdkdescui.production,compile.module.cdkdescui.tests"
-            description="compile module(s) CDKDescUI"/>
-
-    <target name="compile.module.cdkdescui.production" description="compile module(s) CDKDescUI production classes">
+    <target name="compile.desc" description="compile module(s) CDKDescUI production classes">
         <antcall target="getversion"/>
         <mkdir dir="${cdkdescui.output.dir}"/>
         <javac destdir="${cdkdescui.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}"
@@ -134,16 +100,15 @@
         </javac>
         <copy todir="${cdkdescui.output.dir}">
             <fileset dir="${module.cdkdescui.basedir}/src">
-                <patternset refid="compiler.resources"/>
                 <type type="file"/>
             </fileset>
         </copy>
     </target>
 
-    <target name="compile.module.cdkdescui.tests" depends="compile.module.cdkdescui.production"
+    <target name="compile.module.cdkdescui.tests" depends="compile.desc"
             description="compile module(s) CDKDescUI test classes" unless="skip.tests"/>
 
-    <target name="clean.module.cdkdescui" description="cleanup module">
+    <target name="clean" description="cleanup module">
         <delete dir="${cdkdescui.build.dir}"/>
         <delete dir="${cdkdescui.output.dir}"/>
         <delete dir="${cdkdescui.testoutput.dir}"/>
@@ -172,7 +137,7 @@
         </copy>
     </target>
 
-    <target name="jar" description="Create JAR" depends="init, compile.module.cdkdescui">
+    <target name="jar" description="Create JAR" depends="init, compile.desc">
         <mkdir dir="${cdkdescui.build.dir}"/>
         <antcall target="copyOut2Build"/>
         <unjar dest="${cdkdescui.build.dir}" src="libs/CheckBoxTree.jar"/>
@@ -184,11 +149,13 @@
         </jar>
     </target>
 
-    <target name="bigjar" description="Create a big JAR" depends="init, compile.module.cdkdescui">
+    <target name="bigjar" description="Create a big JAR" depends="init, compile.desc">
         <mkdir dir="${cdkdescui.build.dir}"/>
         <antcall target="copyOut2Build"/>
         <unjar dest="${cdkdescui.build.dir}" src="libs/CheckBoxTree.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="libs/commons-cli-1.0.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="libs/slf4j-api-1.6.1.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="libs/slf4j-jdk14-1.6.1.jar"/>
 
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-qsar.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-qsarionpot.jar"/>
@@ -278,7 +245,5 @@
         <!-- Perform any build initialization in this target -->
     </target>
 
-    <target name="clean" depends="clean.module.cdkdescui" description="cleanup all"/>
-
-    <target name="all" depends="init, clean, compile.module.cdkdescui" description="build all"/>
+    <target name="all" depends="init, clean, compile.desc" description="build all"/>
 </project>

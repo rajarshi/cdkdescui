@@ -1,9 +1,11 @@
 package net.guha.apps.cdkdesc.ui;
 
 import net.guha.apps.cdkdesc.CDKDescConstants;
+import org.openscience.cdk.CDK;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -65,7 +67,7 @@ public class AboutDialog extends JDialog {
 
     private String getMeText() {
         String txt =
-                "The CDK Descriptor Calculator (v" + CDKDescConstants.VERSION + ") allows easy evaluation\n" +
+                "The CDK Descriptor Calculator (v" + CDKDescConstants.VERSION + ", CDK v" + CDK.getVersion() + ")\nallows easy evaluation " +
                         "of the CDK molecular descriptors. By default, all\n" +
                         "descriptors will be evaluated though it is easy to select\n" +
                         "individual descriptors or groups of descriptors.\n\n" +

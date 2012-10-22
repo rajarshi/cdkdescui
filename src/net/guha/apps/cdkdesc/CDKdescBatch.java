@@ -1,6 +1,5 @@
 package net.guha.apps.cdkdesc;
 
-import static net.guha.apps.cdkdesc.CDKDescUtils.loadDescriptorSelections;
 import net.guha.apps.cdkdesc.interfaces.ITextOutput;
 import net.guha.apps.cdkdesc.output.PlainTextOutput;
 import nu.xom.ParsingException;
@@ -29,6 +28,8 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -42,18 +43,24 @@ import java.util.BitSet;
 import java.util.List;
 import java.util.Map;
 
+import static net.guha.apps.cdkdesc.CDKDescUtils.loadDescriptorSelections;
+
 /**
  * Batch mode versions of the descriptor and fingerprint calculator.
  *
  * @author Rajarshi Guha
  */
 public class CDKdescBatch {
-    public static void batchFingerprint(String inputFile, String outputFile, String fpType, boolean verbose) throws CDKException {
-        if (verbose) {
-            System.out.println("INFO: input:\t" + inputFile);
-            System.out.println("INFO: output:\t" + outputFile);
-            System.out.println("INFO: type:\t" + fpType);
-        }
+    Logger log;
+
+    public CDKdescBatch() {
+        log = LoggerFactory.getLogger(this.getClass());
+    }
+
+    public void batchFingerprint(String inputFile, String outputFile, String fpType, boolean verbose) throws CDKException {
+        log.info("input:\t" + inputFile);
+        log.info("output:\t" + outputFile);
+        log.info("type:\t" + fpType);
 
         IFingerprinter fprinter = null;
         if (fpType.equals("standard")) fprinter = new Fingerprinter();
@@ -100,7 +107,7 @@ public class CDKdescBatch {
                 IAtomContainer molecule = (IAtomContainer) iterReader.next();
 
                 try {
-                    molecule = (IAtomContainer) CDKDescUtils.checkAndCleanMolecule(molecule);
+                    molecule = CDKDescUtils.checkAndCleanMolecule(molecule);
                 } catch (CDKException e) {
                     exceptionList.add(new ExceptionInfo(molCount + 1, molecule, e, ""));
                     molCount++;
@@ -108,7 +115,7 @@ public class CDKdescBatch {
                 }
 
                 try {
-                    BitSet fingerprint = fprinter.getFingerprint(molecule);
+                    BitSet fingerprint = fprinter.getBitFingerprint(molecule).asBitSet();
                     String title = (String) molecule.getProperty(CDKConstants.TITLE);
                     if (title == null) title = "Mol" + String.valueOf(molCount + 1);
                     tmpWriter.write(title + itemSep + fingerprint.toString() + lineSep);
@@ -119,16 +126,15 @@ public class CDKdescBatch {
                     molCount++;
                 }
 
-                if (verbose && molCount % 10 == 0) {
-                    System.out.print("\rINFO: Processed " + molCount + " molecules");
-                    System.out.flush();
+                if (molCount % 10 == 0) {
+                    log.info("Processed " + molCount + " molecules");
                 }
             }
 
             elapsedTime = ((System.currentTimeMillis() - elapsedTime) / 1000.0);
             if (verbose) {
                 NumberFormat formatter = new DecimalFormat("#0.000");
-                System.out.println("\nINFO: Total time = " + formatter.format(elapsedTime) + "s (" + formatter.format(elapsedTime / molCount) + " s/mol)");
+                log.info("Total time = " + formatter.format(elapsedTime) + "s (" + formatter.format(elapsedTime / molCount) + " s/mol)");
             }
             iterReader.close();
             tmpWriter.close();
@@ -154,10 +160,10 @@ public class CDKdescBatch {
      * @param isDescriptorType if a descriptor type is specified, true otherwise false
      * @param verbose          should output be verbose or not
      */
-    public static void batchDescriptor(String inputFile, String outputFile,
-                                       String descriptorType,
-                                       boolean isDescriptorType,
-                                       boolean verbose) {
+    public void batchDescriptor(String inputFile, String outputFile,
+                                String descriptorType,
+                                boolean isDescriptorType,
+                                boolean verbose) {
 
         Map<String, Boolean> sels = null;
 
@@ -165,20 +171,18 @@ public class CDKdescBatch {
             try {
                 sels = loadDescriptorSelections(descriptorType);
             } catch (ParsingException e) {
-                System.out.println("ERROR: Invalid XML file supplied");
+                log.error("Invalid XML file supplied");
                 System.exit(-1);
             } catch (IOException e) {
-                System.out.println("Couldn't read selection file");
+                log.error("Couldn't read selection file");
                 System.exit(-1);
             }
         }
-        if (verbose) {
-            System.out.println("INFO: input:\t" + inputFile);
-            System.out.println("INFO: output:\t" + outputFile);
-            if (isDescriptorType) System.out.println("INFO: type:\t" + descriptorType);
-            else System.out.println("INFO: using selections from:\t" + descriptorType);
-            System.out.println("INFO: Adding explicit H\t" + AppOptions.getInstance().isAddH());
-        }
+        log.info("input:\t" + inputFile);
+        log.info("output:\t" + outputFile);
+        if (isDescriptorType) log.info("type:\t" + descriptorType);
+        log.info("using selections from:\t" + descriptorType);
+        log.info("Adding explicit H\t" + AppOptions.getInstance().isAddH());
 
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
         List<String> classNames = engine.getDescriptorClassNames();
@@ -208,9 +212,9 @@ public class CDKdescBatch {
             }
         }
 
-        if (verbose) System.out.println("INFO: Will evaluate " + validClassNames.size() + " descriptors");
+        log.info("Will evaluate " + validClassNames.size() + " descriptors");
         List<IDescriptor> instances = engine.instantiateDescriptors(validClassNames);
-        if (verbose) System.out.println("INFO: Got " + validClassNames.size() + " descriptor instances");
+        log.info("Got " + validClassNames.size() + " descriptor instances");
         engine.setDescriptorInstances(instances);
 
         // ok, we've got the desc engine set up, lets check inputs and start the fun
@@ -218,7 +222,7 @@ public class CDKdescBatch {
         if (CDKDescUtils.isSMILESFormat(inputFile)) inputFormat = "smi";
         else if (CDKDescUtils.isMDLFormat(inputFile)) inputFormat = "mdl";
         else {
-            System.out.println("Currently only SMILES of SDF formats are supported");
+            log.error("Currently only SMILES of SDF formats are supported");
             System.exit(-1);
         }
 
@@ -257,8 +261,8 @@ public class CDKdescBatch {
             assert textOutput != null;
             textOutput.writeHeader(headerItems.toArray(new String[]{}));
         } catch (IOException e) {
-            System.out.println("ERROR: Error writing header line");
-            System.out.println(e.toString());
+            log.error("ERROR: Error writing header line");
+            log.error(e.toString());
             System.exit(-1);
         }
 
@@ -314,10 +318,7 @@ public class CDKdescBatch {
 
                 ndesc++;
 
-                if (verbose) {
-                    System.out.print("\rINFO: Processed " + ndesc + " descriptors for " + (nmol + 1) + " molecules");
-                    System.out.flush();
-                }
+                log.info("Processed " + ndesc + " descriptors for " + (nmol + 1) + " molecules");
             }
 
             for (int i = 0; i < dataItems.size(); i++) {
@@ -327,8 +328,8 @@ public class CDKdescBatch {
             try {
                 textOutput.writeLine(dataItems.toArray(new String[]{}));
             } catch (IOException e) {
-                System.out.println("\nERROR: Error writing data line");
-                System.out.println(e.toString());
+                log.error("Error writing data line");
+                log.error(e.toString());
                 System.exit(-1);
             }
 
@@ -342,12 +343,12 @@ public class CDKdescBatch {
             iterReader.close();
             tmpWriter.close();
         } catch (IOException e) {
-            System.out.println("\nERROR: Error closing files");
-            System.out.println(e.toString());
+            log.error("Error closing files");
+            log.error(e.toString());
             System.exit(-1);
         }
 
-        if (verbose) System.out.println("\nINFO: Completed in " + elapsedTime + " sec");
+        log.info("Completed in " + elapsedTime + " sec");
 
         if (exceptionList.size() > 0) {
             System.out.println("=============== Exceptions ===============");

@@ -18,16 +18,7 @@ import org.apache.commons.cli.PosixParser;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.IDescriptor;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.Timer;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
@@ -471,12 +462,14 @@ public class CDKdesc extends JFrame {
                     usage(options);
                 } else inputFile = tmp[0];
             }
-            if (cmd.hasOption("v")) verbose = true;
+            if (cmd.hasOption("v")) {
+                verbose = true;
+            }
 
             if (cmd.hasOption("a")) AppOptions.getInstance().setAddH(true);
             else AppOptions.getInstance().setAddH(false);
 
-            if (cmd.hasOption("d"))AppOptions.getInstance().setDebug(true);
+            if (cmd.hasOption("d")) AppOptions.getInstance().setDebug(true);
 
             if (cmd.hasOption("o")) outputFile = cmd.getOptionValue("o");
             if (cmd.hasOption("f")) {
@@ -511,9 +504,11 @@ public class CDKdesc extends JFrame {
             if (fpType == null && descriptorType == null) throw new CDKException("One of -t or -f must be specified");
             else if (fpType != null && descriptorType != null)
                 throw new CDKException("ERROR: One of -t or -f must be specified");
+
+            CDKdescBatch batch = new CDKdescBatch();
             if (descriptorType != null)
-                CDKdescBatch.batchDescriptor(inputFile, outputFile, descriptorType, descTypeSpecified, verbose);
-            else CDKdescBatch.batchFingerprint(inputFile, outputFile, fpType, verbose);
+                batch.batchDescriptor(inputFile, outputFile, descriptorType, descTypeSpecified, verbose);
+            else batch.batchFingerprint(inputFile, outputFile, fpType, verbose);
         }
     }
 }
