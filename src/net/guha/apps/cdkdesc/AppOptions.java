@@ -5,6 +5,8 @@
 package net.guha.apps.cdkdesc;
 
 import org.openscience.cdk.qsar.DescriptorEngine;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +14,8 @@ import java.util.Map;
 public class AppOptions {
 
     private static String outputMethod = CDKDescConstants.OUTPUT_SPC;
-    private static DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
+    private static DescriptorEngine engine = new DescriptorEngine(IMolecularDescriptor.class,
+            SilentChemObjectBuilder.getInstance());
     private static Map<String, Boolean> selectedDescriptors = new HashMap<String, Boolean>();
     private static String settingsFile = "";
     private static String selectedFingerprintType = null;

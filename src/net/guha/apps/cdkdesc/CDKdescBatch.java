@@ -65,7 +65,7 @@ public class CDKdescBatch {
         IFingerprinter fprinter = null;
         if (fpType.equals("standard")) fprinter = new Fingerprinter();
         else if (fpType.equals("extended")) fprinter = new ExtendedFingerprinter();
-        else if (fpType.equals("pubchem")) fprinter = new PubchemFingerprinter();
+        else if (fpType.equals("pubchem")) fprinter = new PubchemFingerprinter(SilentChemObjectBuilder.getInstance());
         else if (fpType.equals("graph")) fprinter = new GraphOnlyFingerprinter();
         else if (fpType.equals("maccs")) fprinter = new MACCSFingerprinter();
         else if (fpType.equals("estate")) fprinter = new EStateFingerprinter();
@@ -184,7 +184,7 @@ public class CDKdescBatch {
         log.info("using selections from:\t" + descriptorType);
         log.info("Adding explicit H\t" + AppOptions.getInstance().isAddH());
 
-        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
+        DescriptorEngine engine = new DescriptorEngine(IMolecularDescriptor.class, SilentChemObjectBuilder.getInstance());
         List<String> classNames = engine.getDescriptorClassNames();
 
         List<String> validClassNames = new ArrayList<String>();

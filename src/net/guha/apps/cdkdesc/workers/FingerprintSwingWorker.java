@@ -198,7 +198,7 @@ public class FingerprintSwingWorker implements ISwingWorker {
             else if (fptype.equals("Graph only")) printer = new GraphOnlyFingerprinter();
             else if (fptype.equals("EState")) printer = new EStateFingerprinter();
             else if (fptype.equals("MACCS")) printer = new MACCSFingerprinter();
-            else if (fptype.equals("Pubchem")) printer = new PubchemFingerprinter();
+            else if (fptype.equals("Pubchem")) printer = new PubchemFingerprinter(SilentChemObjectBuilder.getInstance());
             else if (fptype.equals("Hybridization")) printer = new HybridizationFingerprinter();
             else if (fptype.equals("Signature")) printer = new SignatureFingerprinter();
             else printer = new SubstructureFingerprinter();

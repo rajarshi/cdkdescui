@@ -168,6 +168,7 @@
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-pdb.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-libiocml.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-io.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-hash.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-ioformats.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-isomorphism.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-dict.jar"/>
@@ -182,12 +183,18 @@
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-charges.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-reaction.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-silent.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-signature.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-valencycheck.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-atomtype.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-ionpot.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.libs}/cdk-fragment.jar"/>
 
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/beam-core-0.3-SNAPSHOT.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/beam-func-0.3-SNAPSHOT.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/guava-14.0.1.jar"/>
+
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/jama-1.0.2.jar"/>
+        <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/signatures-1.1.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/jgrapht-0.6.0.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/vecmath1.2-1.14.jar"/>
         <unjar dest="${cdkdescui.build.dir}" src="${cdk.deps}/xom-1.1.jar"/>
