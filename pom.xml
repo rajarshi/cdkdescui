@@ -47,6 +47,8 @@
             <groupId>checkboxtree</groupId>
             <artifactId>checkboxtree</artifactId>
             <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/libs/checkboxtree-0.1.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -139,7 +141,7 @@
                             <goal>single</goal>
                         </goals>
                         <configuration>
-                        <finalName>CDKDescUI-${project.version}</finalName>
+                            <finalName>CDKDescUI-${project.version}</finalName>
                         </configuration>
                     </execution>
                 </executions>
