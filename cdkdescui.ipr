@@ -2,14 +2,6 @@
 <project version="4">
   <component name="AntConfiguration">
     <defaultAnt bundledAnt="true" />
-    <buildFile url="file://$PROJECT_DIR$/build.xml">
-      <additionalClassPath />
-      <antReference projectDefault="true" />
-      <customJdkName value="" />
-      <maximumHeapSize value="128" />
-      <maximumStackSize value="32" />
-      <properties />
-    </buildFile>
   </component>
   <component name="BuildJarProjectSettings">
     <option name="BUILD_JARS_ON_MAKE" value="false" />
@@ -256,8 +248,6 @@
     <library name="libs">
       <CLASSES>
         <root url="jar://$PROJECT_DIR$/libs/cdk.jar!/" />
-        <root url="jar://$PROJECT_DIR$/libs/CheckBoxTree.jar!/" />
-        <root url="jar://$PROJECT_DIR$/libs/commons-cli-1.0.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
