@@ -29,7 +29,7 @@ public class AboutDialog extends JDialog {
             }
         });
 
-        java.net.URL imgURL = AboutDialog.class.getResource("/net/guha/apps/cdkdesc/data/about.png");
+        java.net.URL imgURL = AboutDialog.class.getResource("/about.png");
         ImageIcon aboutPicture = new ImageIcon(imgURL);
         JLabel aboutLabel = new JLabel(aboutPicture);
 

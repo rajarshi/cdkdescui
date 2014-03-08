@@ -1,14 +1,15 @@
 package net.guha.apps.cdkdesc.ui;
 
 import javax.swing.*;
-import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
-import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.net.URL;
+
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
+import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
 
 /**
  * @cdk.author Rajarshi Guha
@@ -25,7 +26,7 @@ public class PluginUI extends JDialog {
         super();
 
         // get the icon for the entries in the list
-        URL imageUrl = this.getClass().getClassLoader().getResource("net/guha/apps/cdkdesc/data/jaricon.png");
+        URL imageUrl = this.getClass().getClassLoader().getResource("jaricon.png");
         jarIcon = new ImageIcon(imageUrl);
         Image jarImage = jarIcon.getImage();
         jarIcon = new ImageIcon(jarImage.getScaledInstance(16, 16, Image.SCALE_AREA_AVERAGING));
