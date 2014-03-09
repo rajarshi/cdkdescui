@@ -4,8 +4,7 @@ import net.guha.apps.cdkdesc.CDKDescConstants;
 import org.openscience.cdk.CDK;
 
 import javax.swing.*;
-import java.awt.BorderLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -77,7 +76,7 @@ public class AboutDialog extends JDialog {
                         "parameter settings for each descriptor\n\n" +
                         "Author: Rajarshi Guha\n" +
                         "Email: rajarshi.guha@gmail.com\n" +
-                        "http://rguha.net/code/java/cdkdesc.html\n";
+                        "http://www.rguha.net/code/java/cdkdesc.html\n";
         return txt;
     }
 

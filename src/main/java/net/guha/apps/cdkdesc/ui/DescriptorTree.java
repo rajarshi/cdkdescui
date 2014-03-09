@@ -79,7 +79,8 @@ public class DescriptorTree {
 
             DescriptorTreeLeaf leaf = new DescriptorTreeLeaf((IDescriptor) descInst.get(i), definition);
             if (leaf.getName() == null || definition == null) {
-                throw new CDKException("Seems that " + leaf.getInstance() + " is missing an entry in the OWL dictionary");
+                System.err.println("ERROR: " + leaf.getInstance() + " is missing an entry in the OWL dictionary");
+                //throw new CDKException("Seems that " + leaf.getInstance() + " is missing an entry in the OWL dictionary");
             } else
                 leaves.add(leaf);
         }

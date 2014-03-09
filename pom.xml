@@ -6,16 +6,16 @@
     <groupId>net.rguha</groupId>
     <artifactId>cdkdescui</artifactId>
     <packaging>jar</packaging>
-    <version>1.4.0</version>
+    <version>1.4.1</version>
     <name>cdkdescui</name>
     <url>http://maven.apache.org</url>
 
 
     <repositories>
-        <repository>
-            <id>java.net</id>
-            <url>http://download.java.net/maven/2</url>
-        </repository>
+        <!--<repository>-->
+            <!--<id>java.net</id>-->
+            <!--<url>http://download.java.net/maven/2</url>-->
+        <!--</repository>-->
         <repository>
             <id>MavenCentral</id>
             <name>Maven repository</name>
@@ -71,27 +71,27 @@
         <dependency>
             <groupId>org.openscience.cdk</groupId>
             <artifactId>cdk-fingerprint</artifactId>
-            <version>1.5.5</version>
+            <version>1.5.6-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.openscience.cdk</groupId>
             <artifactId>cdk-qsarmolecular</artifactId>
-            <version>1.5.5</version>
+            <version>1.5.6-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.openscience.cdk</groupId>
             <artifactId>cdk-silent</artifactId>
-            <version>1.5.5</version>
+            <version>1.5.6-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.openscience.cdk</groupId>
             <artifactId>cdk-signature</artifactId>
-            <version>1.5.5</version>
+            <version>1.5.6-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.openscience.cdk</groupId>
             <artifactId>cdk-data</artifactId>
-            <version>1.5.5</version>
+            <version>1.5.6-SNAPSHOT</version>
         </dependency>
 
     </dependencies>
