@@ -326,7 +326,7 @@
   <component name="libraryTable">
     <library name="Maven: checkboxtree:checkboxtree:0.1">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/libs/checkboxtree-0.1.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/checkboxtree/checkboxtree/0.1/checkboxtree-0.1.jar!/" />
       </CLASSES>
       <JAVADOC>
         <root url="jar://$MAVEN_REPOSITORY$/checkboxtree/checkboxtree/0.1/checkboxtree-0.1-javadoc.jar!/" />

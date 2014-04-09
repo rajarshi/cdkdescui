@@ -6,7 +6,7 @@
     <groupId>net.rguha</groupId>
     <artifactId>cdkdescui</artifactId>
     <packaging>jar</packaging>
-    <version>1.4.1</version>
+    <version>1.4.2</version>
     <name>cdkdescui</name>
     <url>http://maven.apache.org</url>
 
@@ -41,6 +41,10 @@
                 <enabled>false</enabled>
             </releases>
         </repository>
+        <repository>
+            <id>repo</id>
+            <url>file://${basedir}/local.repo</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -64,8 +68,6 @@
             <groupId>checkboxtree</groupId>
             <artifactId>checkboxtree</artifactId>
             <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/libs/checkboxtree-0.1.jar</systemPath>
         </dependency>
 
         <dependency>
