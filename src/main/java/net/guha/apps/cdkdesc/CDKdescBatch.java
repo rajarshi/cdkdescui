@@ -6,6 +6,7 @@ import nu.xom.ParsingException;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.fingerprint.CircularFingerprinter;
 import org.openscience.cdk.fingerprint.EStateFingerprinter;
 import org.openscience.cdk.fingerprint.ExtendedFingerprinter;
 import org.openscience.cdk.fingerprint.Fingerprinter;
@@ -13,6 +14,7 @@ import org.openscience.cdk.fingerprint.GraphOnlyFingerprinter;
 import org.openscience.cdk.fingerprint.IFingerprinter;
 import org.openscience.cdk.fingerprint.MACCSFingerprinter;
 import org.openscience.cdk.fingerprint.PubchemFingerprinter;
+import org.openscience.cdk.fingerprint.SignatureFingerprinter;
 import org.openscience.cdk.fingerprint.SubstructureFingerprinter;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.iterator.DefaultIteratingChemObjectReader;
@@ -70,6 +72,8 @@ public class CDKdescBatch {
         else if (fpType.equals("maccs")) fprinter = new MACCSFingerprinter();
         else if (fpType.equals("estate")) fprinter = new EStateFingerprinter();
         else if (fpType.equals("substructure")) fprinter = new SubstructureFingerprinter();
+        else if (fpType.equals("signature")) fprinter = new SignatureFingerprinter();
+        else if (fpType.equals("circular")) fprinter = new CircularFingerprinter(CircularFingerprinter.CLASS_ECFP4);
         else throw new CDKException("Invalid fingerprint type specified");
 
         List<ExceptionInfo> exceptionList = new ArrayList<ExceptionInfo>();
