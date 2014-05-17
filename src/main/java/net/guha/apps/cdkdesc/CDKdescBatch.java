@@ -11,6 +11,7 @@ import org.openscience.cdk.fingerprint.EStateFingerprinter;
 import org.openscience.cdk.fingerprint.ExtendedFingerprinter;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.fingerprint.GraphOnlyFingerprinter;
+import org.openscience.cdk.fingerprint.IBitFingerprint;
 import org.openscience.cdk.fingerprint.IFingerprinter;
 import org.openscience.cdk.fingerprint.MACCSFingerprinter;
 import org.openscience.cdk.fingerprint.PubchemFingerprinter;
@@ -107,6 +108,7 @@ public class CDKdescBatch {
             assert iterReader != null;
             double elapsedTime = System.currentTimeMillis();
 
+
             while (iterReader.hasNext()) {  // loop over molecules
                 IAtomContainer molecule = (IAtomContainer) iterReader.next();
 
@@ -119,10 +121,26 @@ public class CDKdescBatch {
                 }
 
                 try {
-                    BitSet fingerprint = fprinter.getBitFingerprint(molecule).asBitSet();
                     String title = (String) molecule.getProperty(CDKConstants.TITLE);
                     if (title == null) title = "Mol" + String.valueOf(molCount + 1);
-                    tmpWriter.write(title + itemSep + fingerprint.toString() + lineSep);
+                    String repr = null;
+
+                    if (fprinter instanceof SignatureFingerprinter) {
+                        IBitFingerprint fp = fprinter.getBitFingerprint(molecule);
+                        int[] trueBits = fp.getSetbits();
+                        StringBuilder b = new StringBuilder();
+                        String delim = "";
+                        for (int i : trueBits) {
+                            b.append(delim).append(i);
+                            delim = ",";
+                        }
+                        repr = b.toString();
+                    } else {
+                        BitSet fingerprint = fprinter.getBitFingerprint(molecule).asBitSet();
+                        repr = fingerprint.toString();
+                    }
+
+                    tmpWriter.write(title + itemSep + repr + lineSep);
                     tmpWriter.flush();
                     molCount++;
                 } catch (Exception e) {

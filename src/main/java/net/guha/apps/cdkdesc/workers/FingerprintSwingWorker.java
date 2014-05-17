@@ -11,6 +11,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.fingerprint.CircularFingerprinter;
 import org.openscience.cdk.fingerprint.EStateFingerprinter;
 import org.openscience.cdk.fingerprint.ExtendedFingerprinter;
 import org.openscience.cdk.fingerprint.Fingerprinter;
@@ -39,6 +40,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.List;
 
 
@@ -189,6 +191,10 @@ public class FingerprintSwingWorker implements ISwingWorker {
 
     class ActualTask {
 
+        private String srepr() {
+            return null;
+        }
+
         private boolean evalToTextFile(String sdfFileName, String outputFormat) throws CDKException {
 
             String fptype = AppOptions.getSelectedFingerprintType();
@@ -198,9 +204,11 @@ public class FingerprintSwingWorker implements ISwingWorker {
             else if (fptype.equals("Graph only")) printer = new GraphOnlyFingerprinter();
             else if (fptype.equals("EState")) printer = new EStateFingerprinter();
             else if (fptype.equals("MACCS")) printer = new MACCSFingerprinter();
-            else if (fptype.equals("Pubchem")) printer = new PubchemFingerprinter(SilentChemObjectBuilder.getInstance());
+            else if (fptype.equals("Pubchem"))
+                printer = new PubchemFingerprinter(SilentChemObjectBuilder.getInstance());
             else if (fptype.equals("Hybridization")) printer = new HybridizationFingerprinter();
             else if (fptype.equals("Signature")) printer = new SignatureFingerprinter();
+            else if (fptype.equals("Circular")) printer = new CircularFingerprinter(CircularFingerprinter.CLASS_ECFP4);
             else printer = new SubstructureFingerprinter();
 
             String lineSep = System.getProperty("line.separator");
@@ -243,10 +251,26 @@ public class FingerprintSwingWorker implements ISwingWorker {
                     }
 
                     try {
-                        IBitFingerprint fingerprint = printer.getBitFingerprint(molecule);
                         String title = (String) molecule.getProperty(CDKConstants.TITLE);
                         if (title == null) title = "Mol" + String.valueOf(molCount + 1);
-                        tmpWriter.write(title + itemSep + fingerprint.toString() + lineSep);
+                        String repr = null;
+
+                        if (printer instanceof SignatureFingerprinter) {
+                            IBitFingerprint fp = printer.getBitFingerprint(molecule);
+                            int[] trueBits = fp.getSetbits();
+                            StringBuilder b = new StringBuilder();
+                            String delim = "";
+                            for (int i : trueBits) {
+                                b.append(delim).append(i);
+                                delim = ",";
+                            }
+                            repr = b.toString();
+                        } else {
+                            BitSet fingerprint = printer.getBitFingerprint(molecule).asBitSet();
+                            repr = fingerprint.toString();
+                        }
+
+                        tmpWriter.write(title + itemSep + repr + lineSep);
                         tmpWriter.flush();
                         molCount++;
                     } catch (Exception e) {
