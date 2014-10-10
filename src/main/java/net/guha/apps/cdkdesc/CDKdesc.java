@@ -25,7 +25,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -447,7 +447,7 @@ public class CDKdesc extends JFrame {
         options.addOption("o", true, "Output file");
         options.addOption("a", false, "Add explicit H's");
         options.addOption("t", true, "Descriptor type: all, topological, geometric, constitutional, electronic, hybrid");
-        options.addOption("f", true, "Fingerprint type: estate, extended, graph, standard, pubchem, substructure");
+        options.addOption("f", true, "Fingerprint type: estate, extended, graph, standard, pubchem, substructure, signature, circular");
         options.addOption("s", true, "A descriptor selection file. Overrides the descriptor type option");
 
         CommandLineParser parser = new PosixParser();
