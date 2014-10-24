@@ -75,6 +75,8 @@ public class CDKDescUtils {
             IAtomContainer m = sp.parseSmiles(tokens[0].trim());
         } catch (InvalidSmilesException ise) {
             return false;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return false;
         }
 
         // now check the second line
