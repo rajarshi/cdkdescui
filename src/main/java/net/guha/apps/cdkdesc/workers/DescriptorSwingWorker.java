@@ -1,11 +1,7 @@
 package net.guha.apps.cdkdesc.workers;
 
 
-import net.guha.apps.cdkdesc.AppOptions;
-import net.guha.apps.cdkdesc.CDKDescConstants;
-import net.guha.apps.cdkdesc.CDKDescUtils;
-import net.guha.apps.cdkdesc.ExceptionInfo;
-import net.guha.apps.cdkdesc.SDFormatListener;
+import net.guha.apps.cdkdesc.*;
 import net.guha.apps.cdkdesc.SwingWorker;
 import net.guha.apps.cdkdesc.interfaces.ISwingWorker;
 import net.guha.apps.cdkdesc.interfaces.ITextOutput;
@@ -23,19 +19,11 @@ import org.openscience.cdk.io.iterator.IteratingSMILESReader;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
-import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.qsar.result.IntegerArrayResult;
-import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.qsar.result.*;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import javax.swing.*;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -72,10 +60,10 @@ public class DescriptorSwingWorker implements ISwingWorker {
 
         // see what type of file we have
         inputFormat = "invalid";
-        if (CDKDescUtils.isSMILESFormat(ui.getSdfFileTextField().getText())) {
-            inputFormat = "smi";
-        } else if (CDKDescUtils.isMDLFormat(ui.getSdfFileTextField().getText())) {
+        if (CDKDescUtils.isMDLFormat(ui.getSdfFileTextField().getText())) {
             inputFormat = "mdl";
+        } else if (CDKDescUtils.isSMILESFormat(ui.getSdfFileTextField().getText())) {
+            inputFormat = "smi";
         }
 
         if (inputFormat.equals("invalid")) {

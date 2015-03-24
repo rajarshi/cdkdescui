@@ -8,9 +8,11 @@ import net.guha.apps.cdkdesc.output.PlainTextOutput;
 import net.guha.apps.cdkdesc.ui.ApplicationUI;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
+import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -23,20 +25,12 @@ import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
-import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.qsar.result.IntegerArrayResult;
-import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.qsar.result.*;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.swing.*;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -72,10 +66,10 @@ public class DescriptorSwingWorker implements ISwingWorker {
 
         // see what type of file we have
         inputFormat = "invalid";
-        if (CDKDescUtils.isSMILESFormat(ui.getSdfFileTextField().getText())) {
-            inputFormat = "smi";
-        } else if (CDKDescUtils.isMDLFormat(ui.getSdfFileTextField().getText())) {
+        if (CDKDescUtils.isMDLFormat(ui.getSdfFileTextField().getText())) {
             inputFormat = "mdl";
+        } else if (CDKDescUtils.isSMILESFormat(ui.getSdfFileTextField().getText())) {
+            inputFormat = "smi";
         }
 
         if (inputFormat.equals("invalid")) {
@@ -181,7 +175,9 @@ public class DescriptorSwingWorker implements ISwingWorker {
 
         // do a aromaticity check
         try {
-            CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+            Aromaticity aromaticity = new Aromaticity(ElectronDonation.daylight(),
+                    Cycles.vertexShort());
+            aromaticity.apply(molecule);
         } catch (CDKException e) {
             throw new CDKException("Error in aromaticity detection");
         }

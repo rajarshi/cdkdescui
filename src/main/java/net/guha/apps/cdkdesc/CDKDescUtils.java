@@ -1,15 +1,13 @@
 package net.guha.apps.cdkdesc;
 
-import nu.xom.Builder;
-import nu.xom.Document;
-import nu.xom.Element;
-import nu.xom.Elements;
-import nu.xom.ParsingException;
+import nu.xom.*;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
+import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -20,15 +18,11 @@ import org.openscience.cdk.io.iterator.IteratingSDFReader;
 import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.AtomTypeAwareSaturationChecker;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -203,17 +197,21 @@ public class CDKDescUtils {
             throw new CDKException("Error in atom typing" + e.toString());
         }
 
+        CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(molecule.getBuilder());
+        adder.addImplicitHydrogens(molecule);
+        AtomTypeAwareSaturationChecker sat = new AtomTypeAwareSaturationChecker();
+        sat.decideBondOrder(molecule);
+
         // add explicit H's if required
         if (AppOptions.getInstance().isAddH()) {
-            CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(molecule.getBuilder());
-            adder.addImplicitHydrogens(molecule);
             AtomContainerManipulator.convertImplicitToExplicitHydrogens(molecule);
-
         }
 
         // do a aromaticity check
         try {
-            CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+            Aromaticity aromaticity = new Aromaticity(ElectronDonation.daylight(),
+                    Cycles.vertexShort());
+            aromaticity.apply(molecule);
         } catch (CDKException e) {
             throw new CDKException("Error in aromaticity detection");
         }

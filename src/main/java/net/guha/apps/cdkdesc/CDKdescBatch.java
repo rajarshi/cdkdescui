@@ -6,17 +6,7 @@ import nu.xom.ParsingException;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.fingerprint.CircularFingerprinter;
-import org.openscience.cdk.fingerprint.EStateFingerprinter;
-import org.openscience.cdk.fingerprint.ExtendedFingerprinter;
-import org.openscience.cdk.fingerprint.Fingerprinter;
-import org.openscience.cdk.fingerprint.GraphOnlyFingerprinter;
-import org.openscience.cdk.fingerprint.IBitFingerprint;
-import org.openscience.cdk.fingerprint.IFingerprinter;
-import org.openscience.cdk.fingerprint.MACCSFingerprinter;
-import org.openscience.cdk.fingerprint.PubchemFingerprinter;
-import org.openscience.cdk.fingerprint.SignatureFingerprinter;
-import org.openscience.cdk.fingerprint.SubstructureFingerprinter;
+import org.openscience.cdk.fingerprint.*;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.iterator.DefaultIteratingChemObjectReader;
 import org.openscience.cdk.io.iterator.IteratingSDFReader;
@@ -25,11 +15,7 @@ import org.openscience.cdk.qsar.DescriptorEngine;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
-import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.qsar.result.IntegerArrayResult;
-import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.qsar.result.*;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,11 +26,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.BitSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static net.guha.apps.cdkdesc.CDKDescUtils.loadDescriptorSelections;
 
@@ -241,8 +223,8 @@ public class CDKdescBatch {
 
         // ok, we've got the desc engine set up, lets check inputs and start the fun
         String inputFormat = "invalid";
-        if (CDKDescUtils.isSMILESFormat(inputFile)) inputFormat = "smi";
-        else if (CDKDescUtils.isMDLFormat(inputFile)) inputFormat = "mdl";
+        if (CDKDescUtils.isMDLFormat(inputFile)) inputFormat = "mdl";
+        else if (CDKDescUtils.isSMILESFormat(inputFile)) inputFormat = "smi";
         else {
             log.error("Currently only SMILES of SDF formats are supported");
             System.exit(-1);
@@ -340,8 +322,9 @@ public class CDKdescBatch {
 
                 ndesc++;
 
-                log.info("Processed " + ndesc + " descriptors for " + (nmol + 1) + " molecules");
+
             }
+            log.info("Processed " + ndesc + " descriptors for " + (nmol + 1) + " molecules");
 
             for (int i = 0; i < dataItems.size(); i++) {
                 if (dataItems.get(i).equals("NaN")) dataItems.set(i, "NA");
