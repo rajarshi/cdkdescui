@@ -1,6 +1,7 @@
 package net.guha.apps.cdkdesc;
 
 import nu.xom.*;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.ElectronDonation;
@@ -175,6 +176,7 @@ public class CDKDescUtils {
         }
 
         // Check for salts and such
+        String title = molecule.getProperty(CDKConstants.TITLE);
         if (!ConnectivityChecker.isConnected(molecule)) {
             // lets see if we have just two parts if so, we assume its a salt and just work
             // on the larger part. Ideally we should have a check to ensure that the smaller
@@ -187,6 +189,7 @@ public class CDKDescUtils {
                 IAtomContainer frag2 = fragments.getAtomContainer(1);
                 if (frag1.getAtomCount() > frag2.getAtomCount()) molecule = frag1;
                 else molecule = frag2;
+                molecule.setProperty(CDKConstants.TITLE, title);
             }
         }
 
