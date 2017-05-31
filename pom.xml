@@ -6,7 +6,7 @@
     <groupId>net.rguha</groupId>
     <artifactId>cdkdescui</artifactId>
     <packaging>jar</packaging>
-    <version>1.4.6</version>
+    <version>1.4.7</version>
     <name>cdkdescui</name>
     <url>http://maven.apache.org</url>
 
@@ -73,32 +73,32 @@
         <dependency>
             <groupId>org.openscience.cdk</groupId>
             <artifactId>cdk-fingerprint</artifactId>
-            <version>1.5.10</version>
+            <version>2.0</version>
         </dependency>
         <dependency>
             <groupId>org.openscience.cdk</groupId>
             <artifactId>cdk-qsarmolecular</artifactId>
-            <version>1.5.10</version>
+            <version>2.0</version>
         </dependency>
         <dependency>
             <groupId>org.openscience.cdk</groupId>
             <artifactId>cdk-silent</artifactId>
-            <version>1.5.10</version>
+            <version>2.0</version>
         </dependency>
         <dependency>
             <groupId>org.openscience.cdk</groupId>
             <artifactId>cdk-signature</artifactId>
-            <version>1.5.10</version>
+            <version>2.0</version>
         </dependency>
         <dependency>
             <groupId>org.openscience.cdk</groupId>
             <artifactId>cdk-data</artifactId>
-            <version>1.5.10</version>
+            <version>2.0</version>
         </dependency>
         <dependency>
             <groupId>org.openscience.cdk</groupId>
             <artifactId>cdk-standard</artifactId>
-            <version>1.5.10</version>
+            <version>2.0</version>
         </dependency>
 
     </dependencies>
