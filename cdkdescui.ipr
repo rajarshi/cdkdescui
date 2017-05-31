@@ -18,11 +18,13 @@
       <entry name="?*.tld" />
       <entry name="?*.ftl" />
     </wildcardResourcePatterns>
-    <annotationProcessing enabled="false" useClasspath="true" />
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="false">
+        <processorPath useClasspath="true" />
+      </profile>
+    </annotationProcessing>
   </component>
-  <component name="CopyrightManager" default="">
-    <module2copyright />
-  </component>
+  <component name="CopyrightManager" default="" />
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
   </component>
@@ -38,17 +40,42 @@
   </component>
   <component name="IdProvider" IDEtalkID="C47E84B517A8AD854016D1BED39A6567" />
   <component name="InspectionProjectProfileManager">
-    <profiles>
-      <profile version="1.0" is_locked="false">
-        <option name="myName" value="Project Default" />
-        <option name="myLocal" value="false" />
-        <inspection_tool class="SpellCheckingInspection" enabled="false" level="TYPO" enabled_by_default="false">
-          <option name="processCode" value="true" />
-          <option name="processLiterals" value="true" />
-          <option name="processComments" value="true" />
-        </inspection_tool>
-      </profile>
-    </profiles>
+    <profile version="1.0">
+      <option name="myName" value="Project Default" />
+      <option name="myLocal" value="true" />
+      <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
+        <option name="myValues">
+          <value>
+            <list size="6">
+              <item index="0" class="java.lang.String" itemvalue="type" />
+              <item index="1" class="java.lang.String" itemvalue="wmode" />
+              <item index="2" class="java.lang.String" itemvalue="src" />
+              <item index="3" class="java.lang.String" itemvalue="width" />
+              <item index="4" class="java.lang.String" itemvalue="height" />
+              <item index="5" class="java.lang.String" itemvalue="name" />
+            </list>
+          </value>
+        </option>
+        <option name="myCustomValuesEnabled" value="true" />
+      </inspection_tool>
+      <inspection_tool class="IgnoreResultOfCall" enabled="false" level="WARNING" enabled_by_default="false">
+        <option name="m_reportAllNonLibraryCalls" value="false" />
+        <option name="callCheckString" value="java.io.InputStream,read,java.io.InputStream,skip,java.lang.StringBuffer,toString,java.lang.StringBuilder,toString,java.lang.String,.*,java.math.BigInteger,.*,java.math.BigDecimal,.*,java.net.InetAddress,.*,java.io.File,.*,java.lang.Object,equals|hashCode" />
+      </inspection_tool>
+      <inspection_tool class="JDBCResource" enabled="true" level="WARNING" enabled_by_default="true">
+        <option name="insideTryAllowed" value="false" />
+      </inspection_tool>
+      <inspection_tool class="RequiredAttributes" enabled="true" level="WARNING" enabled_by_default="true">
+        <option name="myAdditionalRequiredHtmlAttributes" value="action" />
+      </inspection_tool>
+      <inspection_tool class="ResultSetIndexZero" enabled="true" level="WARNING" enabled_by_default="true" />
+      <inspection_tool class="SpellCheckingInspection" enabled="false" level="TYPO" enabled_by_default="false">
+        <option name="processCode" value="true" />
+        <option name="processLiterals" value="true" />
+        <option name="processComments" value="true" />
+      </inspection_tool>
+      <inspection_tool class="UseOfJDBCDriverClass" enabled="true" level="WARNING" enabled_by_default="true" />
+    </profile>
     <option name="PROJECT_PROFILE" value="Project Default" />
     <option name="USE_PROJECT_PROFILE" value="true" />
     <version value="1.0" />
@@ -196,7 +223,7 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/cdkdescui.iml" filepath="$PROJECT_DIR$/cdkdescui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Cdkdescui.iml" filepath="$PROJECT_DIR$/Cdkdescui.iml" />
     </modules>
   </component>
   <component name="ProjectResources">
@@ -799,4 +826,3 @@
     </library>
   </component>
 </project>
-

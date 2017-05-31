@@ -1,6 +1,11 @@
 package net.guha.apps.cdkdesc;
 
-import nu.xom.*;
+import nu.xom.Builder;
+import nu.xom.Document;
+import nu.xom.Element;
+import nu.xom.Elements;
+import nu.xom.ParsingException;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.ElectronDonation;
@@ -22,7 +27,12 @@ import org.openscience.cdk.tools.AtomTypeAwareSaturationChecker;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -162,6 +172,8 @@ public class CDKDescUtils {
 
 
     public static IAtomContainer checkAndCleanMolecule(IAtomContainer molecule) throws CDKException {
+        String title = molecule.getProperty(CDKConstants.TITLE);
+
         boolean isMarkush = false;
         for (IAtom atom : molecule.atoms()) {
             if (atom.getSymbol().equals("R")) {
@@ -187,6 +199,8 @@ public class CDKDescUtils {
                 IAtomContainer frag2 = fragments.getAtomContainer(1);
                 if (frag1.getAtomCount() > frag2.getAtomCount()) molecule = frag1;
                 else molecule = frag2;
+
+                molecule.setProperty(CDKConstants.TITLE, title);
             }
         }
 
