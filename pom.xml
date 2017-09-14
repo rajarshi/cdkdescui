@@ -6,7 +6,7 @@
     <groupId>net.rguha</groupId>
     <artifactId>cdkdescui</artifactId>
     <packaging>jar</packaging>
-    <version>1.4.7</version>
+    <version>1.4.8</version>
     <name>cdkdescui</name>
     <url>http://maven.apache.org</url>
 
@@ -109,8 +109,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
 

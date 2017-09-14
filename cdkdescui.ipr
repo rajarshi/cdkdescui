@@ -22,7 +22,17 @@
       <profile default="true" name="Default" enabled="false">
         <processorPath useClasspath="true" />
       </profile>
+      <profile default="false" name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="Cdkdescui" />
+      </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Cdkdescui" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="CopyrightManager" default="" />
   <component name="DaemonCodeAnalyzer">
@@ -79,9 +89,6 @@
     <option name="PROJECT_PROFILE" value="Project Default" />
     <option name="USE_PROJECT_PROFILE" value="true" />
     <version value="1.0" />
-  </component>
-  <component name="JavacSettings">
-    <option name="ADDITIONAL_OPTIONS_STRING" value="-target 1.6" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
@@ -229,7 +236,7 @@
   <component name="ProjectResources">
     <default-html-doctype>http://www.w3.org/1999/xhtml</default-html-doctype>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" assert-keyword="true" jdk-15="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="RunManager">
@@ -362,15 +369,26 @@
         <root url="jar://$MAVEN_REPOSITORY$/checkboxtree/checkboxtree/0.1/checkboxtree-0.1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.google.guava:guava:14.0.1">
+    <library name="Maven: com.github.gilleain.signatures:signatures:1.1">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/google/guava/guava/14.0.1/guava-14.0.1.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/github/gilleain/signatures/signatures/1.1/signatures-1.1.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/google/guava/guava/14.0.1/guava-14.0.1-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/github/gilleain/signatures/signatures/1.1/signatures-1.1-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/google/guava/guava/14.0.1/guava-14.0.1-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/github/gilleain/signatures/signatures/1.1/signatures-1.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.google.guava:guava:17.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/google/guava/guava/17.0/guava-17.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/google/guava/guava/17.0/guava-17.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/google/guava/guava/17.0/guava-17.0-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: commons-cli:commons-cli:1.0">
@@ -406,37 +424,26 @@
         <root url="jar://$MAVEN_REPOSITORY$/commons-logging/commons-logging/1.0/commons-logging-1.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: Jama:Jama:1.0.2">
+    <library name="Maven: gov.nist.math:jama:1.0.3">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/Jama/Jama/1.0.2/Jama-1.0.2.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/gov/nist/math/jama/1.0.3/jama-1.0.3.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/Jama/Jama/1.0.2/Jama-1.0.2-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/gov/nist/math/jama/1.0.3/jama-1.0.3-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/Jama/Jama/1.0.2/Jama-1.0.2-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/gov/nist/math/jama/1.0.3/jama-1.0.3-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: java3d:vecmath:1.5.2">
+    <library name="Maven: javax.vecmath:vecmath:1.5.2">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/java3d/vecmath/1.5.2/vecmath-1.5.2.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/javax/vecmath/vecmath/1.5.2/vecmath-1.5.2.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/java3d/vecmath/1.5.2/vecmath-1.5.2-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/javax/vecmath/vecmath/1.5.2/vecmath-1.5.2-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/java3d/vecmath/1.5.2/vecmath-1.5.2-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: jgrapht:jgrapht:0.6.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/jgrapht/jgrapht/0.6.0/jgrapht-0.6.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/jgrapht/jgrapht/0.6.0/jgrapht-0.6.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/jgrapht/jgrapht/0.6.0/jgrapht-0.6.0-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/javax/vecmath/vecmath/1.5.2/vecmath-1.5.2-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: junit:junit:3.7">
@@ -461,257 +468,246 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/apache/commons/commons-math3/3.1.1/commons-math3-3.1.1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openscience.cdk:cdk-annotation:1.5.6-SNAPSHOT">
+    <library name="Maven: org.openscience.cdk:cdk-atomtype:2.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-annotation/1.5.6-SNAPSHOT/cdk-annotation-1.5.6-SNAPSHOT.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-atomtype/2.0/cdk-atomtype-2.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-annotation/1.5.6-SNAPSHOT/cdk-annotation-1.5.6-SNAPSHOT-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-atomtype/2.0/cdk-atomtype-2.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-annotation/1.5.6-SNAPSHOT/cdk-annotation-1.5.6-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-atomtype/2.0/cdk-atomtype-2.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openscience.cdk:cdk-atomtype:1.5.6-SNAPSHOT">
+    <library name="Maven: org.openscience.cdk:cdk-charges:2.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-atomtype/1.5.6-SNAPSHOT/cdk-atomtype-1.5.6-SNAPSHOT.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-charges/2.0/cdk-charges-2.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-atomtype/1.5.6-SNAPSHOT/cdk-atomtype-1.5.6-SNAPSHOT-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-charges/2.0/cdk-charges-2.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-atomtype/1.5.6-SNAPSHOT/cdk-atomtype-1.5.6-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-charges/2.0/cdk-charges-2.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openscience.cdk:cdk-charges:1.5.6-SNAPSHOT">
+    <library name="Maven: org.openscience.cdk:cdk-core:2.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-charges/1.5.6-SNAPSHOT/cdk-charges-1.5.6-SNAPSHOT.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-core/2.0/cdk-core-2.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-charges/1.5.6-SNAPSHOT/cdk-charges-1.5.6-SNAPSHOT-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-core/2.0/cdk-core-2.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-charges/1.5.6-SNAPSHOT/cdk-charges-1.5.6-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-core/2.0/cdk-core-2.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openscience.cdk:cdk-core:1.5.6-SNAPSHOT">
+    <library name="Maven: org.openscience.cdk:cdk-data:2.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-core/1.5.6-SNAPSHOT/cdk-core-1.5.6-SNAPSHOT.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-data/2.0/cdk-data-2.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-core/1.5.6-SNAPSHOT/cdk-core-1.5.6-SNAPSHOT-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-data/2.0/cdk-data-2.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-core/1.5.6-SNAPSHOT/cdk-core-1.5.6-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-data/2.0/cdk-data-2.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openscience.cdk:cdk-data:1.5.6-SNAPSHOT">
+    <library name="Maven: org.openscience.cdk:cdk-dict:2.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-data/1.5.6-SNAPSHOT/cdk-data-1.5.6-SNAPSHOT.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-dict/2.0/cdk-dict-2.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-data/1.5.6-SNAPSHOT/cdk-data-1.5.6-SNAPSHOT-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-dict/2.0/cdk-dict-2.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-data/1.5.6-SNAPSHOT/cdk-data-1.5.6-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-dict/2.0/cdk-dict-2.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openscience.cdk:cdk-dict:1.5.6-SNAPSHOT">
+    <library name="Maven: org.openscience.cdk:cdk-fingerprint:2.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-dict/1.5.6-SNAPSHOT/cdk-dict-1.5.6-SNAPSHOT.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-fingerprint/2.0/cdk-fingerprint-2.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-dict/1.5.6-SNAPSHOT/cdk-dict-1.5.6-SNAPSHOT-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-fingerprint/2.0/cdk-fingerprint-2.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-dict/1.5.6-SNAPSHOT/cdk-dict-1.5.6-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-fingerprint/2.0/cdk-fingerprint-2.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openscience.cdk:cdk-fingerprint:1.5.6-SNAPSHOT">
+    <library name="Maven: org.openscience.cdk:cdk-formula:2.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-fingerprint/1.5.6-SNAPSHOT/cdk-fingerprint-1.5.6-SNAPSHOT.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-formula/2.0/cdk-formula-2.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-fingerprint/1.5.6-SNAPSHOT/cdk-fingerprint-1.5.6-SNAPSHOT-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-formula/2.0/cdk-formula-2.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-fingerprint/1.5.6-SNAPSHOT/cdk-fingerprint-1.5.6-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-formula/2.0/cdk-formula-2.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openscience.cdk:cdk-formula:1.5.6-SNAPSHOT">
+    <library name="Maven: org.openscience.cdk:cdk-fragment:2.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-formula/1.5.6-SNAPSHOT/cdk-formula-1.5.6-SNAPSHOT.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-fragment/2.0/cdk-fragment-2.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-formula/1.5.6-SNAPSHOT/cdk-formula-1.5.6-SNAPSHOT-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-fragment/2.0/cdk-fragment-2.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-formula/1.5.6-SNAPSHOT/cdk-formula-1.5.6-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-fragment/2.0/cdk-fragment-2.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openscience.cdk:cdk-fragment:1.5.6-SNAPSHOT">
+    <library name="Maven: org.openscience.cdk:cdk-hash:2.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-fragment/1.5.6-SNAPSHOT/cdk-fragment-1.5.6-SNAPSHOT.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-hash/2.0/cdk-hash-2.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-fragment/1.5.6-SNAPSHOT/cdk-fragment-1.5.6-SNAPSHOT-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-hash/2.0/cdk-hash-2.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-fragment/1.5.6-SNAPSHOT/cdk-fragment-1.5.6-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-hash/2.0/cdk-hash-2.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openscience.cdk:cdk-hash:1.5.6-SNAPSHOT">
+    <library name="Maven: org.openscience.cdk:cdk-interfaces:2.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-hash/1.5.6-SNAPSHOT/cdk-hash-1.5.6-SNAPSHOT.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-interfaces/2.0/cdk-interfaces-2.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-hash/1.5.6-SNAPSHOT/cdk-hash-1.5.6-SNAPSHOT-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-interfaces/2.0/cdk-interfaces-2.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-hash/1.5.6-SNAPSHOT/cdk-hash-1.5.6-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-interfaces/2.0/cdk-interfaces-2.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openscience.cdk:cdk-interfaces:1.5.6-SNAPSHOT">
+    <library name="Maven: org.openscience.cdk:cdk-io:2.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-interfaces/1.5.6-SNAPSHOT/cdk-interfaces-1.5.6-SNAPSHOT.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-io/2.0/cdk-io-2.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-interfaces/1.5.6-SNAPSHOT/cdk-interfaces-1.5.6-SNAPSHOT-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-io/2.0/cdk-io-2.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-interfaces/1.5.6-SNAPSHOT/cdk-interfaces-1.5.6-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-io/2.0/cdk-io-2.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openscience.cdk:cdk-io:1.5.6-SNAPSHOT">
+    <library name="Maven: org.openscience.cdk:cdk-ioformats:2.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-io/1.5.6-SNAPSHOT/cdk-io-1.5.6-SNAPSHOT.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-ioformats/2.0/cdk-ioformats-2.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-io/1.5.6-SNAPSHOT/cdk-io-1.5.6-SNAPSHOT-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-ioformats/2.0/cdk-ioformats-2.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-io/1.5.6-SNAPSHOT/cdk-io-1.5.6-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-ioformats/2.0/cdk-ioformats-2.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openscience.cdk:cdk-ioformats:1.5.6-SNAPSHOT">
+    <library name="Maven: org.openscience.cdk:cdk-isomorphism:2.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-ioformats/1.5.6-SNAPSHOT/cdk-ioformats-1.5.6-SNAPSHOT.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-isomorphism/2.0/cdk-isomorphism-2.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-ioformats/1.5.6-SNAPSHOT/cdk-ioformats-1.5.6-SNAPSHOT-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-isomorphism/2.0/cdk-isomorphism-2.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-ioformats/1.5.6-SNAPSHOT/cdk-ioformats-1.5.6-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-isomorphism/2.0/cdk-isomorphism-2.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openscience.cdk:cdk-isomorphism:1.5.6-SNAPSHOT">
+    <library name="Maven: org.openscience.cdk:cdk-qsar:2.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-isomorphism/1.5.6-SNAPSHOT/cdk-isomorphism-1.5.6-SNAPSHOT.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-qsar/2.0/cdk-qsar-2.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-isomorphism/1.5.6-SNAPSHOT/cdk-isomorphism-1.5.6-SNAPSHOT-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-qsar/2.0/cdk-qsar-2.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-isomorphism/1.5.6-SNAPSHOT/cdk-isomorphism-1.5.6-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-qsar/2.0/cdk-qsar-2.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openscience.cdk:cdk-qsar:1.5.6-SNAPSHOT">
+    <library name="Maven: org.openscience.cdk:cdk-qsarmolecular:2.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-qsar/1.5.6-SNAPSHOT/cdk-qsar-1.5.6-SNAPSHOT.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-qsarmolecular/2.0/cdk-qsarmolecular-2.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-qsar/1.5.6-SNAPSHOT/cdk-qsar-1.5.6-SNAPSHOT-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-qsarmolecular/2.0/cdk-qsarmolecular-2.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-qsar/1.5.6-SNAPSHOT/cdk-qsar-1.5.6-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-qsarmolecular/2.0/cdk-qsarmolecular-2.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openscience.cdk:cdk-qsarmolecular:1.5.6-SNAPSHOT">
+    <library name="Maven: org.openscience.cdk:cdk-reaction:2.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-qsarmolecular/1.5.6-SNAPSHOT/cdk-qsarmolecular-1.5.6-SNAPSHOT.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-reaction/2.0/cdk-reaction-2.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-qsarmolecular/1.5.6-SNAPSHOT/cdk-qsarmolecular-1.5.6-SNAPSHOT-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-reaction/2.0/cdk-reaction-2.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-qsarmolecular/1.5.6-SNAPSHOT/cdk-qsarmolecular-1.5.6-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-reaction/2.0/cdk-reaction-2.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openscience.cdk:cdk-reaction:1.5.6-SNAPSHOT">
+    <library name="Maven: org.openscience.cdk:cdk-signature:2.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-reaction/1.5.6-SNAPSHOT/cdk-reaction-1.5.6-SNAPSHOT.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-signature/2.0/cdk-signature-2.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-reaction/1.5.6-SNAPSHOT/cdk-reaction-1.5.6-SNAPSHOT-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-signature/2.0/cdk-signature-2.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-reaction/1.5.6-SNAPSHOT/cdk-reaction-1.5.6-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-signature/2.0/cdk-signature-2.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openscience.cdk:cdk-signature:1.5.6-SNAPSHOT">
+    <library name="Maven: org.openscience.cdk:cdk-silent:2.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-signature/1.5.6-SNAPSHOT/cdk-signature-1.5.6-SNAPSHOT.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-silent/2.0/cdk-silent-2.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-signature/1.5.6-SNAPSHOT/cdk-signature-1.5.6-SNAPSHOT-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-silent/2.0/cdk-silent-2.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-signature/1.5.6-SNAPSHOT/cdk-signature-1.5.6-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-silent/2.0/cdk-silent-2.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openscience.cdk:cdk-silent:1.5.6-SNAPSHOT">
+    <library name="Maven: org.openscience.cdk:cdk-smarts:2.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-silent/1.5.6-SNAPSHOT/cdk-silent-1.5.6-SNAPSHOT.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-smarts/2.0/cdk-smarts-2.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-silent/1.5.6-SNAPSHOT/cdk-silent-1.5.6-SNAPSHOT-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-smarts/2.0/cdk-smarts-2.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-silent/1.5.6-SNAPSHOT/cdk-silent-1.5.6-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-smarts/2.0/cdk-smarts-2.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openscience.cdk:cdk-smarts:1.5.6-SNAPSHOT">
+    <library name="Maven: org.openscience.cdk:cdk-smiles:2.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-smarts/1.5.6-SNAPSHOT/cdk-smarts-1.5.6-SNAPSHOT.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-smiles/2.0/cdk-smiles-2.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-smarts/1.5.6-SNAPSHOT/cdk-smarts-1.5.6-SNAPSHOT-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-smiles/2.0/cdk-smiles-2.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-smarts/1.5.6-SNAPSHOT/cdk-smarts-1.5.6-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-smiles/2.0/cdk-smiles-2.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openscience.cdk:cdk-smiles:1.5.6-SNAPSHOT">
+    <library name="Maven: org.openscience.cdk:cdk-standard:2.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-smiles/1.5.6-SNAPSHOT/cdk-smiles-1.5.6-SNAPSHOT.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-standard/2.0/cdk-standard-2.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-smiles/1.5.6-SNAPSHOT/cdk-smiles-1.5.6-SNAPSHOT-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-standard/2.0/cdk-standard-2.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-smiles/1.5.6-SNAPSHOT/cdk-smiles-1.5.6-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-standard/2.0/cdk-standard-2.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.openscience.cdk:cdk-standard:1.5.6-SNAPSHOT">
+    <library name="Maven: org.openscience.cdk:cdk-valencycheck:2.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-standard/1.5.6-SNAPSHOT/cdk-standard-1.5.6-SNAPSHOT.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-valencycheck/2.0/cdk-valencycheck-2.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-standard/1.5.6-SNAPSHOT/cdk-standard-1.5.6-SNAPSHOT-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-valencycheck/2.0/cdk-valencycheck-2.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-standard/1.5.6-SNAPSHOT/cdk-standard-1.5.6-SNAPSHOT-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.openscience.cdk:cdk-valencycheck:1.5.6-SNAPSHOT">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-valencycheck/1.5.6-SNAPSHOT/cdk-valencycheck-1.5.6-SNAPSHOT.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-valencycheck/1.5.6-SNAPSHOT/cdk-valencycheck-1.5.6-SNAPSHOT-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-valencycheck/1.5.6-SNAPSHOT/cdk-valencycheck-1.5.6-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/openscience/cdk/cdk-valencycheck/2.0/cdk-valencycheck-2.0-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: org.slf4j:slf4j-api:1.6.1">
@@ -736,37 +732,26 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-jdk14/1.6.1/slf4j-jdk14-1.6.1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: signatures:signatures:1.1">
+    <library name="Maven: uk.ac.ebi.beam:beam-core:0.9.2">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/signatures/signatures/1.1/signatures-1.1.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/uk/ac/ebi/beam/beam-core/0.9.2/beam-core-0.9.2.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/signatures/signatures/1.1/signatures-1.1-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/uk/ac/ebi/beam/beam-core/0.9.2/beam-core-0.9.2-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/signatures/signatures/1.1/signatures-1.1-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/uk/ac/ebi/beam/beam-core/0.9.2/beam-core-0.9.2-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: uk.ac.ebi.beam:beam-core:0.5">
+    <library name="Maven: uk.ac.ebi.beam:beam-func:0.9.2">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/uk/ac/ebi/beam/beam-core/0.5/beam-core-0.5.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/uk/ac/ebi/beam/beam-func/0.9.2/beam-func-0.9.2.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/uk/ac/ebi/beam/beam-core/0.5/beam-core-0.5-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/uk/ac/ebi/beam/beam-func/0.9.2/beam-func-0.9.2-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/uk/ac/ebi/beam/beam-core/0.5/beam-core-0.5-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: uk.ac.ebi.beam:beam-func:0.5">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/uk/ac/ebi/beam/beam-func/0.5/beam-func-0.5.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/uk/ac/ebi/beam/beam-func/0.5/beam-func-0.5-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/uk/ac/ebi/beam/beam-func/0.5/beam-func-0.5-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/uk/ac/ebi/beam/beam-func/0.9.2/beam-func-0.9.2-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: xalan:xalan:2.7.0">
@@ -811,17 +796,6 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/xom/xom/1.2.5/xom-1.2.5-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: xpp3:xpp3:1.1.4c">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/xpp3/xpp3/1.1.4c/xpp3-1.1.4c.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/xpp3/xpp3/1.1.4c/xpp3-1.1.4c-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/xpp3/xpp3/1.1.4c/xpp3-1.1.4c-sources.jar!/" />
       </SOURCES>
     </library>
   </component>

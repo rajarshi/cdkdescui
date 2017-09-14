@@ -1,6 +1,10 @@
 package net.guha.apps.cdkdesc;
 
-import nu.xom.*;
+import nu.xom.Builder;
+import nu.xom.Document;
+import nu.xom.Element;
+import nu.xom.Elements;
+import nu.xom.ParsingException;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -183,19 +187,20 @@ public class CDKDescUtils {
         // Check for salts and such
         String title = molecule.getProperty(CDKConstants.TITLE);
         if (!ConnectivityChecker.isConnected(molecule)) {
-            // lets see if we have just two parts if so, we assume its a salt and just work
-            // on the larger part. Ideally we should have a check to ensure that the smaller
+            // lets see if we have >1 parts if so, we assume its a salt and just work
+            // on the biggest part. Ideally we should have a check to ensure that the smaller
             //  part is a metal/halogen etc.
             IAtomContainerSet fragments = ConnectivityChecker.partitionIntoMolecules(molecule);
-            if (fragments.getAtomContainerCount() > 2) {
-                throw new CDKException("More than 2 components. Skipped");
-            } else {
-                IAtomContainer frag1 = fragments.getAtomContainer(0);
-                IAtomContainer frag2 = fragments.getAtomContainer(1);
-                if (frag1.getAtomCount() > frag2.getAtomCount()) molecule = frag1;
-                else molecule = frag2;
-                molecule.setProperty(CDKConstants.TITLE, title);
+            int maxFragSize = -1;
+            int maxFragPos = -1;
+            for (int i = 0; i < fragments.getAtomContainerCount();i++) {
+                if (fragments.getAtomContainer(i).getAtomCount() > maxFragSize) {
+                    maxFragSize = fragments.getAtomContainer(i).getAtomCount();
+                    maxFragPos = i;
+                }
             }
+            molecule = fragments.getAtomContainer(maxFragPos);
+            molecule.setProperty(CDKConstants.TITLE, title);
         }
 
         // Do the configuration
